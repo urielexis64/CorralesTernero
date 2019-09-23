@@ -1,12 +1,7 @@
 package Vista;
 
 import java.awt.Component;
-
-import javax.swing.Action;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import Controlador.ControladorBarraMenu;
 import mdlaf.shadows.DropShadowBorder;
 import mdlaf.utils.MaterialColors;
@@ -31,8 +26,6 @@ public class BarraMenu extends JMenuBar {
 		item1 = new JMenuItem("Cambiar tema");
 		item2 = new JMenuItem("Acerca de...", Rutinas.AjustarImagen("Resources\\info.png", 20, 20));
 
-//		menu1.addSeparator();
-
 		menu1.add(item1);
 		menu2.add(item2);
 
@@ -46,7 +39,8 @@ public class BarraMenu extends JMenuBar {
 
 	public void showInfoMessage() {
 		JOptionPane.showMessageDialog(component, "<html>" + "<center>Realizado por: </center>"
-				+ "<div style='color: #fffff0; h2 {text-align: center;}'><h2>Uriel Alexis Aispuro Sánchez</h2></div><br> "
-				+ "<h3><center>21/09/2019</center></h3>" + "</html>", "Acerca de...", JOptionPane.INFORMATION_MESSAGE);
+				+ "<div style='color: #fffff0; h2 {margin-left: 5px;}'><h2>Uriel Alexis Aispuro Sánchez</h2></div><br> "
+				+ "<h3><center>Versión 0.2.1</center></h3><br><h3><center>21/09/2019</center></h3>" + "</html>",
+				"Acerca de...", -1);
 	}
 }

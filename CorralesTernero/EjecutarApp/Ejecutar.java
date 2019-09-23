@@ -1,6 +1,5 @@
 package EjecutarApp;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -20,19 +19,8 @@ import mdlaf.themes.MaterialOceanicTheme;
 public class Ejecutar {
 
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {
-		ConexionBD.host = JOptionPane.showInputDialog("Host");
-		ConexionBD.port = JOptionPane.showInputDialog("Puerto");
-		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos");
-		ConexionBD.user = JOptionPane.showInputDialog("User");
-		ConexionBD.pwd = JOptionPane.showInputDialog("Password");
+		login();
 
-		if (ConexionBD.getConexion() == null) {
-			JOptionPane.showMessageDialog(null, "ERROR AL CONECTARSE A LA BASE DE DATOS", "ERROR",
-					JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
-		}
-		
-		JDialog.setDefaultLookAndFeelDecorated(false);
 		UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
 
 		VentanaPrincipal vista = new VentanaPrincipal();
@@ -52,7 +40,20 @@ public class Ejecutar {
 		vista.consulta.setControladorSeleccionTabla(controladorSeleccionTabla);
 
 		vista.setVisible(true);
+	}
 
+	private static void login() {
+		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
+		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
+		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
+		ConexionBD.user = JOptionPane.showInputDialog("User: ");
+		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
+
+		if (ConexionBD.getConexion() == null) {
+			JOptionPane.showMessageDialog(null, "ERROR AL CONECTARSE A LA BASE DE DATOS", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 	}
 
 }

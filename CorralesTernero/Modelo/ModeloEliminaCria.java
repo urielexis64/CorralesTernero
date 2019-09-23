@@ -2,9 +2,7 @@ package Modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 
 public class ModeloEliminaCria {
 
@@ -28,6 +26,19 @@ public class ModeloEliminaCria {
 			return true;
 		} catch (SQLException e) {
 			System.out.println("NO ELIMINADA " + e.getMessage());
+			return false;
+		}
+	}
+	
+	public boolean vaciarTabla() {
+		String insercion = "DELETE FROM CRIAS";
+
+		try {
+			PreparedStatement consultaPreparada = conexion.prepareStatement(insercion);
+			consultaPreparada.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("ERROR: " + e.getMessage());
 			return false;
 		}
 	}

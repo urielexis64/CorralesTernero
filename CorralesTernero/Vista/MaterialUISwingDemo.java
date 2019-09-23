@@ -166,6 +166,8 @@ public class MaterialUISwingDemo {
 		taskPane.add(new JLabel("if you see it means that at a certain point \n" +
 				"you do not see yourself anymore"));
 		taskPane.setTitle("Material Look and fell");
+		taskPane.add(new JButton("k"));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pn.add(taskPane);
 
 		//Test effect mouse over
@@ -197,9 +199,7 @@ public class MaterialUISwingDemo {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				JOptionPane optionPane = new JOptionPane();
-				optionPane.showMessageDialog(frame, "This is message info", "Message info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "This is message info", "Message info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 		buttonInfo.setAction(new InfoMessage());

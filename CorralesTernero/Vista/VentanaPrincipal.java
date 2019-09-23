@@ -21,6 +21,8 @@ public class VentanaPrincipal extends JFrame {
 
 	public BarraMenu barraMenu;
 
+	public static int positionX, positionY;
+
 	public VentanaPrincipal() {
 		hazInterfaz();
 		hazEscuchas();
@@ -32,11 +34,12 @@ public class VentanaPrincipal extends JFrame {
 		registro = new PestañaRegistro();
 		clasificacion = new PestañaClasifcacion();
 		consulta = new PestañaConsulta();
-
+		
 		pestañas.addTab("Registro", Rutinas.AjustarImagen("Resources\\registro_icon.png", 22, 22), registro);
 		pestañas.addTab("Clasificación", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18),
 				clasificacion);
 		pestañas.addTab("Consulta", Rutinas.AjustarImagen("Resources\\consulta_icon.png", 22, 22), consulta);
+		
 		barraMenu = new BarraMenu(this);
 
 		btnModoOscuro = new JToggleButton("Modo oscuro (BETA)");
@@ -55,7 +58,7 @@ public class VentanaPrincipal extends JFrame {
 		add(pestañas, BorderLayout.CENTER);
 		add(barraMenu, BorderLayout.NORTH);
 	}
-	
+
 	private void hazEscuchas() {
 		btnModoOscuro.addActionListener(new ControladorModoOscuro(this));
 	}

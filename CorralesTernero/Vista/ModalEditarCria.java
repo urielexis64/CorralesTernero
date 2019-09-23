@@ -1,10 +1,137 @@
 package Vista;
 
-import javax.swing.JDialog;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ModalEditarCria extends JDialog{
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+
+import Modelo.ModeloActualiza;
+import de.craften.ui.swingmaterial.*;
+import mdlaf.utils.MaterialColors;
+
+public class ModalEditarCria extends JDialog implements ActionListener {
+	public MaterialTextField txtPesoCria, txtColorCria, txtGrasaCria;
+	private MaterialButton btnLimpiar, btnActualizar;
+	private ModeloActualiza modelo;
+	private JLabel lblInfo;
+	private int idActual;
 
 	public ModalEditarCria() {
-		
+		hazInterfaz();
+		hazEscuchas();
+	}
+
+	public void hazInterfaz() {
+		setSize(480, 400);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setModal(true);
+		setLayout(null);
+
+		lblInfo = new JLabel();
+		lblInfo.setFont(new Font("Century Gothic", Font.PLAIN, 30));
+		lblInfo.setBounds(50, -20, 400, 80);
+
+		txtPesoCria = new MaterialTextField();
+		txtPesoCria.setBounds(50, 60, 380, 70);
+		txtPesoCria.setLabel("Peso de la cría");
+		txtPesoCria.setAccent(MaterialColors.YELLOW_300);
+		txtPesoCria.setForeground(MaterialColors.WHITE);
+		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
+		txtPesoCria.setCaretColor(Color.WHITE);
+
+		txtColorCria = new MaterialTextField();
+		txtColorCria.setBounds(50, 140, 380, 70);
+		txtColorCria.setLabel("Color de músculo");
+		txtColorCria.setAccent(MaterialColors.YELLOW_300);
+		txtColorCria.setForeground(MaterialColors.WHITE);
+		txtColorCria.setBackground(MaterialColor.TRANSPARENT);
+		txtColorCria.setCaretColor(Color.WHITE);
+
+		txtGrasaCria = new MaterialTextField();
+		txtGrasaCria.setBounds(50, 220, 380, 70);
+		txtGrasaCria.setLabel("Porcentaje de grasa");
+		txtGrasaCria.setAccent(MaterialColors.YELLOW_300);
+		txtGrasaCria.setForeground(MaterialColors.WHITE);
+		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
+		txtGrasaCria.setCaretColor(Color.WHITE);
+
+		btnLimpiar = new MaterialButton();
+		btnLimpiar.setText("Limpiar");
+		btnLimpiar.setBounds(30, 300, 200, 60);
+		btnLimpiar.setRippleColor(MaterialColor.GREEN_800);
+		btnLimpiar.setBackground(MaterialColors.GREEN_300);
+		btnLimpiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnLimpiar.setBorderRadius(6);
+		btnLimpiar.setType(MaterialButton.Type.RAISED);
+
+		btnActualizar = new MaterialButton();
+		btnActualizar.setText("Actualizar cría");
+		btnActualizar.setBounds(250, 300, 200, 60);
+		btnActualizar.setRippleColor(MaterialColor.GREEN_800);
+		btnActualizar.setBackground(MaterialColors.GREEN_300);
+		btnActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnActualizar.setBorderRadius(6);
+		btnActualizar.setType(MaterialButton.Type.RAISED);
+
+		add(lblInfo);
+		add(txtPesoCria);
+		add(txtColorCria);
+		add(txtGrasaCria);
+
+		add(btnActualizar);
+		add(btnLimpiar);
+
+//		panel.add(txtPesoCria);
+//		panel.add(txtColorCria);
+//		panel.add(txtGrasaCria);
+//		
+//		panel.add(btnActualizar);
+//		panel.add(btnLimpiar);
+//		
+//		add(panel);
+	}
+
+	public void setInfo(int id, String peso, String color, String grasa) {
+		this.idActual = id;
+		txtPesoCria.setText(peso);
+		txtColorCria.setText(color);
+		txtGrasaCria.setText(grasa);
+		lblInfo.setText("Información de la cría #" + idActual);
+	}
+
+	private void hazEscuchas() {
+		btnLimpiar.addActionListener(this);
+		btnActualizar.addActionListener(this);
+		modelo = new ModeloActualiza();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnLimpiar) {
+			limpiar();
+			return;
+		}
+		if(modelo.actualizaCria(idActual, Integer.parseInt(txtPesoCria.getText()), txtColorCria.getText(),
+				Integer.parseInt(txtGrasaCria.getText()))) {
+			setVisible(false);
+		}
+	}
+
+	private void limpiar() {
+		txtPesoCria.setText("");
+		txtColorCria.setText("");
+		txtGrasaCria.setText("");
+	}
+
+	public void paint(Graphics g) {
+		super.paint(g);
+		Graphics2D g2 = (Graphics2D) g;
+
+		g2.setColor(MaterialColors.DARKLY_BLUE);
+		g2.setStroke(new BasicStroke(8));
+		g2.drawLine(0, 75, 480, 75);
 	}
 }

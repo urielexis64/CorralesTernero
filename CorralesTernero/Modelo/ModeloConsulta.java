@@ -48,16 +48,13 @@ public class ModeloConsulta {
 
 			ResultSet tuplasBD = consultaPreparada.executeQuery();
 
-			while (tuplasBD.next()) {
-				cria.add(tuplasBD.getInt(1) + "");
-				cria.add(tuplasBD.getInt(2) + " kg");
-				cria.add(tuplasBD.getString(3));
-				cria.add(tuplasBD.getInt(4) + " %");
-			}
-			if (cria.size() != 0)
-				return cria.toArray();
-			else
-				return null;
+			tuplasBD.next();
+			cria.add(tuplasBD.getInt(1) + "");
+			cria.add(tuplasBD.getInt(2) + " kg");
+			cria.add(tuplasBD.getString(3));
+			cria.add(tuplasBD.getInt(4) + " %");
+
+			return cria.toArray();
 		} catch (SQLException e) {
 			return null;
 		}
