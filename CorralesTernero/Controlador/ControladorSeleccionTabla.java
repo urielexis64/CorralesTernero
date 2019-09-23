@@ -2,10 +2,14 @@ package Controlador;
 
 import java.awt.event.*;
 
+import javax.swing.JButton;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 
 import Modelo.ModeloEliminaCria;
+import Vista.ModalEditarCria;
 import Vista.VentanaPrincipal;
 
 public class ControladorSeleccionTabla extends MouseAdapter implements ActionListener {
@@ -18,19 +22,72 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 		this.modelo = modelo;
 	}
 
-	@Override
+	private void editarCria() {
+		int id = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+		String peso = tabla.getValueAt(tabla.getSelectedRow(), 1).toString().split(" ")[0];
+		String color = tabla.getValueAt(tabla.getSelectedRow(), 2).toString();
+		String grasa = tabla.getValueAt(tabla.getSelectedRow(), 3).toString().split(" ")[0];
+
+		ModalEditarCria modal = new ModalEditarCria();
+		modal.setInfo(id, peso, color, grasa);
+		modal.setVisible(true);
+	}
+
 	public void mouseClicked(MouseEvent e) {
-		if (tabla == null) // Guardar referencia de la tabla solo una vez
+		if (e.getClickCount() == 2) { // Editar cría desde doble click
+			editarCria();
+		}
+	}
+
+	public void mousePressed(MouseEvent e) {
+		if (tabla == null) { // Guardar referencia de la tabla solo una vez
 			tabla = (JTable) e.getSource();
-		vista.consulta.itemEliminar.setText("Eliminar cría (ID = " + tabla.getValueAt(tabla.getSelectedRow(), 0) + ")");
+		}
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		if (!tabla.isEnabled())
+			return;
+		int r = tabla.rowAtPoint(e.getPoint());
+		if (r >= 0 && r < tabla.getRowCount()) {
+			tabla.setRowSelectionInterval(r, r);
+		} else {
+			tabla.clearSelection();
+		}
+
+		int rowindex = tabla.getSelectedRow();
+		if (rowindex < 0)
+			return;
+		if (e.isPopupTrigger()) {
+			vista.consulta.itemEliminar
+					.setText("Eliminar cría (ID = " + tabla.getValueAt(tabla.getSelectedRow(), 0) + ")");
+			vista.consulta.menuFlotante.show(e.getComponent(), e.getX(), e.getY());
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int id = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
-		if (JOptionPane.showConfirmDialog(vista, "¿Está seguro de eliminar a la cría con el ID #" + id) == 0) {
-			modelo.eliminaCria(id);
-			vista.consulta.btnRefrescar.doClick();
+		if (e.getSource() instanceof JMenuItem) { // Eliminar cría (Menú emergente)
+
+			if (((JMenuItem) e.getSource()).getName().equals("Editar")) {// Si es el item Editar
+				editarCria(); // Editar cría (Menú emergente)
+				return;
+			}
+
+			int id = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString()); // Si es el item Eliminar
+			if (JOptionPane.showConfirmDialog(vista, "¿Está seguro de eliminar a la cría con el ID #" + id) == 0) {
+				modelo.eliminaCria(id);
+				vista.consulta.btnRefrescar.doClick();
+			}
+			return;
+		}
+		if (e.getSource() instanceof JButton) { // Botón eliminar toda la tabla
+			String t = "¿Está seguro de vaciar COMPLETAMENTE la tabla?";
+			if (JOptionPane.showConfirmDialog(vista, t) == 0) {
+				modelo.vaciarTabla();
+				vista.consulta.btnRefrescar.doClick();
+			}
+			return;
 		}
 	}
 }
