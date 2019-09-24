@@ -7,12 +7,14 @@ import Controlador.Controlador_Registro;
 import EjecutarApp.ToastMessage;
 import de.craften.ui.swingmaterial.*;
 import de.craften.ui.swingmaterial.MaterialButton.Type;
+import de.craften.ui.swingmaterial.fonts.MaterialIcons;
 import mdlaf.utils.MaterialColors;
+import misHerramientas.Rutinas;
 
 public class PestañaRegistro extends JPanel {
 
 	public MaterialTextField txtIdCria, txtPesoCria, txtColorCria, txtGrasaCria;
-	public MaterialButton btnRegistrarCria;
+	public MaterialButton btnRegistrarCria, btnLimpiar, btnAleatorio;
 	private MaterialPanel panel;
 	public MaterialProgressSpinner bar;
 
@@ -69,12 +71,30 @@ public class PestañaRegistro extends JPanel {
 		btnRegistrarCria.setType(Type.RAISED);
 		btnRegistrarCria.setBounds(250, 380, 200, 70);
 
+		btnLimpiar = new MaterialButton(Rutinas.AjustarImagen("Resources\\clean.png", 30, 30).getImage());
+		btnLimpiar.setRippleColor(MaterialColor.GREEN_800);
+		btnLimpiar.setBackground(MaterialColors.GREEN_300);
+		btnLimpiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnLimpiar.setBorderRadius(20);
+		btnLimpiar.setType(Type.FLAT);
+		btnLimpiar.setBounds(540, 380, 80, 70);
+
+		btnAleatorio = new MaterialButton(Rutinas.AjustarImagen("Resources\\random.png", 30, 30).getImage());
+		btnAleatorio.setRippleColor(MaterialColor.GREEN_800);
+		btnAleatorio.setBackground(MaterialColors.GREEN_300);
+		btnAleatorio.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnAleatorio.setBorderRadius(20);
+		btnAleatorio.setType(Type.FLAT);
+		btnAleatorio.setBounds(80, 380, 80, 70);
+
 		bar = new MaterialProgressSpinner();
 		bar.setBounds(300, 200, 100, 100);
 		bar.setVisible(false);
 
 		panel.add(bar);
 		panel.add(btnRegistrarCria);
+		panel.add(btnLimpiar);
+		panel.add(btnAleatorio);
 		panel.add(txtIdCria);
 		panel.add(txtPesoCria);
 		panel.add(txtColorCria);
@@ -91,6 +111,13 @@ public class PestañaRegistro extends JPanel {
 			toast.setInfo(msg, MaterialColors.GREEN_600);
 
 		toast.showToast();
+	}
+
+	public void limpiar() {
+		txtIdCria.setText("");
+		txtPesoCria.setText("");
+		txtColorCria.setText("");
+		txtGrasaCria.setText("");
 	}
 
 	public void actualizar() {
@@ -113,6 +140,8 @@ public class PestañaRegistro extends JPanel {
 
 	public void setControlador(Controlador_Registro controlador) {
 		btnRegistrarCria.addActionListener(controlador);
+		btnLimpiar.addActionListener(controlador);
+		btnAleatorio.addActionListener(controlador);
 	}
 
 }

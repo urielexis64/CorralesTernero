@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import EjecutarApp.Ejecutar;
 import EjecutarApp.ToastMessage;
@@ -19,7 +21,6 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 	private ModeloActualiza modelo;
 	private JLabel lblInfo;
 	private int idActual;
-	private ToastMessage mensaje;
 
 	public ModalEditarCria() {
 		hazInterfaz();
@@ -34,8 +35,9 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		setLayout(null);
 
 		lblInfo = new JLabel();
-		lblInfo.setFont(new Font("Century Gothic", Font.PLAIN, 30));
-		lblInfo.setBounds(50, -20, 400, 80);
+		lblInfo.setFont(new Font("Century Gothic", Font.PLAIN, 24));
+		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInfo.setBounds(0, -20, 480, 80);
 
 		txtPesoCria = new MaterialTextField();
 		txtPesoCria.setBounds(50, 60, 380, 70);
@@ -44,7 +46,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtPesoCria.setForeground(MaterialColors.WHITE);
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
 		txtPesoCria.setCaretColor(Color.WHITE);
-
+		
 		txtColorCria = new MaterialTextField();
 		txtColorCria.setBounds(50, 140, 380, 70);
 		txtColorCria.setLabel("Color de músculo");
@@ -86,6 +88,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 
 		add(btnActualizar);
 		add(btnLimpiar);
+		
 	}
 
 	public void setInfo(int id, String peso, String color, String grasa) {
@@ -102,7 +105,6 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		modelo = new ModeloActualiza();
 	}
 
-	@SuppressWarnings("static-access")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnLimpiar) {

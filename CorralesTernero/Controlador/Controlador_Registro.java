@@ -4,10 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Modelo.ModeloRegistro;
 import Vista.VentanaPrincipal;
+import misHerramientas.Rutinas;
 
 public class Controlador_Registro implements ActionListener {
 	private VentanaPrincipal vista;
 	private ModeloRegistro modelo;
+
+	private String colores[] = { "Azul", "Verde", "Rojo", "Amarillo", "Morado", "Naranja", "Gris", "Café", "Blanco" };
 
 	public Controlador_Registro(VentanaPrincipal vista, ModeloRegistro modelo) {
 		this.vista = vista;
@@ -16,7 +19,20 @@ public class Controlador_Registro implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new Thread() {
+		if (e.getSource() == vista.registro.btnLimpiar) { // Botón limpiar
+			vista.registro.limpiar();
+			return;
+		}
+
+		if (e.getSource() == vista.registro.btnAleatorio) { // Botón Aleatorio
+			vista.registro.txtIdCria.setText(Rutinas.nextInt(1, 1000000) + "");
+			vista.registro.txtPesoCria.setText(Rutinas.nextInt(20, 200) + "");
+			vista.registro.txtColorCria.setText(colores[Rutinas.nextInt(0, 8)]);
+			vista.registro.txtGrasaCria.setText(Rutinas.nextInt(1, 100) + "");
+			return;
+		}
+
+		new Thread() { // Botón registrar
 			public void run() {
 				try {
 					vista.registro.bar.setVisible(true);
