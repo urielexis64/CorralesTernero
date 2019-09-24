@@ -1,6 +1,7 @@
 package Vista;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 
 import javax.swing.*;
 
@@ -20,8 +21,6 @@ public class VentanaPrincipal extends JFrame {
 	public PestañaConsulta consulta;
 
 	public BarraMenu barraMenu;
-
-	public static int positionX, positionY;
 
 	public VentanaPrincipal() {
 		hazInterfaz();
@@ -51,7 +50,7 @@ public class VentanaPrincipal extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Corrales Ternero");
 		setSize(800, 800);
-		setResizable(true);
+		setResizable(false);
 		setLocationRelativeTo(null);
 
 		add(btnModoOscuro, BorderLayout.SOUTH);

@@ -1,8 +1,11 @@
 package EjecutarApp;
 
+import java.awt.Component;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import Controlador.ControladorBarraMenu;
 import Controlador.ControladorConsulta;
@@ -18,12 +21,14 @@ import mdlaf.themes.MaterialOceanicTheme;
 
 public class Ejecutar {
 
+	private static VentanaPrincipal vista;
+
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {
 		login();
 
 		UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
 
-		VentanaPrincipal vista = new VentanaPrincipal();
+		vista = new VentanaPrincipal();
 
 		ModeloRegistro modeloRegistro = new ModeloRegistro();
 		ModeloConsulta modeloConsulta = new ModeloConsulta();
@@ -43,17 +48,27 @@ public class Ejecutar {
 	}
 
 	private static void login() {
-		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
-		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
-		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
-		ConexionBD.user = JOptionPane.showInputDialog("User: ");
-		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
+		ConexionBD.host = "localhost";
+		ConexionBD.port = "1433";
+		ConexionBD.databaseName = "prueba";
+		ConexionBD.user = "sa";
+		ConexionBD.pwd = "123";
+
+//		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
+//		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
+//		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
+//		ConexionBD.user = JOptionPane.showInputDialog("User: ");
+//		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
 
 		if (ConexionBD.getConexion() == null) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CONECTARSE A LA BASE DE DATOS", "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
+	}
+
+	public static Component getInstance() {
+		return vista;
 	}
 
 }

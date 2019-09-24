@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
+import EjecutarApp.Ejecutar;
+import EjecutarApp.ToastMessage;
 import Modelo.ModeloActualiza;
 import de.craften.ui.swingmaterial.*;
 import mdlaf.utils.MaterialColors;
@@ -17,6 +19,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 	private ModeloActualiza modelo;
 	private JLabel lblInfo;
 	private int idActual;
+	private ToastMessage mensaje;
 
 	public ModalEditarCria() {
 		hazInterfaz();
@@ -25,7 +28,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 
 	public void hazInterfaz() {
 		setSize(480, 400);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(Ejecutar.getInstance());
 		setResizable(false);
 		setModal(true);
 		setLayout(null);
@@ -83,15 +86,6 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 
 		add(btnActualizar);
 		add(btnLimpiar);
-
-//		panel.add(txtPesoCria);
-//		panel.add(txtColorCria);
-//		panel.add(txtGrasaCria);
-//		
-//		panel.add(btnActualizar);
-//		panel.add(btnLimpiar);
-//		
-//		add(panel);
 	}
 
 	public void setInfo(int id, String peso, String color, String grasa) {
@@ -108,16 +102,28 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		modelo = new ModeloActualiza();
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnLimpiar) {
 			limpiar();
 			return;
 		}
-		if(modelo.actualizaCria(idActual, Integer.parseInt(txtPesoCria.getText()), txtColorCria.getText(),
-				Integer.parseInt(txtGrasaCria.getText()))) {
+
+		ToastMessage toast = new ToastMessage();
+
+		int peso = Integer.parseInt(txtPesoCria.getText());
+		String color = txtColorCria.getText();
+		int grasa = Integer.parseInt(txtGrasaCria.getText());
+
+		if (modelo.actualizaCria(idActual, peso, color, grasa)) {
+			toast.setInfo("Actualizado con éxito", MaterialColors.BLUE_400);
 			setVisible(false);
+		} else {
+			toast.setInfo("Hubo un error...", MaterialColors.RED_400);
 		}
+		toast.showToast();
+
 	}
 
 	private void limpiar() {

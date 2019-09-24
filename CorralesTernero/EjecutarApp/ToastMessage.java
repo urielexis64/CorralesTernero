@@ -10,48 +10,34 @@ public class ToastMessage extends JFrame {
 	private JPanel p;
 	private int wid = 200, hei = 30;
 
-	public void setInfo(String text, Color bg) {
-		this.bg = bg;
-		this.text = text;
-		w.remove(p);
-		w.repaint();
-		createPanel();
+	public ToastMessage() {
+		w = new JWindow();
+		w.setBackground(new Color(0, 0, 0, 0));
+		w.setSize(wid + 20, hei + 20);
+		w.setLocationRelativeTo(Ejecutar.getInstance());
 	}
 
-	public ToastMessage(int x, int y) {
-		w = new JWindow();
-
-		w.setBackground(new Color(0, 0, 0, 0));
-
+	public void setInfo(String text, Color bg) {
+		this.text = text;
+		this.bg = bg;
 		createPanel();
 
-		w.add(p);
-		w.setLocation(x, y);
-		w.setSize(wid + 20, hei + 20);
 	}
 
 	private void createPanel() {
 		p = new JPanel() {
 			public void paintComponent(Graphics g) {
-//				int wid = g.getFontMetrics().stringWidth(text);
-//				int hei = g.getFontMetrics().getHeight();
-
 				FontMetrics metrics = g.getFontMetrics();
-				// Determine the X coordinate for the text
+				// Coordenada x del texto
 				int x = 60 + (100 - metrics.stringWidth(text)) / 2;
-				// Determine the Y coordinate for the text (note we add the ascent, as in java
-				// 2d 0 is top of the screen)
+				// Coordenada y del texto
 				int y = 10 + ((30 - metrics.getHeight()) / 2) + metrics.getAscent();
-				// Set the font
 
 				g.setColor(bg);
-//				g.fillRoundRect(10, 10, wid + 30, hei + 10, 30, 30);
 				g.fillRoundRect(10, 10, wid, hei, 30, 30);
 				g.setColor(bg);
-//				g.drawRoundRect(10, 10, wid + 30, hei + 10,30, 30);
 				g.drawRoundRect(10, 10, wid, hei, 30, 30);
 
-				// set the color of text
 				g.setColor(new Color(255, 255, 255, 240));
 				g.drawString(text, x, y);
 				int t = 250;
@@ -59,7 +45,6 @@ public class ToastMessage extends JFrame {
 				for (int i = 0; i < 4; i++) {
 					t -= 60;
 					g.setColor(new Color(222, 218, 210, t));
-//					g.drawRoundRect(10 - i, 10 - i, wid + 30 + i * 2, hei + 10 + i * 2, 30, 30);
 					g.drawRoundRect(10 - i, 10 - i, wid, hei, 30, 30);
 				}
 			}
@@ -67,11 +52,8 @@ public class ToastMessage extends JFrame {
 		w.add(p);
 	}
 
-	// function to pop up the toast
-	public void showtoast() {
-
+	public void showToast() {
 		new Thread() {
-
 			public void run() {
 				try {
 					w.setOpacity(0);
@@ -92,10 +74,9 @@ public class ToastMessage extends JFrame {
 
 					w.setVisible(false);
 				} catch (Exception e) {
-					System.out.println(e.getMessage());
 				}
 			}
 		}.start();
-
 	}
+
 }

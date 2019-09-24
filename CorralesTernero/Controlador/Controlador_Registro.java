@@ -26,12 +26,12 @@ public class Controlador_Registro implements ActionListener {
 					String colorMusculo = vista.registro.txtColorCria.getText();
 					int porcentajeGrasa = Integer.parseInt(vista.registro.txtGrasaCria.getText());
 
-					boolean estado=modelo.registrarCria(id, peso, colorMusculo, porcentajeGrasa);
-					
+					boolean estado = modelo.registrarCria(id, peso, colorMusculo, porcentajeGrasa);
+
 					if (estado) {
 						vista.registro.mensaje("¡Cría insertada con éxito!", false);
-						vista.consulta.btnRefrescar.doClick(); //Actualizar tabla de consultas
-					} else{
+						vista.consulta.btnRefrescar.doClick(); // Actualizar tabla de consultas
+					} else {
 						vista.registro.mensaje("Inserción de ID duplicada", true);
 					}
 				} catch (Exception e2) {

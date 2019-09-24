@@ -12,10 +12,9 @@ import mdlaf.utils.MaterialColors;
 public class PestañaRegistro extends JPanel {
 
 	public MaterialTextField txtIdCria, txtPesoCria, txtColorCria, txtGrasaCria;
-	private MaterialButton btnRegistrarCria;
+	public MaterialButton btnRegistrarCria;
 	private MaterialPanel panel;
 	public MaterialProgressSpinner bar;
-	public ToastMessage mensaje;
 
 	public PestañaRegistro() {
 		hazInterfaz();
@@ -36,7 +35,7 @@ public class PestañaRegistro extends JPanel {
 		txtIdCria.setForeground(MaterialColors.WHITE);
 		txtIdCria.setBackground(MaterialColor.TRANSPARENT);
 		txtIdCria.setCaretColor(Color.WHITE);
-		
+
 		txtPesoCria = new MaterialTextField();
 		txtPesoCria.setBounds(100, 110, 500, 80);
 		txtPesoCria.setLabel("Peso de la cría");
@@ -85,13 +84,13 @@ public class PestañaRegistro extends JPanel {
 	}
 
 	public void mensaje(String msg, boolean error) {
-		mensaje = new ToastMessage(getLocationOnScreen().x + 275, getLocationOnScreen().y + 200);
+		ToastMessage toast = new ToastMessage();
 		if (error)
-			mensaje.setInfo(msg, MaterialColors.RED_500);
+			toast.setInfo(msg, MaterialColors.RED_500);
 		else
-			mensaje.setInfo(msg, MaterialColors.GREEN_600);
+			toast.setInfo(msg, MaterialColors.GREEN_600);
 
-		mensaje.showtoast();
+		toast.showToast();
 	}
 
 	public void actualizar() {
@@ -115,4 +114,5 @@ public class PestañaRegistro extends JPanel {
 	public void setControlador(Controlador_Registro controlador) {
 		btnRegistrarCria.addActionListener(controlador);
 	}
+
 }
