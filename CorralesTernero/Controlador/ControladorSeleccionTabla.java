@@ -33,8 +33,6 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		JTable tabla = (JTable) e.getSource();
-
 		if (e.getClickCount() == 2 && tabla.getColumnCount() == 4) { // Editar cría desde doble click
 			editarCria();
 			vista.consulta.btnRefrescar.doClick();
@@ -42,12 +40,15 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 	}
 
 	public void mousePressed(MouseEvent e) {
-
+		if (tabla == null) {
+			tabla = (JTable) e.getSource();
+		}
 	}
 
 	public void mouseReleased(MouseEvent e) {
 		if (!tabla.isEnabled())
 			return;
+
 		int r = tabla.rowAtPoint(e.getPoint());
 		if (r >= 0 && r < tabla.getRowCount()) {
 			tabla.setRowSelectionInterval(r, r);
