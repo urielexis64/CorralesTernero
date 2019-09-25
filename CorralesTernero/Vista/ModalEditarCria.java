@@ -3,7 +3,12 @@ package Vista;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -13,6 +18,7 @@ import EjecutarApp.Ejecutar;
 import EjecutarApp.ToastMessage;
 import Modelo.ModeloActualiza;
 import de.craften.ui.swingmaterial.*;
+import javafx.scene.shape.Circle;
 import mdlaf.utils.MaterialColors;
 
 public class ModalEditarCria extends JDialog implements ActionListener {
@@ -32,6 +38,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		setLocationRelativeTo(Ejecutar.getInstance());
 		setResizable(false);
 		setModal(true);
+		setTitle("Editar cría");
 		setLayout(null);
 
 		lblInfo = new JLabel();
@@ -42,6 +49,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtPesoCria = new MaterialTextField();
 		txtPesoCria.setBounds(50, 60, 380, 70);
 		txtPesoCria.setLabel("Peso de la cría");
+		txtPesoCria.setUpperFilter(true);
 		txtPesoCria.setAccent(MaterialColors.YELLOW_300);
 		txtPesoCria.setForeground(MaterialColors.WHITE);
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
@@ -50,6 +58,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtColorCria = new MaterialTextField();
 		txtColorCria.setBounds(50, 140, 380, 70);
 		txtColorCria.setLabel("Color de músculo");
+		txtColorCria.setUpperFilter(true);
 		txtColorCria.setAccent(MaterialColors.YELLOW_300);
 		txtColorCria.setForeground(MaterialColors.WHITE);
 		txtColorCria.setBackground(MaterialColor.TRANSPARENT);
@@ -58,6 +67,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtGrasaCria = new MaterialTextField();
 		txtGrasaCria.setBounds(50, 220, 380, 70);
 		txtGrasaCria.setLabel("Porcentaje de grasa");
+		txtGrasaCria.setUpperFilter(true);
 		txtGrasaCria.setAccent(MaterialColors.YELLOW_300);
 		txtGrasaCria.setForeground(MaterialColors.WHITE);
 		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
@@ -111,7 +121,14 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 			limpiar();
 			return;
 		}
-
+		BufferedImage img = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+		paint(img.getGraphics());
+		File outputfile = new File("saved.png");
+		try {
+			ImageIO.write(img, "png", outputfile);
+		} catch (IOException e4) {
+			e4.printStackTrace();
+		}
 		ToastMessage toast = new ToastMessage();
 
 		int peso = Integer.parseInt(txtPesoCria.getText());
@@ -125,7 +142,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 			toast.setInfo("Hubo un error...", MaterialColors.RED_400);
 		}
 		toast.showToast();
-
+		
 	}
 
 	private void limpiar() {

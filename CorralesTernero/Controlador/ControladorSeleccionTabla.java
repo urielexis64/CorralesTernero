@@ -5,7 +5,6 @@ import java.awt.event.*;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 
 import Modelo.ModeloEliminaCria;
@@ -34,15 +33,16 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if (e.getClickCount() == 2) { // Editar cría desde doble click
+		JTable tabla = (JTable) e.getSource();
+
+		if (e.getClickCount() == 2 && tabla.getColumnCount() == 4) { // Editar cría desde doble click
 			editarCria();
+			vista.consulta.btnRefrescar.doClick();
 		}
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if (tabla == null) { // Guardar referencia de la tabla solo una vez
-			tabla = (JTable) e.getSource();
-		}
+
 	}
 
 	public void mouseReleased(MouseEvent e) {

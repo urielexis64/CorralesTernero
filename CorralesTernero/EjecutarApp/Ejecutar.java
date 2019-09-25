@@ -5,11 +5,10 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import Controlador.ControladorBarraMenu;
 import Controlador.ControladorConsulta;
 import Controlador.ControladorSeleccionTabla;
+import Controlador.ControladorTitleBar;
 import Controlador.Controlador_Registro;
 import Modelo.ConexionBD;
 import Modelo.ModeloConsulta;
@@ -36,11 +35,11 @@ public class Ejecutar {
 
 		Controlador_Registro controladorRegistro = new Controlador_Registro(vista, modeloRegistro);
 		ControladorConsulta controladorConsulta = new ControladorConsulta(vista, modeloConsulta);
-		ControladorBarraMenu controladorMenu = new ControladorBarraMenu(vista);
 		ControladorSeleccionTabla controladorSeleccionTabla = new ControladorSeleccionTabla(vista, modeloEliminaCria);
+		ControladorTitleBar controladorTitleBar = new ControladorTitleBar(vista);
 
+		vista.setControlador(controladorTitleBar);
 		vista.registro.setControlador(controladorRegistro);
-		vista.barraMenu.setControlador(controladorMenu);
 		vista.consulta.setControlador(controladorConsulta);
 		vista.consulta.setControladorSeleccionTabla(controladorSeleccionTabla);
 
@@ -48,17 +47,11 @@ public class Ejecutar {
 	}
 
 	private static void login() {
-		ConexionBD.host = "localhost";
-		ConexionBD.port = "1433";
-		ConexionBD.databaseName = "prueba";
-		ConexionBD.user = "sa";
-		ConexionBD.pwd = "123";
-
-//		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
-//		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
-//		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
-//		ConexionBD.user = JOptionPane.showInputDialog("User: ");
-//		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
+		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
+		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
+		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
+		ConexionBD.user = JOptionPane.showInputDialog("User: ");
+		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
 
 		if (ConexionBD.getConexion() == null) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CONECTARSE A LA BASE DE DATOS", "ERROR",
@@ -67,7 +60,7 @@ public class Ejecutar {
 		}
 	}
 
-	public static Component getInstance() {
+	public static Component getInstance() { // Para centrar el Toast respecto a la posicion
 		return vista;
 	}
 

@@ -7,7 +7,6 @@ import Controlador.Controlador_Registro;
 import EjecutarApp.ToastMessage;
 import de.craften.ui.swingmaterial.*;
 import de.craften.ui.swingmaterial.MaterialButton.Type;
-import de.craften.ui.swingmaterial.fonts.MaterialIcons;
 import mdlaf.utils.MaterialColors;
 import misHerramientas.Rutinas;
 
@@ -33,6 +32,7 @@ public class PestañaRegistro extends JPanel {
 		txtIdCria = new MaterialTextField();
 		txtIdCria.setBounds(100, 20, 500, 80);
 		txtIdCria.setLabel("ID");
+		txtIdCria.setUpperFilter(true);
 		txtIdCria.setAccent(MaterialColors.YELLOW_300);
 		txtIdCria.setForeground(MaterialColors.WHITE);
 		txtIdCria.setBackground(MaterialColor.TRANSPARENT);
@@ -41,6 +41,7 @@ public class PestañaRegistro extends JPanel {
 		txtPesoCria = new MaterialTextField();
 		txtPesoCria.setBounds(100, 110, 500, 80);
 		txtPesoCria.setLabel("Peso de la cría");
+		txtPesoCria.setUpperFilter(true);
 		txtPesoCria.setAccent(MaterialColors.YELLOW_300);
 		txtPesoCria.setForeground(MaterialColors.WHITE);
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
@@ -49,6 +50,7 @@ public class PestañaRegistro extends JPanel {
 		txtColorCria = new MaterialTextField();
 		txtColorCria.setBounds(100, 200, 500, 80);
 		txtColorCria.setLabel("Color de músculo");
+		txtColorCria.setUpperFilter(true);
 		txtColorCria.setAccent(MaterialColors.YELLOW_300);
 		txtColorCria.setForeground(MaterialColors.WHITE);
 		txtColorCria.setBackground(MaterialColor.TRANSPARENT);
@@ -57,6 +59,7 @@ public class PestañaRegistro extends JPanel {
 		txtGrasaCria = new MaterialTextField();
 		txtGrasaCria.setBounds(100, 290, 500, 80);
 		txtGrasaCria.setLabel("Porcentaje de grasa");
+		txtGrasaCria.setUpperFilter(true);
 		txtGrasaCria.setAccent(MaterialColors.YELLOW_300);
 		txtGrasaCria.setForeground(MaterialColors.WHITE);
 		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
@@ -64,7 +67,7 @@ public class PestañaRegistro extends JPanel {
 
 		btnRegistrarCria = new MaterialButton();
 		btnRegistrarCria.setText("REGISTRAR CRÍA");
-		btnRegistrarCria.setRippleColor(MaterialColor.GREEN_800);
+		btnRegistrarCria.setRippleColor(MaterialColor.GREEN_500);
 		btnRegistrarCria.setBackground(MaterialColors.GREEN_300);
 		btnRegistrarCria.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnRegistrarCria.setBorderRadius(6);
@@ -72,16 +75,16 @@ public class PestañaRegistro extends JPanel {
 		btnRegistrarCria.setBounds(250, 380, 200, 70);
 
 		btnLimpiar = new MaterialButton(Rutinas.AjustarImagen("Resources\\clean.png", 30, 30).getImage());
-		btnLimpiar.setRippleColor(MaterialColor.GREEN_800);
-		btnLimpiar.setBackground(MaterialColors.GREEN_300);
+		btnLimpiar.setRippleColor(MaterialColor.GREEN_500);
+		btnLimpiar.setBackground(MaterialColor.TRANSPARENT);
 		btnLimpiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnLimpiar.setBorderRadius(20);
 		btnLimpiar.setType(Type.FLAT);
 		btnLimpiar.setBounds(540, 380, 80, 70);
 
-		btnAleatorio = new MaterialButton(Rutinas.AjustarImagen("Resources\\random.png", 30, 30).getImage());
-		btnAleatorio.setRippleColor(MaterialColor.GREEN_800);
-		btnAleatorio.setBackground(MaterialColors.GREEN_300);
+		btnAleatorio = new MaterialButton(Rutinas.AjustarImagen("Resources\\random.png",30, 30).getImage());
+		btnAleatorio.setRippleColor(MaterialColor.BLUE_200);
+		btnAleatorio.setBackground(MaterialColor.TRANSPARENT);
 		btnAleatorio.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnAleatorio.setBorderRadius(20);
 		btnAleatorio.setType(Type.FLAT);

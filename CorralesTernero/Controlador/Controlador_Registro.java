@@ -54,7 +54,9 @@ public class Controlador_Registro implements ActionListener {
 					vista.registro.mensaje("Hubo un error...", true);
 				}
 				vista.registro.bar.setVisible(false);
+				vista.registro.limpiar();
 			}
 		}.start();
+
 	}
 }

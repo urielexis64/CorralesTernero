@@ -61,15 +61,15 @@ public class ToastMessage extends JFrame {
 
 					w.setVisible(true);
 
-					for (double d = .1; d < 1; d += 0.1) {
-						sleep(100);
+					for (double d = .1; d < 1; d += 0.05) {
+						sleep(30);
 						w.setOpacity((float) d);
 					}
 
 					sleep(2000);
 
-					for (double d = 1.0; d > 0.2; d -= 0.1) {
-						sleep(100);
+					for (double d = 1.0; d > 0.2; d -= 0.05) {
+						sleep(30);
 						w.setOpacity((float) d);
 					}
 
