@@ -33,21 +33,22 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		JTable tabla = (JTable) e.getSource();
-
-		if (e.getClickCount() == 2 && tabla.getColumnCount() == 4) { // Editar cría desde doble click
+		if (e.getClickCount() == 2 && tabla.getColumnCount() == 4) { // Editar crÃ­a desde doble click
 			editarCria();
 			vista.consulta.btnRefrescar.doClick();
 		}
 	}
 
 	public void mousePressed(MouseEvent e) {
-
+		if (tabla == null) {
+			tabla = (JTable) e.getSource();
+		}
 	}
 
 	public void mouseReleased(MouseEvent e) {
 		if (!tabla.isEnabled())
 			return;
+
 		int r = tabla.rowAtPoint(e.getPoint());
 		if (r >= 0 && r < tabla.getRowCount()) {
 			tabla.setRowSelectionInterval(r, r);
@@ -60,29 +61,29 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 			return;
 		if (e.isPopupTrigger()) {
 			vista.consulta.itemEliminar
-					.setText("Eliminar cría (ID = " + tabla.getValueAt(tabla.getSelectedRow(), 0) + ")");
+					.setText("Eliminar crÃ­a (ID = " + tabla.getValueAt(tabla.getSelectedRow(), 0) + ")");
 			vista.consulta.menuFlotante.show(e.getComponent(), e.getX(), e.getY());
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() instanceof JMenuItem) { // Eliminar cría (Menú emergente)
+		if (e.getSource() instanceof JMenuItem) { // Eliminar crÃ­a (MenÃº emergente)
 
 			if (((JMenuItem) e.getSource()).getName().equals("Editar")) {// Si es el item Editar
-				editarCria(); // Editar cría (Menú emergente)
+				editarCria(); // Editar crÃ­a (MenÃº emergente)
 				return;
 			}
 
 			int id = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString()); // Si es el item Eliminar
-			if (JOptionPane.showConfirmDialog(vista, "¿Está seguro de eliminar a la cría con el ID #" + id) == 0) {
+			if (JOptionPane.showConfirmDialog(vista, "Â¿EstÃ¡ seguro de eliminar a la crÃ­a con el ID #" + id) == 0) {
 				modelo.eliminaCria(id);
 				vista.consulta.btnRefrescar.doClick();
 			}
 			return;
 		}
-		if (e.getSource() instanceof JButton) { // Botón eliminar toda la tabla
-			String t = "¿Está seguro de vaciar COMPLETAMENTE la tabla?";
+		if (e.getSource() instanceof JButton) { // BotÃ³n eliminar toda la tabla
+			String t = "Â¿EstÃ¡ seguro de vaciar COMPLETAMENTE la tabla?";
 			if (JOptionPane.showConfirmDialog(vista, t) == 0) {
 				modelo.vaciarTabla();
 				vista.consulta.btnRefrescar.doClick();
