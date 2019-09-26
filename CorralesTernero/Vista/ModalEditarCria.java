@@ -121,14 +121,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 			limpiar();
 			return;
 		}
-		BufferedImage img = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-		paint(img.getGraphics());
-		File outputfile = new File("saved.png");
-		try {
-			ImageIO.write(img, "png", outputfile);
-		} catch (IOException e4) {
-			e4.printStackTrace();
-		}
+
 		ToastMessage toast = new ToastMessage();
 
 		int peso = Integer.parseInt(txtPesoCria.getText());

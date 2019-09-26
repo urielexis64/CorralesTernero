@@ -29,17 +29,40 @@ public class ModeloEliminaCria {
 			return false;
 		}
 	}
-	
-	public boolean vaciarTabla() {
-		String insercion = "DELETE FROM CRIAS";
+
+	public int vaciarTabla() {
+		String borrarTuplas = "BEGIN TRAN DELETE FROM CRIAS";
+
+		PreparedStatement consultaPreparada;
 
 		try {
-			PreparedStatement consultaPreparada = conexion.prepareStatement(insercion);
-			consultaPreparada.executeUpdate();
-			return true;
+			conexion.setAutoCommit(false);
+
+			consultaPreparada = conexion.prepareStatement(borrarTuplas);
+
+			int tuplasBorradas = consultaPreparada.executeUpdate();
+
+			return tuplasBorradas;
 		} catch (SQLException e) {
 			System.out.println("ERROR: " + e.getMessage());
-			return false;
+			return -1;
+		}
+	}
+
+	public void commitTransaccion(boolean commit) {
+		try {
+			if (commit) {
+				conexion.prepareStatement("COMMIT TRAN");
+				System.out.println("HICE COMMIT");
+				conexion.commit();
+			} else {
+				conexion.prepareStatement("ROLLBACK TRAN");
+				System.out.println("HICE ROLLBACK");
+				conexion.rollback();
+			}
+			conexion.setAutoCommit(true);
+		} catch (Exception e) {
+			System.out.println("ERROR" + e.getMessage());
 		}
 	}
 

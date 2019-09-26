@@ -1,23 +1,17 @@
 package Vista;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.event.MouseEvent;
 import java.util.Vector;
+import java.util.logging.Handler;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 
 import Controlador.*;
+import EjecutarApp.ToastMessage;
 import de.craften.ui.swingmaterial.MaterialButton;
 import de.craften.ui.swingmaterial.MaterialButton.Type;
-import de.craften.ui.swingmaterial.MaterialColor;
 import de.craften.ui.swingmaterial.MaterialComboBox;
 import de.craften.ui.swingmaterial.fonts.MaterialIcons;
 import mdlaf.utils.MaterialColors;
@@ -28,7 +22,7 @@ public class PestañaConsulta extends JPanel {
 	private JTable tabla;
 	private static ModeloTabla modeloTabla;
 	private JScrollPane scrollTable;
-	public MaterialButton btnRefrescar, btnVaciar;
+	public MaterialButton btnRefrescar, btnVaciar, btnUndo;
 
 	public JPopupMenu menuFlotante;
 	public JMenuItem itemEliminar, itemEditar;
@@ -65,6 +59,14 @@ public class PestañaConsulta extends JPanel {
 		btnVaciar.setBorder(new DropShadowBorder());
 		btnVaciar.setBounds(5, 140, 80, 80);
 
+		btnUndo = new MaterialButton();
+		btnUndo.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
+		btnUndo.setText(String.valueOf(MaterialIcons.UNDO));
+		btnUndo.setType(Type.FLAT);
+		btnUndo.setBorder(new DropShadowBorder());
+		btnUndo.setBounds(5, 220, 80, 80);
+		btnUndo.setVisible(false);
+
 		menuFlotante = new JPopupMenu();
 		itemEliminar = new JMenuItem("Eliminar cría");
 		itemEliminar.setName("Eliminar");
@@ -87,6 +89,7 @@ public class PestañaConsulta extends JPanel {
 		add(scrollTable);
 		add(btnRefrescar);
 		add(btnVaciar);
+		add(btnUndo);
 	}
 
 	private void iniciarTabla() {
@@ -120,6 +123,7 @@ public class PestañaConsulta extends JPanel {
 		itemEliminar.addActionListener(controlador);
 		itemEditar.addActionListener(controlador);
 		btnVaciar.addActionListener(controlador);
+		btnUndo.addActionListener(controlador);
 	}
 
 	public void setTabla(Vector<Vector<String>> objetoCria) {
@@ -171,6 +175,16 @@ public class PestañaConsulta extends JPanel {
 			columnas.getColumn(0).setPreferredWidth(25);
 			columnas.getColumn(1).setPreferredWidth(25);
 		}
+	}
+
+	public void showMessage(String msg, boolean error) {
+		ToastMessage toast = new ToastMessage();
+		if (error) {
+			toast.setInfo(msg, MaterialColors.RED_500);
+		} else {
+			toast.setInfo(msg, MaterialColors.BLUE_500);
+		}
+		toast.showToast();
 	}
 }
 

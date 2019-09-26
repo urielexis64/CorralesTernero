@@ -106,7 +106,7 @@ public class PestañaRegistro extends JPanel {
 		add(panel);
 	}
 
-	public void mensaje(String msg, boolean error) {
+	public void showMessage(String msg, boolean error) {
 		ToastMessage toast = new ToastMessage();
 		if (error)
 			toast.setInfo(msg, MaterialColors.RED_500);

@@ -45,13 +45,13 @@ public class Controlador_Registro implements ActionListener {
 					boolean estado = modelo.registrarCria(id, peso, colorMusculo, porcentajeGrasa);
 
 					if (estado) {
-						vista.registro.mensaje("¡Cría insertada con éxito!", false);
+						vista.registro.showMessage("¡Cría insertada con éxito!", false);
 						vista.consulta.btnRefrescar.doClick(); // Actualizar tabla de consultas
 					} else {
-						vista.registro.mensaje("Inserción de ID duplicada", true);
+						vista.registro.showMessage("Inserción de ID duplicada", true);
 					}
 				} catch (Exception e2) {
-					vista.registro.mensaje("Hubo un error...", true);
+					vista.registro.showMessage("Hubo un error...", true);
 				}
 				vista.registro.bar.setVisible(false);
 				vista.registro.limpiar();

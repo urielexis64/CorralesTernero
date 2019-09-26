@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.Timer;
 
 import Modelo.ModeloEliminaCria;
 import Vista.ModalEditarCria;
@@ -15,10 +16,12 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 	private VentanaPrincipal vista;
 	private ModeloEliminaCria modelo;
 	private static JTable tabla;
+	private Timer timer;
 
 	public ControladorSeleccionTabla(VentanaPrincipal vista, ModeloEliminaCria modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
+		timer = new Timer(5000, this);
 	}
 
 	private void editarCria() {
@@ -61,34 +64,54 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 			return;
 		if (e.isPopupTrigger()) {
 			vista.consulta.itemEliminar
-					.setText("Eliminar cría (ID = " + tabla.getValueAt(tabla.getSelectedRow(), 0) + ")");
+					.setText("Eliminar crÃ­a (ID = " + tabla.getValueAt(tabla.getSelectedRow(), 0) + ")");
 			vista.consulta.menuFlotante.show(e.getComponent(), e.getX(), e.getY());
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() instanceof JMenuItem) { // Eliminar cría (Menú emergente)
+		if (e.getSource() instanceof JMenuItem) { // Eliminar crÃ­a (MenÃº emergente)
 
 			if (((JMenuItem) e.getSource()).getName().equals("Editar")) {// Si es el item Editar
-				editarCria(); // Editar cría (Menú emergente)
+				editarCria(); // Editar crÃ­a (MenÃº emergente)
 				return;
 			}
 
 			int id = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString()); // Si es el item Eliminar
-			if (JOptionPane.showConfirmDialog(vista, "¿Está seguro de eliminar a la cría con el ID #" + id) == 0) {
+			if (JOptionPane.showConfirmDialog(vista, "Â¿EstÃ¡ seguro de eliminar a la crÃ­a con el ID #" + id) == 0) {
 				modelo.eliminaCria(id);
 				vista.consulta.btnRefrescar.doClick();
 			}
 			return;
 		}
-		if (e.getSource() instanceof JButton) { // Botón eliminar toda la tabla
-			String t = "¿Está seguro de vaciar COMPLETAMENTE la tabla?";
-			if (JOptionPane.showConfirmDialog(vista, t) == 0) {
-				modelo.vaciarTabla();
+
+		if (e.getSource() == vista.consulta.btnVaciar) { // BotÃ³n eliminar toda la tabla
+			String mensaje = "Â¿EstÃ¡ seguro de vaciar COMPLETAMENTE la tabla?";
+			if (JOptionPane.showConfirmDialog(vista, mensaje) == 0) {
+				int tuplasEliminadas = modelo.vaciarTabla();
+				if (tuplasEliminadas == -1) {
+					vista.consulta.showMessage("Hubo un error...", true);
+				} else {
+					vista.consulta.showMessage("Se eliminaron " + tuplasEliminadas + " tuplas.", false);
+					vista.consulta.btnUndo.setVisible(true);
+					timer.start();
+				}
 				vista.consulta.btnRefrescar.doClick();
 			}
 			return;
 		}
+
+		if (e.getSource() == timer) {
+			vista.consulta.btnUndo.setVisible(false);
+			modelo.commitTransaccion(true); // Si no presiona el boton UNDO
+			timer.stop();
+			return;
+		}
+
+		timer.stop(); // Si se presiona el boton UNDO
+		modelo.commitTransaccion(false);
+		vista.consulta.btnUndo.setVisible(false);
+		vista.consulta.btnRefrescar.doClick();
 	}
 }
