@@ -46,18 +46,12 @@ public class Ejecutar {
 		vista.setVisible(true);
 	}
 
-	private static void login() {
-		ConexionBD.host = "localhost";
-		ConexionBD.port = "1433";
-		ConexionBD.databaseName = "prueba";
-		ConexionBD.user = "sa";
-		ConexionBD.pwd = "123";
-		
-//		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
-//		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
-//		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
-//		ConexionBD.user = JOptionPane.showInputDialog("User: ");
-//		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
+	private static void login() {	
+		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
+		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
+		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
+		ConexionBD.user = JOptionPane.showInputDialog("User: ");
+		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
 
 		if (ConexionBD.getConexion() == null) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CONECTARSE A LA BASE DE DATOS", "ERROR",
