@@ -19,8 +19,10 @@ public class ModeloConsulta {
 
 		String insercion = "SELECT * FROM CRIAS";
 
+		PreparedStatement consultaPreparada = null;
+
 		try {
-			PreparedStatement consultaPreparada = conexion.prepareStatement(insercion);
+			consultaPreparada = conexion.prepareStatement(insercion);
 
 			ResultSet tuplasBD = consultaPreparada.executeQuery();
 
@@ -30,11 +32,23 @@ public class ModeloConsulta {
 				aux.add(tuplasBD.getInt(2) + " kg");
 				aux.add(tuplasBD.getString(3));
 				aux.add(tuplasBD.getInt(4) + " %");
+
+				String fecha = tuplasBD.getString(5); // Le doy formato a la fecha dd-mm-yyyy
+				String partesFecha[] = fecha.split("-");
+
+				aux.add(partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0]);
+
 				crias.add(aux);
 			}
 			return crias;
 		} catch (SQLException e) {
 			return null;
+		} finally {
+			try {
+				consultaPreparada.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -43,13 +57,17 @@ public class ModeloConsulta {
 
 		String sentencia = getSentencia(atributo);
 
+		PreparedStatement consultaPreparada = null;
+
 		try {
-			PreparedStatement consultaPreparada = conexion.prepareStatement(sentencia);
+			consultaPreparada = conexion.prepareStatement(sentencia);
 
 			if (tipo == 1)
-				consultaPreparada.setInt(1, Integer.parseInt(valor));
+				consultaPreparada.setInt(1, Integer.parseInt(valor)); // Si es valor numérico
+			else if (tipo == 2)
+				consultaPreparada.setString(1, "%" + valor + "%");// Si es varchar
 			else
-				consultaPreparada.setString(1, "%" + valor + "%");
+				consultaPreparada.setString(1, valor);
 
 			ResultSet tuplasBD = consultaPreparada.executeQuery();
 
@@ -59,6 +77,11 @@ public class ModeloConsulta {
 				aux.add(tuplasBD.getInt(2) + " kg");
 				aux.add(tuplasBD.getString(3));
 				aux.add(tuplasBD.getInt(4) + " %");
+
+				String fecha = tuplasBD.getString(5); // Le doy formato a la fecha dd-mm-yyyy
+				String partesFecha[] = fecha.split("-");
+
+				aux.add(partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0]);
 				conjuntoCrias.add(aux);
 			}
 			return conjuntoCrias;
@@ -66,6 +89,12 @@ public class ModeloConsulta {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return null;
+		} finally {
+			try {
+				consultaPreparada.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -75,13 +104,14 @@ public class ModeloConsulta {
 			tipo = 1;
 			return "SELECT * FROM CRIAS WHERE " + atributo + " = ?";
 		case "PESO":
+		case "PORCENTAJE_GRASA":
 			tipo = 1;
 			return "SELECT * FROM CRIAS WHERE " + atributo + " >= ?";
 		case "COLOR_MUSCULO":
 			tipo = 2;
 			return "SELECT * FROM CRIAS WHERE " + atributo + " LIKE ?";
-		default:
-			tipo = 1;
+		default: // Case FECHA_ENTRADA
+			tipo = 3;
 			return "SELECT * FROM CRIAS WHERE " + atributo + " >= ?";
 		}
 	}

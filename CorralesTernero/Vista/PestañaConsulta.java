@@ -1,12 +1,15 @@
 package Vista;
 
-import java.awt.Font;
 import java.util.Vector;
-import java.util.logging.Handler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.optionalusertools.DateChangeListener;
+import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
 
 import Controlador.*;
 import EjecutarApp.ToastMessage;
@@ -16,6 +19,7 @@ import de.craften.ui.swingmaterial.MaterialComboBox;
 import de.craften.ui.swingmaterial.fonts.MaterialIcons;
 import mdlaf.utils.MaterialColors;
 import misHerramientas.IconTextField;
+import misHerramientas.Rutinas;
 import mdlaf.shadows.DropShadowBorder;
 
 public class PestañaConsulta extends JPanel {
@@ -29,6 +33,7 @@ public class PestañaConsulta extends JPanel {
 	public IconTextField txtBuscar;
 
 	public MaterialComboBox<String> comboBox;
+	public DatePicker calendario;
 
 	public PestañaConsulta() {
 		hazInterfaz();
@@ -36,11 +41,10 @@ public class PestañaConsulta extends JPanel {
 
 	private void hazInterfaz() {
 		setLayout(null);
-		setFocusable(true);
 
 		comboBox = new MaterialComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(
-				new String[] { "ID_CRIA", "PESO", "COLOR_MUSCULO", "PORCENTAJE_GRASA" }));
+				new String[] { "ID_CRIA", "PESO", "COLOR_MUSCULO", "PORCENTAJE_GRASA", "FECHA_ENTRADA" }));
 		comboBox.setBounds(280, 16, 200, 45);
 		comboBox.setAccent(MaterialColors.YELLOW_500);
 		SwingUtilities.updateComponentTreeUI(comboBox); // Actualizar la apariencia (error)
@@ -79,17 +83,30 @@ public class PestañaConsulta extends JPanel {
 		iniciarTabla();
 		scrollTable = new JScrollPane(tabla);
 		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
-		scrollTable.setBounds(75, 60, 650, 450);
+		scrollTable.setBounds(75, 60, 700, 550);
 
 		txtBuscar = new IconTextField("Resources\\search_icon.png", "Buscar", 20);
 		txtBuscar.setBounds(90, 25, 185, 30);
 
-		add(comboBox);
-		add(txtBuscar);
-		add(scrollTable);
+		DatePickerSettings dateSettings = new DatePickerSettings();
+		dateSettings.setVisibleDateTextField(false);
+		dateSettings.setGapBeforeButtonPixels(0);
+		dateSettings.setFormatForDatesCommonEra("dd-MM-uuuu");
+		calendario = new DatePicker(dateSettings);
+		calendario.getComponentToggleCalendarButton().setIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
+		calendario.getComponentToggleCalendarButton().setText("");
+		calendario.setEnabled(false);
+		calendario.getComponentToggleCalendarButton().setDisabledIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
+		calendario.setBounds(490, 15, 45, 45);
+
 		add(btnRefrescar);
 		add(btnVaciar);
+		add(txtBuscar);
+		add(scrollTable);
+		add(comboBox);
+		add(calendario);
 		add(btnUndo);
+
 	}
 
 	private void iniciarTabla() {
@@ -100,22 +117,27 @@ public class PestañaConsulta extends JPanel {
 		modeloTabla.addColumn("Peso");
 		modeloTabla.addColumn("Color músculo");
 		modeloTabla.addColumn("Porcentaje de grasa");
+		modeloTabla.addColumn("Fecha de entrada");
 
-		tabla.setFont(new Font("Serif", Font.PLAIN, 16));
 		// tabla.setComponentPopupMenu(menuFlotante); // Menú emergente
 		tabla.getTableHeader().setReorderingAllowed(false); // Evitar mover columnas
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Evitar multiselección
-		tabla.setAutoCreateRowSorter(true);
+		tabla.setAutoCreateRowSorter(true); // Ordena columnas por orden alfabético
 
 		TableColumnModel columnas = tabla.getColumnModel();
-		columnas.getColumn(0).setPreferredWidth(25); // Cambiar ancho de la columna
-		columnas.getColumn(1).setPreferredWidth(25);
+		columnas.getColumn(0).setMaxWidth(85); // Cambiar ancho de la columna
+		columnas.getColumn(1).setMaxWidth(85);
+		columnas.getColumn(2).setMaxWidth(150);
+		columnas.getColumn(3).setMaxWidth(170);
+		columnas.getColumn(4).setMaxWidth(170);
+
 	}
 
 	public void setControlador(ControladorConsulta controlador) {
 		btnRefrescar.addActionListener(controlador);
 		txtBuscar.addCaretListener(controlador);
 		comboBox.addItemListener(controlador);
+		calendario.addDateChangeListener(controlador);
 	}
 
 	public void setControladorSeleccionTabla(ControladorSeleccionTabla controlador) {
@@ -135,6 +157,7 @@ public class PestañaConsulta extends JPanel {
 			nuevaCria.add(objetoCria.get(i).get(1)); // Peso
 			nuevaCria.add(objetoCria.get(i).get(2)); // Color
 			nuevaCria.add(objetoCria.get(i).get(3)); // Grasa
+			nuevaCria.add(objetoCria.get(i).get(4)); // Fecha entrada
 			modeloTabla.addRow(nuevaCria);
 		}
 	}
@@ -155,6 +178,7 @@ public class PestañaConsulta extends JPanel {
 				nuevaCria.add(objetoCria.get(i).get(1)); // Peso
 				nuevaCria.add(objetoCria.get(i).get(2)); // Color
 				nuevaCria.add(objetoCria.get(i).get(3)); // Grasa
+				nuevaCria.add(objetoCria.get(i).get(4)); // Fecha entrada
 				modeloTabla.addRow(nuevaCria);
 			}
 		}
@@ -162,18 +186,23 @@ public class PestañaConsulta extends JPanel {
 
 	private void limpiarTabla() {
 		((DefaultTableModel) tabla.getModel()).setNumRows(0);
-		if (((DefaultTableModel) tabla.getModel()).getColumnCount() != 4) {
+		if (((DefaultTableModel) tabla.getModel()).getColumnCount() != 5) {
 			((DefaultTableModel) tabla.getModel()).setColumnCount(0);
 			modeloTabla
 					.addColumn("<html><div style='color: yellow; text-decoration: underline;'><h2>ID Cría</h2></div>");
 			modeloTabla.addColumn("Peso");
 			modeloTabla.addColumn("Color músculo");
 			modeloTabla.addColumn("Porcentaje de grasa");
-			TableColumnModel columnas = tabla.getColumnModel();
+			modeloTabla.addColumn("Fecha de entrada");
 
 			tabla.setEnabled(true); // Permitir clicks en las filas
-			columnas.getColumn(0).setPreferredWidth(25);
-			columnas.getColumn(1).setPreferredWidth(25);
+
+			TableColumnModel columnas = tabla.getColumnModel();
+			columnas.getColumn(0).setMaxWidth(85); // Cambiar ancho de la columna
+			columnas.getColumn(1).setMaxWidth(85);
+			columnas.getColumn(2).setMaxWidth(150);
+			columnas.getColumn(3).setMaxWidth(170);
+			columnas.getColumn(4).setMaxWidth(170);
 		}
 	}
 

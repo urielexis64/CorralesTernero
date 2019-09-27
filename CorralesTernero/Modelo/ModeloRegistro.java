@@ -10,8 +10,8 @@ public class ModeloRegistro {
 		conexion = ConexionBD.getConexion();
 	}
 
-	public boolean registrarCria(int id, int peso, String colorMusculo, int porcentajeGrasa) {
-		String insercion = " INSERT INTO CRIAS VALUES (?, ?, ?, ?)";
+	public boolean registrarCria(int id, int peso, String colorMusculo, int porcentajeGrasa, String fecha_entrada) {
+		String insercion = " EXECUTE PA_INSERTACRIA ?, ?, ?, ?, ?";
 
 		try {
 			PreparedStatement consultaPreparada = conexion.prepareStatement(insercion);
@@ -20,12 +20,13 @@ public class ModeloRegistro {
 			consultaPreparada.setInt(2, peso);
 			consultaPreparada.setString(3, colorMusculo);
 			consultaPreparada.setInt(4, porcentajeGrasa);
-			
-			int columnasAfectadas = consultaPreparada.executeUpdate();
-			
+			consultaPreparada.setString(5, fecha_entrada);
+
+			consultaPreparada.executeUpdate();
+
 			return true;
 		} catch (Exception e) {
-			System.err.println("Violación de restricción de PRIMARY KEY");
+			System.err.println("Violación de restricción de PRIMARY KEY"+e.getMessage());
 			return false;
 		}
 	}

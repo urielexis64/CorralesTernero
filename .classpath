@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="E:/Documentos/JAVA RARS/Librerias/timingframework-core-5.0.0.jar"/>
 	<classpathentry kind="lib" path="E:/Documentos/JAVA RARS/Librerias/timingframework-swing-5.0.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MaterialDesign"/>
+	<classpathentry kind="lib" path="E:/Documentos/JAVA RARS/Librerias/LGoodDatePicker-10.4.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

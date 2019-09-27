@@ -9,10 +9,13 @@ import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
+import com.github.lgooddatepicker.optionalusertools.DateChangeListener;
+import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
+
 import Modelo.ModeloConsulta;
 import Vista.VentanaPrincipal;
 
-public class ControladorConsulta implements ActionListener, CaretListener, ItemListener {
+public class ControladorConsulta implements ActionListener, CaretListener, ItemListener, DateChangeListener {
 	private VentanaPrincipal vista;
 	private ModeloConsulta modelo;
 
@@ -45,16 +48,29 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 				vista.consulta.setTablaBusqueda(modelo.getCria(valor, atributo));
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
-				System.out.println(valor + " " + atributo);
 			}
+
 		}
 	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		if (e.getItem().equals("COLOR_MUSCULO"))
-			vista.consulta.txtBuscar.setEnabledRegex(false);
-		else
+		if (e.getItem().equals("COLOR_MUSCULO")) {
 			vista.consulta.txtBuscar.setEnabledRegex(true);
+			vista.consulta.calendario.setEnabled(false);
+			vista.consulta.txtBuscar.setEnabled(true);
+		} else if (e.getItem().equals("FECHA_ENTRADA")) {
+			vista.consulta.calendario.setEnabled(true);
+			vista.consulta.txtBuscar.setEnabled(false);
+		} else {
+			vista.consulta.txtBuscar.setEnabledRegex(false);
+			vista.consulta.calendario.setEnabled(false);
+			vista.consulta.txtBuscar.setEnabled(true);
+		}
+	}
+
+	@Override
+	public void dateChanged(DateChangeEvent arg0) {
+		vista.consulta.txtBuscar.setText(vista.consulta.calendario.getDateStringOrEmptyString());
 	}
 }

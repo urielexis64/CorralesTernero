@@ -2,7 +2,6 @@ package Controlador;
 
 import java.awt.event.*;
 
-import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -36,7 +35,7 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if (e.getClickCount() == 2 && tabla.getColumnCount() == 4) { // Editar cría desde doble click
+		if (e.getClickCount() == 2 && tabla.getColumnCount() == 5) { // Editar cría desde doble click
 			editarCria();
 			vista.consulta.btnRefrescar.doClick();
 		}
@@ -87,9 +86,11 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 		}
 
 		if (e.getSource() == vista.consulta.btnVaciar) { // BotÃ³n eliminar toda la tabla
-			String mensaje = "Â¿EstÃ¡ seguro de vaciar COMPLETAMENTE la tabla?";
-			if (JOptionPane.showConfirmDialog(vista, mensaje) == 0) {
+			String mensaje = "¿Está seguro de vaciar COMPLETAMENTE la tabla?";
+
+			if (JOptionPane.showConfirmDialog(vista, mensaje, "Aviso", JOptionPane.YES_NO_OPTION) == 0) {
 				int tuplasEliminadas = modelo.vaciarTabla();
+
 				if (tuplasEliminadas == -1) {
 					vista.consulta.showMessage("Hubo un error...", true);
 				} else {

@@ -1,10 +1,13 @@
 package Vista;
 
+import java.awt.Color;
 import java.awt.Font;
+
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
+
 import javax.swing.*;
 import Controlador.ControladorModoOscuro;
 import Controlador.ControladorTitleBar;
@@ -55,8 +58,8 @@ public class VentanaPrincipal extends JFrame {
 		btnMinimizar.setActionCommand("minimizar");
 
 		pestañas = new JTabbedPane();
-		pestañas.setBounds(10, 50, 780, 630);
-
+		pestañas.setBounds(10, 50, 780, 730);
+		
 		registro = new PestañaRegistro();
 		clasificacion = new PestañaClasifcacion();
 		consulta = new PestañaConsulta();
@@ -65,11 +68,12 @@ public class VentanaPrincipal extends JFrame {
 		pestañas.addTab("Clasificación", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18),
 				clasificacion);
 		pestañas.addTab("Consulta", Rutinas.AjustarImagen("Resources\\consulta_icon.png", 22, 22), consulta);
-		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
-		
+//		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
+
 		btnModoOscuro = new JToggleButton("Modo claro (BETA)");
 		btnModoOscuro.setSelected(true);
-		btnModoOscuro.setBounds(300, 640, 200, 50);
+		btnModoOscuro.setBackground(new Color(40, 65, 91, 0));
+		btnModoOscuro.setBounds(300, 740, 200, 50);
 
 		panelSuperior.add(lblTitulo);
 		panelSuperior.add(btnInfo);
@@ -80,10 +84,12 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void hazFrame() {
-		setSize(800, 700);
+		setSize(800, 800);
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
+		setBackground(new Color(40, 65, 91, 240));
+
 		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 40, 40));
 		setIconImage(Rutinas.AjustarImagen("Resources\\cow.png", 100, 100).getImage());
 		setLayout(null);

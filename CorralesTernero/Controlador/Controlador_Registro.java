@@ -2,6 +2,8 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+
 import Modelo.ModeloRegistro;
 import Vista.VentanaPrincipal;
 import misHerramientas.Rutinas;
@@ -10,7 +12,8 @@ public class Controlador_Registro implements ActionListener {
 	private VentanaPrincipal vista;
 	private ModeloRegistro modelo;
 
-	private String colores[] = { "Azul", "Verde", "Rojo", "Amarillo", "Morado", "Naranja", "Gris", "Café", "Blanco" };
+	private String colores[] = { "Azul", "Verde", "Rojo", "Amarillo", "Morado", "Naranja", "Gris", "Café", "Blanco",
+			"Rosa" };
 
 	public Controlador_Registro(VentanaPrincipal vista, ModeloRegistro modelo) {
 		this.vista = vista;
@@ -29,6 +32,12 @@ public class Controlador_Registro implements ActionListener {
 			vista.registro.txtPesoCria.setText(Rutinas.nextInt(20, 200) + "");
 			vista.registro.txtColorCria.setText(colores[Rutinas.nextInt(0, 8)]);
 			vista.registro.txtGrasaCria.setText(Rutinas.nextInt(1, 100) + "");
+
+			int año = Rutinas.nextInt(2000, 2020);
+			int mes = Rutinas.nextInt(1, 12);
+			int dia = mes == 2 ? Rutinas.nextInt(1, 28)
+					: mes == 4 || mes == 6 || mes == 9 || mes == 11 ? Rutinas.nextInt(1, 30) : Rutinas.nextInt(1, 31);
+			vista.registro.calendario.setDate(LocalDate.of(año, mes, dia));
 			return;
 		}
 
@@ -41,8 +50,9 @@ public class Controlador_Registro implements ActionListener {
 					int peso = Integer.parseInt(vista.registro.txtPesoCria.getText());
 					String colorMusculo = vista.registro.txtColorCria.getText();
 					int porcentajeGrasa = Integer.parseInt(vista.registro.txtGrasaCria.getText());
+					String fecha_entrada = vista.registro.calendario.getText();
 
-					boolean estado = modelo.registrarCria(id, peso, colorMusculo, porcentajeGrasa);
+					boolean estado = modelo.registrarCria(id, peso, colorMusculo, porcentajeGrasa, fecha_entrada);
 
 					if (estado) {
 						vista.registro.showMessage("¡Cría insertada con éxito!", false);
