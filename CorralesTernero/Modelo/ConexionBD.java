@@ -14,7 +14,7 @@ public class ConexionBD {
 
 	public static synchronized Connection getConexion() {
 		if (conn == null) {
-			url = "jdbc:sqlserver://" + host + "\\SQLEXPRESS:" + port + ";databaseName=" + databaseName + ";user="
+			url = "jdbc:sqlserver://" + host + "\\SQLEXPRESS:" + port + ";databaseName=" + databaseName + ";useServerPrepStmts=true;user="
 					+ user + ";password=" + pwd;
 			try {
 				conn = DriverManager.getConnection(url);

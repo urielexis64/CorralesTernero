@@ -90,11 +90,11 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 			String mensaje = "¿Está seguro de vaciar COMPLETAMENTE la tabla?";
 
 			if (JOptionPane.showConfirmDialog(vista, mensaje, "Aviso", JOptionPane.YES_NO_OPTION) == 0) {
-				int tuplasEliminadas = modelo.vaciarTabla();
 
-				if (tuplasEliminadas == -1) {
+				if (!modelo.vaciarTabla()) {
 					vista.consulta.showMessage("Hubo un error...", true);
 				} else {
+					String tuplasEliminadas = vista.consulta.lblNumeroCrias.getText().split(":")[1];
 					vista.consulta.showMessage("Se eliminaron " + tuplasEliminadas + " tuplas.", false);
 					vista.consulta.btnUndo.setVisible(true);
 					timer.start();

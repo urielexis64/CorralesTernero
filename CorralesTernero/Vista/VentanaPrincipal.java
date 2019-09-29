@@ -80,8 +80,7 @@ public class VentanaPrincipal extends JFrame {
 		panelSuperior.add(btnCerrar);
 		panelSuperior.add(btnMinimizar);
 
-		hazFrame();
-		
+		hazFrame();		
 	}
 
 	private void hazFrame() {

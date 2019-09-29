@@ -2,7 +2,6 @@ package Modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -17,16 +16,16 @@ public class ModeloEliminaCria {
 	public boolean eliminaCria(int id) {
 		String insercion = "DELETE FROM CRIAS WHERE ID_CRIA = ?";
 
-		PreparedStatement consultaPreparada =null;
-		
+		PreparedStatement consultaPreparada = null;
+
 		try {
 			consultaPreparada = conexion.prepareStatement(insercion);
 
 			consultaPreparada.setInt(1, id);
 
 			consultaPreparada.executeUpdate();
-			System.out.println("ELIMINADA");
 
+			System.out.println("ELIMINADA");
 			return true;
 		} catch (SQLException e) {
 			System.err.println("NO ELIMINADA " + e.getMessage());
@@ -40,20 +39,12 @@ public class ModeloEliminaCria {
 		}
 	}
 
-	public int vaciarTabla() {
+	public boolean vaciarTabla() {
 		String borrarTuplas = "BEGIN TRAN TRANSACCION_TRUNCAR TRUNCATE TABLE CRIAS";
-		String contarTuplas = "SELECT COUNT(*) FROM CRIAS";
 
-		Statement truncate = null, count = null;
-
-		int tuplasTotales = -1;
+		Statement truncate = null;
 
 		try {
-			count = conexion.createStatement();
-			ResultSet rs = count.executeQuery(contarTuplas);
-			rs.next();
-			tuplasTotales = rs.getInt(1);
-
 			conexion.setAutoCommit(false);
 
 			truncate = conexion.createStatement();
@@ -61,15 +52,15 @@ public class ModeloEliminaCria {
 
 		} catch (SQLException e) {
 			System.err.println("ERROR: " + e.getMessage());
+			return false;
 		} finally {
 			try {
 				truncate.close();
-				count.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return tuplasTotales;
+		return true;
 	}
 
 	public void commitTransaccion(boolean commit) {

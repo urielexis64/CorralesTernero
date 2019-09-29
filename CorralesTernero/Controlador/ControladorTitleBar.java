@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
+import Modelo.ConexionBD;
 import Vista.VentanaPrincipal;
 
 public class ControladorTitleBar implements ActionListener {
@@ -25,6 +26,7 @@ public class ControladorTitleBar implements ActionListener {
 			vista.setState(Frame.ICONIFIED);
 			break;
 		case "cerrar":
+			ConexionBD.cierraConexion();
 			System.exit(0);
 		}
 	}

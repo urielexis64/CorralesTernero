@@ -99,7 +99,7 @@ public class PestañaRegistro extends JPanel {
 		lblFechaEntrada.setFont(Roboto.BOLD.deriveFont(14f));
 		lblFechaEntrada.setForeground(MaterialColors.DARKLY_GRAY);
 		lblFechaEntrada.setBounds(100, 345, 150, 20);
-		
+
 		calendario = new DatePicker(dateSettings);
 		calendario.getComponentToggleCalendarButton().setText("");
 		calendario.getComponentToggleCalendarButton().setIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
@@ -145,7 +145,7 @@ public class PestañaRegistro extends JPanel {
 		panel.add(txtGrasaCria);
 		panel.add(lblFechaEntrada);
 		panel.add(calendario);
-
+		
 		add(panel);
 	}
 

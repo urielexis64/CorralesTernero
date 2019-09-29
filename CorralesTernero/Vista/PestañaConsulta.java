@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Font;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -14,22 +15,26 @@ import EjecutarApp.ToastMessage;
 import de.craften.ui.swingmaterial.MaterialButton;
 import de.craften.ui.swingmaterial.MaterialButton.Type;
 import de.craften.ui.swingmaterial.MaterialComboBox;
+import de.craften.ui.swingmaterial.MaterialProgressSpinner;
 import de.craften.ui.swingmaterial.fonts.MaterialIcons;
 import mdlaf.utils.MaterialColors;
 import misHerramientas.IconTextField;
 import misHerramientas.Rutinas;
 import mdlaf.shadows.DropShadowBorder;
+import mdlaf.shadows.RoundedCornerBorder;
 
 public class PestañaConsulta extends JPanel {
 	private JTable tabla;
 	private static ModeloTabla modeloTabla;
 	private JScrollPane scrollTable;
+
 	public MaterialButton btnRefrescar, btnVaciar, btnUndo;
+	public JLabel lblNumeroCrias;
 
 	public JPopupMenu menuFlotante;
 	public JMenuItem itemEliminar, itemEditar;
-	public IconTextField txtBuscar;
 
+	public IconTextField txtBuscar;
 	public MaterialComboBox<String> comboBox;
 	public DatePicker calendario;
 
@@ -43,7 +48,7 @@ public class PestañaConsulta extends JPanel {
 		comboBox = new MaterialComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(
 				new String[] { "ID_CRIA", "PESO", "COLOR_MUSCULO", "PORCENTAJE_GRASA", "FECHA_ENTRADA" }));
-		comboBox.setBounds(280, 16, 200, 45);
+		comboBox.setBounds(290, 16, 180, 45);
 		comboBox.setAccent(MaterialColors.YELLOW_500);
 		SwingUtilities.updateComponentTreeUI(comboBox); // Actualizar la apariencia (error)
 
@@ -86,16 +91,22 @@ public class PestañaConsulta extends JPanel {
 		txtBuscar = new IconTextField("Resources\\search_icon.png", "Buscar", 20);
 		txtBuscar.setBounds(90, 25, 185, 30);
 
+		lblNumeroCrias = new JLabel("Total de crías: ");
+		lblNumeroCrias.setFont(new Font("Roboto", Font.BOLD, 16));
+		lblNumeroCrias.setBorder(new RoundedCornerBorder(MaterialColors.DARKLY_BLUE));
+		lblNumeroCrias.setBounds(610, 15, 150, 40);
+
 		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings.setVisibleDateTextField(false);
-		dateSettings.setGapBeforeButtonPixels(0);
+		dateSettings.setGapBeforeButtonPixels(0); // Redondez de las esquinas
 		dateSettings.setFormatForDatesCommonEra("dd-MM-uuuu");
 		calendario = new DatePicker(dateSettings);
 		calendario.getComponentToggleCalendarButton().setIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
 		calendario.getComponentToggleCalendarButton().setText("");
 		calendario.setEnabled(false);
-		calendario.getComponentToggleCalendarButton().setDisabledIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
-		calendario.setBounds(490, 15, 45, 45);
+		calendario.getComponentToggleCalendarButton()
+				.setDisabledIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
+		calendario.setBounds(480, 15, 45, 45);
 
 		add(btnRefrescar);
 		add(btnVaciar);
@@ -104,7 +115,7 @@ public class PestañaConsulta extends JPanel {
 		add(comboBox);
 		add(calendario);
 		add(btnUndo);
-
+		add(lblNumeroCrias);
 	}
 
 	private void iniciarTabla() {

@@ -27,11 +27,12 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 
 	public void llenaTabla() {
 		vista.consulta.setTabla(modelo.getTotalCrias());
+		vista.consulta.lblNumeroCrias.setText("Total de crías: " + modelo.getNumCrias());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		llenaTabla(); //Boton refrescar
+		llenaTabla(); // Boton refrescar
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		vista.consulta.txtBuscar.setText(""); // Limpiar texto para evitar búsquedas erróneas
-		
+
 		if (e.getItem().equals("COLOR_MUSCULO")) {
 			vista.consulta.txtBuscar.setEnabledRegex(false);
 			vista.consulta.calendario.setEnabled(false);

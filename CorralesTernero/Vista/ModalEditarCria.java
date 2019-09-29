@@ -3,22 +3,14 @@ package Vista;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-
 import EjecutarApp.Ejecutar;
 import EjecutarApp.ToastMessage;
 import Modelo.ModeloActualiza;
 import de.craften.ui.swingmaterial.*;
-import javafx.scene.shape.Circle;
 import mdlaf.utils.MaterialColors;
 
 public class ModalEditarCria extends JDialog implements ActionListener {
@@ -54,6 +46,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtPesoCria.setForeground(MaterialColors.WHITE);
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
 		txtPesoCria.setCaretColor(Color.WHITE);
+		txtPesoCria.setEnabledRegex(true);
 		
 		txtColorCria = new MaterialTextField();
 		txtColorCria.setBounds(50, 140, 380, 70);
@@ -72,7 +65,8 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtGrasaCria.setForeground(MaterialColors.WHITE);
 		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
 		txtGrasaCria.setCaretColor(Color.WHITE);
-
+		txtGrasaCria.setEnabledRegex(true);
+		
 		btnLimpiar = new MaterialButton();
 		btnLimpiar.setText("Limpiar");
 		btnLimpiar.setBounds(30, 300, 200, 60);
