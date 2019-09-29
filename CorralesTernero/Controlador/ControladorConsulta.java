@@ -31,7 +31,7 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		llenaTabla();
+		llenaTabla(); //Boton refrescar
 	}
 
 	@Override
@@ -45,9 +45,11 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 				valor = txt.getText(); // Valor en la caja de texto Buscar
 				atributo = vista.consulta.comboBox.getSelectedItem().toString(); // Valor del ComboBox
 
-				vista.consulta.setTablaBusqueda(modelo.getCria(valor, atributo));
+				vista.consulta.setTablaBusqueda(modelo.getConsultaCrias(valor, atributo));
+				// vista.consulta.setTablaBusqueda(modelo.getConsultaCriasNo(valor, atributo));
+				// Inyección SQL
 			} catch (Exception ex) {
-				System.out.println(ex.getMessage());
+				System.out.println("Error al consultar: " + ex.getMessage());
 			}
 
 		}
@@ -55,15 +57,17 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		vista.consulta.txtBuscar.setText(""); // Limpiar texto para evitar búsquedas erróneas
+		
 		if (e.getItem().equals("COLOR_MUSCULO")) {
-			vista.consulta.txtBuscar.setEnabledRegex(true);
+			vista.consulta.txtBuscar.setEnabledRegex(false);
 			vista.consulta.calendario.setEnabled(false);
 			vista.consulta.txtBuscar.setEnabled(true);
 		} else if (e.getItem().equals("FECHA_ENTRADA")) {
 			vista.consulta.calendario.setEnabled(true);
 			vista.consulta.txtBuscar.setEnabled(false);
 		} else {
-			vista.consulta.txtBuscar.setEnabledRegex(false);
+			vista.consulta.txtBuscar.setEnabledRegex(true);
 			vista.consulta.calendario.setEnabled(false);
 			vista.consulta.txtBuscar.setEnabled(true);
 		}
@@ -71,6 +75,6 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 
 	@Override
 	public void dateChanged(DateChangeEvent arg0) {
-		vista.consulta.txtBuscar.setText(vista.consulta.calendario.getDateStringOrEmptyString());
+		vista.consulta.txtBuscar.setText(vista.consulta.calendario.getText());
 	}
 }

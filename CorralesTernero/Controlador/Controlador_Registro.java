@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import Modelo.ModeloRegistro;
 import Vista.VentanaPrincipal;
+import mdlaf.utils.MaterialColors;
 import misHerramientas.Rutinas;
 
 public class Controlador_Registro implements ActionListener {
@@ -41,6 +42,10 @@ public class Controlador_Registro implements ActionListener {
 			return;
 		}
 
+		if (!verificarCampos()) {
+			vista.registro.showMessage("Llene todos los campos.", true);
+			return;
+		}
 		new Thread() { // Botón registrar
 			public void run() {
 				try {
@@ -67,6 +72,26 @@ public class Controlador_Registro implements ActionListener {
 				vista.registro.limpiar();
 			}
 		}.start();
+	}
 
+	private boolean verificarCampos() {
+		boolean estado = true;
+		if (vista.registro.txtIdCria.getText().equals("")) {
+			estado = false;
+			vista.registro.txtIdCria.requestFocus();
+		} else if (vista.registro.txtPesoCria.getText().equals("")) {
+			estado = false;
+			vista.registro.txtPesoCria.requestFocus();
+		} else if (vista.registro.txtColorCria.getText().trim().equals("")) {
+			estado = false;
+			vista.registro.txtColorCria.requestFocus();
+		} else if (vista.registro.txtGrasaCria.getText().equals("")) {
+			estado = false;
+			vista.registro.txtGrasaCria.requestFocus();
+		} else if (vista.registro.calendario.getText().equals("")) {
+			estado = false;
+			vista.registro.calendario.getComponentDateTextField().setBackground(MaterialColors.RED_400);
+		}
+		return estado;
 	}
 }

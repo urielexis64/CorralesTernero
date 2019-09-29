@@ -10,6 +10,7 @@ import javax.swing.Timer;
 import Modelo.ModeloEliminaCria;
 import Vista.ModalEditarCria;
 import Vista.VentanaPrincipal;
+import misHerramientas.AccionComponente;
 
 public class ControladorSeleccionTabla extends MouseAdapter implements ActionListener {
 	private VentanaPrincipal vista;
@@ -97,6 +98,7 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 					vista.consulta.showMessage("Se eliminaron " + tuplasEliminadas + " tuplas.", false);
 					vista.consulta.btnUndo.setVisible(true);
 					timer.start();
+					AccionComponente.disco(vista.consulta.btnUndo, 5000, 100);
 				}
 				vista.consulta.btnRefrescar.doClick();
 			}
@@ -113,6 +115,7 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 		timer.stop(); // Si se presiona el boton UNDO
 		modelo.commitTransaccion(false);
 		vista.consulta.btnUndo.setVisible(false);
+		vista.consulta.showMessage("Se recuperaron las tuplas.", false);
 		vista.consulta.btnRefrescar.doClick();
 	}
 }

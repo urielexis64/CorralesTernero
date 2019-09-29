@@ -40,7 +40,7 @@ public class VentanaPrincipal extends JFrame {
 		panelSuperior.setBounds(0, 0, 800, 75);
 		panelSuperior.setLayout(null);
 
-		lblTitulo = new JLabel("Corrales Ternero", JLabel.RIGHT);
+		lblTitulo = new JLabel("Corrales Ternero");
 		lblTitulo.setFont(new Font("Forte", Font.PLAIN, 20));
 		lblTitulo.setIcon(Rutinas.AjustarImagen("Resources\\cow.png", 30, 30));
 		lblTitulo.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -81,6 +81,7 @@ public class VentanaPrincipal extends JFrame {
 		panelSuperior.add(btnMinimizar);
 
 		hazFrame();
+		
 	}
 
 	private void hazFrame() {

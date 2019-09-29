@@ -34,6 +34,5 @@ public class ControladorTitleBar implements ActionListener {
 				+ "<div style='color: #fffff0; h2 {margin-left: 5px;}'><h2>Uriel Alexis Aispuro Sánchez</h2></div><br> "
 				+ "<h3><center>Versión 0.3.1</center></h3><br><h3><center>21/09/2019</center></h3>" + "</html>",
 				"Acerca de...", -1);
-		
 	}
 }

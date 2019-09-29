@@ -47,6 +47,7 @@ public class PestañaRegistro extends JPanel {
 		txtIdCria.setForeground(MaterialColors.WHITE);
 		txtIdCria.setBackground(MaterialColor.TRANSPARENT);
 		txtIdCria.setCaretColor(Color.WHITE);
+		txtIdCria.setEnabledRegex(true);
 
 		txtPesoCria = new MaterialTextField();
 		txtPesoCria.setBounds(100, 100, 500, 70);
@@ -56,6 +57,7 @@ public class PestañaRegistro extends JPanel {
 		txtPesoCria.setForeground(MaterialColors.WHITE);
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
 		txtPesoCria.setCaretColor(Color.WHITE);
+		txtPesoCria.setEnabledRegex(true);
 
 		txtColorCria = new MaterialTextField();
 		txtColorCria.setBounds(100, 180, 500, 70);
@@ -74,6 +76,7 @@ public class PestañaRegistro extends JPanel {
 		txtGrasaCria.setForeground(MaterialColors.WHITE);
 		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
 		txtGrasaCria.setCaretColor(Color.WHITE);
+		txtGrasaCria.setEnabledRegex(true);
 
 		Font fuente = Roboto.REGULAR.deriveFont(16f);
 
