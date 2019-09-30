@@ -26,6 +26,8 @@ public class ControladorTitleBar implements ActionListener {
 			vista.setState(Frame.ICONIFIED);
 			break;
 		case "cerrar":
+			if (JOptionPane.showConfirmDialog(vista, "¿Esta seguro de cerrar la aplicación?") != 0)
+				return;
 			ConexionBD.cierraConexion();
 			System.exit(0);
 		}

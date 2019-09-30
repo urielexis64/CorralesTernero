@@ -29,24 +29,19 @@ public class Controlador_Registro implements ActionListener {
 		}
 
 		if (e.getSource() == vista.registro.btnAleatorio) { // Botón Aleatorio
-			vista.registro.txtIdCria.setText(Rutinas.nextInt(1, 1000000) + "");
-			vista.registro.txtPesoCria.setText(Rutinas.nextInt(20, 200) + "");
-			vista.registro.txtColorCria.setText(colores[Rutinas.nextInt(0, 8)]);
-			vista.registro.txtGrasaCria.setText(Rutinas.nextInt(1, 100) + "");
-
-			int año = Rutinas.nextInt(2000, 2020);
-			int mes = Rutinas.nextInt(1, 12);
-			int dia = mes == 2 ? Rutinas.nextInt(1, 28)
-					: mes == 4 || mes == 6 || mes == 9 || mes == 11 ? Rutinas.nextInt(1, 30) : Rutinas.nextInt(1, 31);
-			vista.registro.calendario.setDate(LocalDate.of(año, mes, dia));
+			procesoAleatorio();
 			return;
 		}
 
-		if (!verificarCampos()) {
+		procesoRegistrarCria(); //Botón Registrar
+	}
+
+	private void procesoRegistrarCria() {
+		if (!verificarCampos()) { // Verificamos que todos los campos tengan información
 			vista.registro.showMessage("Llene todos los campos.", true);
 			return;
 		}
-		new Thread() { // Botón registrar
+		new Thread() { // Inicia proceso de registro
 			public void run() {
 				try {
 					vista.registro.bar.setVisible(true);
@@ -72,6 +67,19 @@ public class Controlador_Registro implements ActionListener {
 				vista.registro.limpiar();
 			}
 		}.start();
+	}
+
+	private void procesoAleatorio() {
+		vista.registro.txtIdCria.setText(Rutinas.nextInt(1, 1_000_000) + "");
+		vista.registro.txtPesoCria.setText(Rutinas.nextInt(20, 200) + "");
+		vista.registro.txtColorCria.setText(colores[Rutinas.nextInt(0, 8)]);
+		vista.registro.txtGrasaCria.setText(Rutinas.nextInt(1, 100) + "");
+
+		int año = Rutinas.nextInt(2000, 2020);
+		int mes = Rutinas.nextInt(1, 12);
+		int dia = mes == 2 ? Rutinas.nextInt(1, 28)
+				: mes == 4 || mes == 6 || mes == 9 || mes == 11 ? Rutinas.nextInt(1, 30) : Rutinas.nextInt(1, 31);
+		vista.registro.calendario.setDate(LocalDate.of(año, mes, dia));
 	}
 
 	private boolean verificarCampos() {

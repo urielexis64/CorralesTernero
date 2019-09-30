@@ -36,23 +36,20 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 	}
 
 	@Override
-	public void caretUpdate(CaretEvent e) {
+	public void caretUpdate(CaretEvent e) {	
 		JTextField txt = (JTextField) e.getSource();
 
-		String valor = "", atributo = "";
-
+		String valor = "", atributo = "";	
+		
 		if (!txt.getText().equals("")) {
 			try {
 				valor = txt.getText(); // Valor en la caja de texto Buscar
 				atributo = vista.consulta.comboBox.getSelectedItem().toString(); // Valor del ComboBox
 
 				vista.consulta.setTablaBusqueda(modelo.getConsultaCrias(valor, atributo));
-				// vista.consulta.setTablaBusqueda(modelo.getConsultaCriasNo(valor, atributo));
-				// Inyección SQL
 			} catch (Exception ex) {
 				System.out.println("Error al consultar: " + ex.getMessage());
 			}
-
 		}
 	}
 

@@ -2,7 +2,7 @@ package Modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.SQLException;
 
 public class ModeloActualiza {
 	private Connection conexion;
@@ -14,8 +14,10 @@ public class ModeloActualiza {
 	public boolean actualizaCria(int id, int peso, String colorMusculo, int porcentajeGrasa) {
 		String insercion = "UPDATE CRIAS SET PESO = ?, COLOR_MUSCULO = ?, PORCENTAJE_GRASA = ? WHERE ID_CRIA = ?";
 
+		PreparedStatement consultaPreparada = null;
+
 		try {
-			PreparedStatement consultaPreparada = conexion.prepareStatement(insercion);
+			consultaPreparada = conexion.prepareStatement(insercion);
 
 			consultaPreparada.setInt(1, peso);
 			consultaPreparada.setString(2, colorMusculo);
@@ -29,6 +31,12 @@ public class ModeloActualiza {
 		} catch (Exception e) {
 			System.err.println("Se generó un error: " + e.getMessage());
 			return false;
+		} finally {
+			try {
+				consultaPreparada.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

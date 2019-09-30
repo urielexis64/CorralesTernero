@@ -23,7 +23,6 @@ public class ModeloConsulta {
 		Statement consulta = null;
 
 		try {
-
 			consulta = conexion.createStatement();
 
 			ResultSet tuplasBD = consulta.executeQuery(sentencia);
@@ -39,7 +38,6 @@ public class ModeloConsulta {
 				String partesFecha[] = fecha.split("-");
 
 				aux.add(partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0]);
-
 				crias.add(aux);
 			}
 
@@ -70,7 +68,7 @@ public class ModeloConsulta {
 			else if (tipo == 2)
 				consultaPreparada.setString(1, "%" + valor + "%");// Si es varchar
 			else
-				consultaPreparada.setString(1, valor);
+				consultaPreparada.setString(1, valor); // Si es fecha
 
 			ResultSet tuplasBD = consultaPreparada.executeQuery();
 
@@ -90,7 +88,6 @@ public class ModeloConsulta {
 			return conjuntoCrias;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 			return null;
 		} finally {
 			try {
@@ -108,14 +105,18 @@ public class ModeloConsulta {
 		Statement consulta = null;
 
 		try {
-			consulta = conexion.createStatement();
-			ResultSet rs = consulta.executeQuery(contarTuplas);
+			ResultSet rs = (consulta = conexion.createStatement()).executeQuery(contarTuplas);
 			rs.next();
 			numCrias = rs.getInt(1);
 		} catch (SQLException e) {
 			return -1;
+		} finally {
+			try {
+				consulta.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-
 		return numCrias;
 	}
 

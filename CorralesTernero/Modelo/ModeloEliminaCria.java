@@ -1,38 +1,37 @@
 package Modelo;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class ModeloEliminaCria {
 
 	private Connection conexion;
+	private Statement consulta;
+
+	private static final Logger LOGGER = Logger.getLogger(ModeloEliminaCria.class.getName());
 
 	public ModeloEliminaCria() {
 		conexion = ConexionBD.getConexion();
 	}
 
-	public boolean eliminaCria(int id) {
-		String insercion = "DELETE FROM CRIAS WHERE ID_CRIA = ?";
-
-		PreparedStatement consultaPreparada = null;
+	public boolean eliminaCriaById(int id) {
+		String sentencia = "DELETE FROM CRIAS WHERE ID_CRIA = " + id;
 
 		try {
-			consultaPreparada = conexion.prepareStatement(insercion);
+			consulta = conexion.createStatement();
 
-			consultaPreparada.setInt(1, id);
+			consulta.executeUpdate(sentencia);
 
-			consultaPreparada.executeUpdate();
-
-			System.out.println("ELIMINADA");
+			System.out.println("CRÍA ELIMINADA");
 			return true;
 		} catch (SQLException e) {
-			System.err.println("NO ELIMINADA " + e.getMessage());
+			System.err.println("CRÍA NO ELIMINADA " + e.getMessage());
 			return false;
 		} finally {
 			try {
-				consultaPreparada.close();
+				consulta.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -40,22 +39,20 @@ public class ModeloEliminaCria {
 	}
 
 	public boolean vaciarTabla() {
-		String borrarTuplas = "BEGIN TRAN TRANSACCION_TRUNCAR TRUNCATE TABLE CRIAS";
-
-		Statement truncate = null;
+		String sentencia = "BEGIN TRAN TRANSACCION_TRUNCAR TRUNCATE TABLE CRIAS";
 
 		try {
 			conexion.setAutoCommit(false);
 
-			truncate = conexion.createStatement();
-			truncate.execute(borrarTuplas);
+			consulta = conexion.createStatement();
+			consulta.executeUpdate(sentencia);
 
 		} catch (SQLException e) {
 			System.err.println("ERROR: " + e.getMessage());
 			return false;
 		} finally {
 			try {
-				truncate.close();
+				consulta.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -67,11 +64,12 @@ public class ModeloEliminaCria {
 		try {
 			if (commit) {
 				conexion.prepareStatement("COMMIT TRAN TRANSACCION_TRUNCAR");
-				System.out.println("HICE COMMIT");
+				LOGGER.info("HICE COMMIT");
+
 				conexion.commit();
 			} else {
 				conexion.prepareStatement("ROLLBACK TRAN TRANSACCION_TRUNCAR");
-				System.out.println("HICE ROLLBACK");
+				LOGGER.info("HICE ROLLBACK");
 				conexion.rollback();
 			}
 			conexion.setAutoCommit(true);

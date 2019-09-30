@@ -24,5 +24,5 @@ public class ControladorModoOscuro implements ActionListener {
 			e1.printStackTrace();
 		}
 	}
-
+	
 }

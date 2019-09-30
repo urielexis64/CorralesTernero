@@ -26,10 +26,9 @@ public class ModeloRegistro {
 
 			return true;
 		} catch (Exception e) {
-			System.err.println("Violación de restricción de PRIMARY KEY"+e.getMessage());
+			System.err.println(e.getMessage());
 			return false;
 		}
 	}
-
 
 }

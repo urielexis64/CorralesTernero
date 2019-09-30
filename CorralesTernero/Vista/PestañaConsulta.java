@@ -198,7 +198,7 @@ public class PestañaConsulta extends JPanel {
 		if (((DefaultTableModel) tabla.getModel()).getColumnCount() != 5) {
 			((DefaultTableModel) tabla.getModel()).setColumnCount(0);
 			modeloTabla
-					.addColumn("<html><div style='color: yellow; text-decoration: underline;'><h2>ID Cría</h2></div>");
+					.addColumn("<html><div style='color: yellow; text-decoration: underline;'><h3>ID Cría");
 			modeloTabla.addColumn("Peso");
 			modeloTabla.addColumn("Color músculo");
 			modeloTabla.addColumn("Porcentaje de grasa");
