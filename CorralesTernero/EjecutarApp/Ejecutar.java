@@ -1,7 +1,6 @@
 package EjecutarApp;
 
 import java.awt.Component;
-
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -10,7 +9,7 @@ import Controlador.ControladorConsulta;
 import Controlador.ControladorSeleccionTabla;
 import Controlador.ControladorTitleBar;
 import Controlador.Controlador_Registro;
-import Modelo.ConexionBD;
+import Modelo.ConexionBDSingleton;
 import Modelo.ModeloConsulta;
 import Modelo.ModeloEliminaCria;
 import Modelo.ModeloRegistro;
@@ -44,20 +43,20 @@ public class Ejecutar {
 		vista.consulta.setControladorSeleccionTabla(controladorSeleccionTabla);
 		vista.setVisible(true);
 	}
-
+	
 	private static void login() {	
-		ConexionBD.host = "localhost";
-		ConexionBD.port = "1433";
-		ConexionBD.databaseName = "prueba";
-		ConexionBD.user = "sa";
-		ConexionBD.pwd = "123";
+		ConexionBDSingleton.host = "localhost";
+		ConexionBDSingleton.port = "1433";
+		ConexionBDSingleton.databaseName = "prueba";
+		ConexionBDSingleton.user = "sa";
+		ConexionBDSingleton.pwd = "123";
 //		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
 //		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
 //		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
 //		ConexionBD.user = JOptionPane.showInputDialog("User: ");
 //		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
 
-		if (ConexionBD.getConexion() == null) {
+		if (ConexionBDSingleton.getConexion() == null) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CONECTARSE A LA BASE DE DATOS", "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(0);

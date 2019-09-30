@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
-import Modelo.ConexionBD;
+import Modelo.ConexionBDSingleton;
 import Vista.VentanaPrincipal;
 
 public class ControladorTitleBar implements ActionListener {
@@ -28,7 +28,7 @@ public class ControladorTitleBar implements ActionListener {
 		case "cerrar":
 			if (JOptionPane.showConfirmDialog(vista, "¿Esta seguro de cerrar la aplicación?") != 0)
 				return;
-			ConexionBD.cierraConexion();
+			ConexionBDSingleton.cierraConexion();
 			System.exit(0);
 		}
 	}

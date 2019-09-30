@@ -6,34 +6,34 @@ import java.sql.Statement;
 import java.util.logging.Logger;
 
 public class ModeloEliminaCria {
+	private static final Logger LOGGER = Logger.getLogger(ModeloEliminaCria.class.getName());
 
 	private Connection conexion;
 	private Statement consulta;
 
-	private static final Logger LOGGER = Logger.getLogger(ModeloEliminaCria.class.getName());
-
 	public ModeloEliminaCria() {
-		conexion = ConexionBD.getConexion();
+		conexion = ConexionBDSingleton.getConexion();
 	}
 
 	public boolean eliminaCriaById(int id) {
 		String sentencia = "DELETE FROM CRIAS WHERE ID_CRIA = " + id;
 
 		try {
+			LOGGER.info("ELIMINANDO CRIA CON ID = " + id);
 			consulta = conexion.createStatement();
 
 			consulta.executeUpdate(sentencia);
 
-			System.out.println("CRÍA ELIMINADA");
+			LOGGER.info("CRÍA ELIMINADA -> ID = " + id);
 			return true;
 		} catch (SQLException e) {
-			System.err.println("CRÍA NO ELIMINADA " + e.getMessage());
+			LOGGER.severe("CRIA NO ELIMINADA -> ID = " + id);
 			return false;
 		} finally {
 			try {
 				consulta.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.severe(e.getMessage());
 			}
 		}
 	}
@@ -42,19 +42,20 @@ public class ModeloEliminaCria {
 		String sentencia = "BEGIN TRAN TRANSACCION_TRUNCAR TRUNCATE TABLE CRIAS";
 
 		try {
+			LOGGER.info("TRUNCANDO TABLA CRIAS...");
 			conexion.setAutoCommit(false);
 
 			consulta = conexion.createStatement();
 			consulta.executeUpdate(sentencia);
 
 		} catch (SQLException e) {
-			System.err.println("ERROR: " + e.getMessage());
+			LOGGER.severe(e.getMessage());
 			return false;
 		} finally {
 			try {
 				consulta.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.severe(e.getMessage());
 			}
 		}
 		return true;
@@ -64,17 +65,16 @@ public class ModeloEliminaCria {
 		try {
 			if (commit) {
 				conexion.prepareStatement("COMMIT TRAN TRANSACCION_TRUNCAR");
-				LOGGER.info("HICE COMMIT");
-
 				conexion.commit();
+				LOGGER.info("HICE COMMIT");
 			} else {
 				conexion.prepareStatement("ROLLBACK TRAN TRANSACCION_TRUNCAR");
-				LOGGER.info("HICE ROLLBACK");
 				conexion.rollback();
+				LOGGER.info("HICE ROLLBACK");
 			}
 			conexion.setAutoCommit(true);
 		} catch (Exception e) {
-			System.err.println("ERROR: " + e.getMessage());
+			LOGGER.severe(e.getMessage());
 		}
 	}
 }

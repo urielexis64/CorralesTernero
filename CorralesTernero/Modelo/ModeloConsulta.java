@@ -6,13 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 public class ModeloConsulta {
+	private static final Logger LOGGER = Logger.getLogger(ModeloConsulta.class.getName());
+
 	private Connection conexion;
 	private byte tipo;
 
 	public ModeloConsulta() {
-		conexion = ConexionBD.getConexion();
+		conexion = ConexionBDSingleton.getConexion();
 	}
 
 	public Vector<Vector<String>> getTotalCrias() {
@@ -23,6 +26,8 @@ public class ModeloConsulta {
 		Statement consulta = null;
 
 		try {
+			LOGGER.info("OBTENIENDO TUPLAS DE LA TABLA CRIAS...");
+
 			consulta = conexion.createStatement();
 
 			ResultSet tuplasBD = consulta.executeQuery(sentencia);
@@ -40,15 +45,16 @@ public class ModeloConsulta {
 				aux.add(partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0]);
 				crias.add(aux);
 			}
-
+			LOGGER.info("TUPLAS OBTENIDAS CON ÉXITO");
 			return crias;
 		} catch (SQLException e) {
+			LOGGER.severe(e.getMessage());
 			return null;
 		} finally {
 			try {
 				consulta.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.severe(e.getMessage());
 			}
 		}
 	}
@@ -61,6 +67,7 @@ public class ModeloConsulta {
 		PreparedStatement consultaPreparada = null;
 
 		try {
+			LOGGER.info("OBTENIENDO TUPLAS FILTRADAS POR " + atributo);
 			consultaPreparada = conexion.prepareStatement(sentencia);
 
 			if (tipo == 1)
@@ -85,15 +92,16 @@ public class ModeloConsulta {
 				aux.add(partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0]);
 				conjuntoCrias.add(aux);
 			}
+			LOGGER.info("TUPLAS FILTRADAS CON ÉXITO") ;
 			return conjuntoCrias;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			LOGGER.severe(e.getMessage());
 			return null;
 		} finally {
 			try {
 				consultaPreparada.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.severe(e.getMessage());
 			}
 		}
 	}
@@ -105,16 +113,20 @@ public class ModeloConsulta {
 		Statement consulta = null;
 
 		try {
+			LOGGER.info("OBTENIENDO NÚMERO DE TUPLAS...");
+
 			ResultSet rs = (consulta = conexion.createStatement()).executeQuery(contarTuplas);
 			rs.next();
 			numCrias = rs.getInt(1);
+			LOGGER.info("SE OBTUVIERON " + numCrias + " TUPLAS");
 		} catch (SQLException e) {
+			LOGGER.severe(e.getMessage());
 			return -1;
 		} finally {
 			try {
 				consulta.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.severe(e.getMessage());
 			}
 		}
 		return numCrias;

@@ -3,12 +3,15 @@ package Modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class ModeloActualiza {
+	private static final Logger LOGGER = Logger.getLogger(ModeloActualiza.class.getName());
+
 	private Connection conexion;
 
 	public ModeloActualiza() {
-		conexion = ConexionBD.getConexion();
+		conexion = ConexionBDSingleton.getConexion();
 	}
 
 	public boolean actualizaCria(int id, int peso, String colorMusculo, int porcentajeGrasa) {
@@ -17,6 +20,7 @@ public class ModeloActualiza {
 		PreparedStatement consultaPreparada = null;
 
 		try {
+			LOGGER.info("ACTUALIZANDO CRIA... -> ID = " + id);
 			consultaPreparada = conexion.prepareStatement(insercion);
 
 			consultaPreparada.setInt(1, peso);
@@ -26,16 +30,16 @@ public class ModeloActualiza {
 
 			consultaPreparada.executeUpdate();
 
-			System.out.println("Actualizado con éxito");
+			LOGGER.info("CRÍA ACTUALIZADA CON ÉXITO");
 			return true;
 		} catch (Exception e) {
-			System.err.println("Se generó un error: " + e.getMessage());
+			LOGGER.severe(e.getMessage());
 			return false;
 		} finally {
 			try {
 				consultaPreparada.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.severe(e.getMessage());
 			}
 		}
 	}
