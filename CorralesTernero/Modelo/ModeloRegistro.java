@@ -2,6 +2,7 @@ package Modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class ModeloRegistro {
@@ -29,7 +30,7 @@ public class ModeloRegistro {
 			consultaPreparada.executeUpdate();
 			LOGGER.info("INSERCIÓN REALIZADA CORRECTAMENTE -> ID = " + id);
 			return true;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return false;
 		}

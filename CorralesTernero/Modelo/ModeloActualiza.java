@@ -32,7 +32,7 @@ public class ModeloActualiza {
 
 			LOGGER.info("CRÍA ACTUALIZADA CON ÉXITO");
 			return true;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return false;
 		} finally {

@@ -47,7 +47,7 @@ public class ModeloEliminaCria {
 
 			consulta = conexion.createStatement();
 			consulta.executeUpdate(sentencia);
-
+			return true;
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return false;
@@ -58,7 +58,6 @@ public class ModeloEliminaCria {
 				LOGGER.severe(e.getMessage());
 			}
 		}
-		return true;
 	}
 
 	public void commitTransaccion(boolean commit) {
@@ -73,7 +72,7 @@ public class ModeloEliminaCria {
 				LOGGER.info("HICE ROLLBACK");
 			}
 			conexion.setAutoCommit(true);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 		}
 	}

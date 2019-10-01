@@ -13,8 +13,8 @@ import javax.swing.Timer;
 import Modelo.ModeloEliminaCria;
 import Vista.ModalEditarCria;
 import Vista.VentanaPrincipal;
+import herramientas.AccionComponente;
 import mdlaf.utils.MaterialColors;
-import misHerramientas.AccionComponente;
 
 public class ControladorSeleccionTabla extends MouseAdapter implements ActionListener {
 	private VentanaPrincipal vista;
@@ -26,7 +26,7 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 	public ControladorSeleccionTabla(VentanaPrincipal vista, ModeloEliminaCria modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
-		timer = new Timer(5000, this);
+		timer = new Timer(1000, this);
 	}
 
 	private void editarCria() {
@@ -50,10 +50,8 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if (e.getClickCount() == 2 && tabla.getColumnCount() == 5) { // Editar cría desde doble click
+		if (e.getClickCount() == 2 && tabla.getColumnCount() == 5) // Editar cría desde doble click
 			editarCria();
-			vista.consulta.btnRefrescar.doClick();
-		}
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -114,7 +112,7 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 		if (e.getSource() instanceof JMenuItem) { // Eliminar cría (Menú emergente)
 
 			if (((JMenuItem) e.getSource()).getName().equals("Editar")) {// Si es el item Editar
-				editarCria(); // Editar cría (MenÃº emergente)
+				editarCria(); // Editar cría (Menú emergente)
 				return;
 			}
 
@@ -139,7 +137,8 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 					vista.consulta.showMessage("Se eliminaron " + tuplasEliminadas + " tuplas.", false);
 					vista.consulta.btnUndo.setVisible(true);
 					timer.start();
-					AccionComponente.disco(vista.consulta.btnUndo, 5000, 100);
+					vista.consulta.lblSegundosTransaccion.setVisible(true);
+					AccionComponente.disco(vista.consulta.btnUndo, 6000, 100);
 				}
 				vista.consulta.btnRefrescar.doClick();
 			}
@@ -147,16 +146,31 @@ public class ControladorSeleccionTabla extends MouseAdapter implements ActionLis
 		}
 
 		if (e.getSource() == timer) {
-			vista.consulta.btnUndo.setVisible(false);
-			modelo.commitTransaccion(true); // Si no presiona el boton UNDO
-			timer.stop();
+			if (contador > 0) {
+				vista.consulta.lblSegundosTransaccion.setText(--contador + "");
+				return;
+			}
+			terminarTransaccion(true); // Hace commit
 			return;
 		}
 
-		timer.stop(); // Si se presiona el boton UNDO
-		modelo.commitTransaccion(false);
-		vista.consulta.btnUndo.setVisible(false);
-		vista.consulta.showMessage("Se recuperaron las tuplas.", false);
-		vista.consulta.btnRefrescar.doClick();
+		terminarTransaccion(false); // Hace rollback
 	}
+
+	private void terminarTransaccion(boolean commit) {
+		timer.stop();
+		modelo.commitTransaccion(commit); // Si no presiona el boton UNDO
+		vista.consulta.btnUndo.setVisible(false);
+		vista.consulta.lblSegundosTransaccion.setText("5");
+		vista.consulta.lblSegundosTransaccion.setVisible(false);
+
+		if (!commit) { // Si fue rollback, actualiza la tabla
+			vista.consulta.btnRefrescar.doClick();
+			vista.consulta.showMessage("Se recuperaron las tuplas.", false);
+		}
+		contador = 5; // Se resetea el contador
+	}
+
+	private int contador = 5;
+
 }

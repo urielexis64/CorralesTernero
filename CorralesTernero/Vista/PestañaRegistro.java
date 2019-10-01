@@ -1,6 +1,8 @@
 package Vista;
 
 import java.awt.*;
+import java.time.LocalDate;
+
 import javax.swing.*;
 
 import com.github.lgooddatepicker.components.DatePicker;
@@ -8,13 +10,13 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DatePickerSettings.DateArea;
 
 import Controlador.Controlador_Registro;
-import EjecutarApp.ToastMessage;
 import de.craften.ui.swingmaterial.*;
 import de.craften.ui.swingmaterial.MaterialButton.Type;
 import de.craften.ui.swingmaterial.fonts.Roboto;
+import herramientas.Rutinas;
+import herramientas.ToastMessage;
 import mdlaf.shadows.RoundedCornerBorder;
 import mdlaf.utils.MaterialColors;
-import misHerramientas.Rutinas;
 
 public class PestañaRegistro extends JPanel {
 
@@ -145,14 +147,14 @@ public class PestañaRegistro extends JPanel {
 		panel.add(txtGrasaCria);
 		panel.add(lblFechaEntrada);
 		panel.add(calendario);
-		
+
 		add(panel);
 	}
 
 	public void showMessage(String msg, boolean error) {
-		ToastMessage toast = new ToastMessage();
+		ToastMessage toast = new ToastMessage(this);
 		if (error)
-			toast.setInfo(msg, MaterialColors.RED_500);
+			toast.setInfo(msg, MaterialColors.RED_400);
 		else
 			toast.setInfo(msg, MaterialColors.GREEN_600);
 
@@ -167,22 +169,38 @@ public class PestañaRegistro extends JPanel {
 		calendario.setText("");
 	}
 
-	public void actualizar() {
-		txtIdCria.setAccent(MaterialColors.YELLOW_300);
-		txtIdCria.setForeground(MaterialColors.WHITE);
-		txtIdCria.setBackground(MaterialColor.TRANSPARENT);
+	public boolean verificarCampos() {
+		boolean estado = true;
+		if (txtIdCria.getText().equals("")) {
+			estado = false;
+			txtIdCria.requestFocus();
+		} else if (txtPesoCria.getText().equals("")) {
+			estado = false;
+			txtPesoCria.requestFocus();
+		} else if (txtColorCria.getText().trim().equals("")) {
+			estado = false;
+			txtColorCria.requestFocus();
+		} else if (txtGrasaCria.getText().equals("")) {
+			estado = false;
+			txtGrasaCria.requestFocus();
+		} else if (calendario.getText().equals("")) {
+			estado = false;
+			calendario.getComponentDateTextField().setBackground(MaterialColors.RED_400);
+		}
+		return estado;
+	}
 
-		txtPesoCria.setAccent(MaterialColors.GREEN_600);
-		txtPesoCria.setForeground(MaterialColors.BLACK);
-		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
+	public void procesoAleatorio() {
+		txtIdCria.setText(Rutinas.nextInt(1, 1_000_000) + "");
+		txtPesoCria.setText(Rutinas.nextInt(20, 200) + "");
+		txtColorCria.setText(Rutinas.nextColor());
+		txtGrasaCria.setText(Rutinas.nextInt(1, 100) + "");
 
-		txtColorCria.setAccent(MaterialColors.GREEN_600);
-		txtColorCria.setForeground(MaterialColors.BLACK);
-		txtColorCria.setBackground(MaterialColor.TRANSPARENT);
-
-		txtGrasaCria.setAccent(MaterialColors.GREEN_600);
-		txtGrasaCria.setForeground(MaterialColors.BLACK);
-		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
+		int año = Rutinas.nextInt(2000, 2020);
+		int mes = Rutinas.nextInt(1, 12);
+		int dia = mes == 2 ? Rutinas.nextInt(1, 28)
+				: mes == 4 || mes == 6 || mes == 9 || mes == 11 ? Rutinas.nextInt(1, 30) : Rutinas.nextInt(1, 31);
+		calendario.setDate(LocalDate.of(año, mes, dia));
 	}
 
 	public void setControlador(Controlador_Registro controlador) {

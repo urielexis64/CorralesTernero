@@ -8,9 +8,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import EjecutarApp.Ejecutar;
-import EjecutarApp.ToastMessage;
 import Modelo.ModeloActualiza;
 import de.craften.ui.swingmaterial.*;
+import herramientas.ToastMessage;
 import mdlaf.utils.MaterialColors;
 
 public class ModalEditarCria extends JDialog implements ActionListener {
@@ -47,7 +47,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
 		txtPesoCria.setCaretColor(Color.WHITE);
 		txtPesoCria.setEnabledRegex(true);
-		
+
 		txtColorCria = new MaterialTextField();
 		txtColorCria.setBounds(50, 140, 380, 70);
 		txtColorCria.setLabel("Color de músculo");
@@ -66,7 +66,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
 		txtGrasaCria.setCaretColor(Color.WHITE);
 		txtGrasaCria.setEnabledRegex(true);
-		
+
 		btnLimpiar = new MaterialButton();
 		btnLimpiar.setText("Limpiar");
 		btnLimpiar.setBounds(30, 300, 200, 60);
@@ -92,7 +92,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 
 		add(btnActualizar);
 		add(btnLimpiar);
-		
+
 	}
 
 	public void setInfo(int id, String peso, String color, String grasa) {
@@ -116,7 +116,13 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 			return;
 		}
 
-		ToastMessage toast = new ToastMessage();
+		ToastMessage toast = new ToastMessage(this);
+
+		if (!verificarCampos()) {
+			toast.setInfo("Llene todos los campos.", MaterialColors.RED_400);
+			toast.showToast();
+			return;
+		}
 
 		int peso = Integer.parseInt(txtPesoCria.getText());
 		String color = txtColorCria.getText();
@@ -129,13 +135,28 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 			toast.setInfo("Hubo un error...", MaterialColors.RED_400);
 		}
 		toast.showToast();
-		
+
 	}
 
 	private void limpiar() {
 		txtPesoCria.setText("");
 		txtColorCria.setText("");
 		txtGrasaCria.setText("");
+	}
+
+	public boolean verificarCampos() {
+		boolean estado = true;
+		if (txtPesoCria.getText().equals("")) {
+			estado = false;
+			txtPesoCria.requestFocus();
+		} else if (txtColorCria.getText().trim().equals("")) {
+			estado = false;
+			txtColorCria.requestFocus();
+		} else if (txtGrasaCria.getText().equals("")) {
+			estado = false;
+			txtGrasaCria.requestFocus();
+		}
+		return estado;
 	}
 
 	public void paint(Graphics g) {

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Vector;
 
 import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
@@ -36,20 +37,19 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 	}
 
 	@Override
-	public void caretUpdate(CaretEvent e) {	
+	public void caretUpdate(CaretEvent e) {
 		JTextField txt = (JTextField) e.getSource();
 
-		String valor = "", atributo = "";	
-		
-		if (!txt.getText().equals("")) {
-			try {
-				valor = txt.getText(); // Valor en la caja de texto Buscar
-				atributo = vista.consulta.comboBox.getSelectedItem().toString(); // Valor del ComboBox
+		String valor = "", atributo = "";
 
-				vista.consulta.setTablaBusqueda(modelo.getConsultaCrias(valor, atributo));
-			} catch (Exception ex) {
-				System.out.println("Error al consultar: " + ex.getMessage());
-			}
+		if (!txt.getText().equals("")) {
+			valor = txt.getText(); // Valor en la caja de texto Buscar
+			atributo = vista.consulta.comboBox.getSelectedItem().toString(); // Valor del ComboBox
+
+			Vector<Vector<String>> resultado = modelo.getConsultaCrias(valor, atributo);
+
+			if (resultado != null)
+				vista.consulta.setTablaBusqueda(resultado);
 		}
 	}
 

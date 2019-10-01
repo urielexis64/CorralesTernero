@@ -13,11 +13,11 @@ import Controlador.ControladorModoOscuro;
 import Controlador.ControladorTitleBar;
 import de.craften.ui.swingmaterial.MaterialColor;
 import de.craften.ui.swingmaterial.MaterialPanel;
+import herramientas.Rutinas;
 import mdlaf.*;
 import mdlaf.shadows.RoundedCornerBorder;
 import mdlaf.themes.MaterialLiteTheme;
 import mdlaf.themes.MaterialOceanicTheme;
-import misHerramientas.Rutinas;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -58,8 +58,9 @@ public class VentanaPrincipal extends JFrame {
 		btnMinimizar.setActionCommand("minimizar");
 
 		pestañas = new JTabbedPane();
+
 		pestañas.setBounds(10, 50, 780, 730);
-		
+
 		registro = new PestañaRegistro();
 		clasificacion = new PestañaClasifcacion();
 		consulta = new PestañaConsulta();
@@ -80,7 +81,7 @@ public class VentanaPrincipal extends JFrame {
 		panelSuperior.add(btnCerrar);
 		panelSuperior.add(btnMinimizar);
 
-		hazFrame();		
+		hazFrame();
 	}
 
 	private void hazFrame() {
@@ -110,10 +111,6 @@ public class VentanaPrincipal extends JFrame {
 		addMouseMotionListener(frameDragListener);
 	}
 
-	public void setVisible(boolean b) {
-		super.setVisible(b);
-	}
-
 	public void modoOscuro(boolean oscuro) throws UnsupportedLookAndFeelException {
 		if (oscuro) {
 			UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
@@ -123,11 +120,6 @@ public class VentanaPrincipal extends JFrame {
 			btnModoOscuro.setText("Modo oscuro (BETA)");
 		}
 		SwingUtilities.updateComponentTreeUI(this);
-		actualizaColores();
-	}
-
-	private void actualizaColores() {
-		registro.actualizar();
 	}
 
 	public static class FrameDragListener extends MouseAdapter {

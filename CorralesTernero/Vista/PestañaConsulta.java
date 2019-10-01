@@ -11,15 +11,14 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import Controlador.*;
-import EjecutarApp.ToastMessage;
 import de.craften.ui.swingmaterial.MaterialButton;
 import de.craften.ui.swingmaterial.MaterialButton.Type;
 import de.craften.ui.swingmaterial.MaterialComboBox;
-import de.craften.ui.swingmaterial.MaterialProgressSpinner;
 import de.craften.ui.swingmaterial.fonts.MaterialIcons;
+import herramientas.IconTextField;
+import herramientas.Rutinas;
+import herramientas.ToastMessage;
 import mdlaf.utils.MaterialColors;
-import misHerramientas.IconTextField;
-import misHerramientas.Rutinas;
 import mdlaf.shadows.DropShadowBorder;
 import mdlaf.shadows.RoundedCornerBorder;
 
@@ -29,7 +28,7 @@ public class PestañaConsulta extends JPanel {
 	private JScrollPane scrollTable;
 
 	public MaterialButton btnRefrescar, btnVaciar, btnUndo;
-	public JLabel lblNumeroCrias;
+	public JLabel lblNumeroCrias, lblSegundosTransaccion;
 
 	public JPopupMenu menuFlotante;
 	public JMenuItem itemEliminar, itemEditar;
@@ -44,6 +43,11 @@ public class PestañaConsulta extends JPanel {
 
 	private void hazInterfaz() {
 		setLayout(null);
+		iniciarTabla();
+
+		scrollTable = new JScrollPane(tabla);
+		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
+		scrollTable.setBounds(75, 60, 700, 550);
 
 		comboBox = new MaterialComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(
@@ -83,11 +87,6 @@ public class PestañaConsulta extends JPanel {
 		menuFlotante.addSeparator();
 		menuFlotante.add(itemEditar);
 
-		iniciarTabla();
-		scrollTable = new JScrollPane(tabla);
-		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
-		scrollTable.setBounds(75, 60, 700, 550);
-
 		txtBuscar = new IconTextField("Resources\\search_icon.png", "Buscar", 20);
 		txtBuscar.setBounds(90, 25, 185, 30);
 
@@ -95,6 +94,10 @@ public class PestañaConsulta extends JPanel {
 		lblNumeroCrias.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblNumeroCrias.setBorder(new RoundedCornerBorder(MaterialColors.DARKLY_BLUE));
 		lblNumeroCrias.setBounds(610, 15, 150, 40);
+		lblSegundosTransaccion = new JLabel("5");
+		lblSegundosTransaccion.setFont(new Font("Roboto", Font.BOLD, 16));
+		lblSegundosTransaccion.setBounds(40, 280, 25, 25);
+		lblSegundosTransaccion.setVisible(false);
 
 		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings.setVisibleDateTextField(false);
@@ -116,33 +119,23 @@ public class PestañaConsulta extends JPanel {
 		add(calendario);
 		add(btnUndo);
 		add(lblNumeroCrias);
+		add(lblSegundosTransaccion);
 	}
 
 	private void iniciarTabla() {
 		modeloTabla = new ModeloTabla();
 		tabla = new JTable(modeloTabla);
 
-		modeloTabla.addColumn("<html><div style='color: yellow; text-decoration: underline;'><h2>ID Cría</h2></div>");
-		modeloTabla.addColumn("Peso");
-		modeloTabla.addColumn("Color músculo");
-		modeloTabla.addColumn("Porcentaje de grasa");
-		modeloTabla.addColumn("Fecha de entrada");
+		defineColumnas();
+		defineAnchoColumnas(); // Cambio tamaño máximo de las columnas
 
-		// tabla.setComponentPopupMenu(menuFlotante); // Menú emergente
+//		tabla.setComponentPopupMenu(menuFlotante); // Menú emergente
 		tabla.getTableHeader().setReorderingAllowed(false); // Evitar mover columnas
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Evitar multiselección
 		tabla.setAutoCreateRowSorter(true); // Ordena columnas por orden alfabético
-
-		TableColumnModel columnas = tabla.getColumnModel();
-		columnas.getColumn(0).setMaxWidth(85); // Cambiar ancho de la columna
-		columnas.getColumn(1).setMaxWidth(85);
-		columnas.getColumn(2).setMaxWidth(150);
-		columnas.getColumn(3).setMaxWidth(170);
-		columnas.getColumn(4).setMaxWidth(170);
-
 	}
 
-	public void setControlador(ControladorConsulta controlador) {
+	public void setControladorConsulta(ControladorConsulta controlador) {
 		btnRefrescar.addActionListener(controlador);
 		txtBuscar.addCaretListener(controlador);
 		comboBox.addItemListener(controlador);
@@ -169,59 +162,55 @@ public class PestañaConsulta extends JPanel {
 			nuevaCria.add(objetoCria.get(i).get(4)); // Fecha entrada
 			modeloTabla.addRow(nuevaCria);
 		}
+		btnVaciar.setEnabled(tabla.getRowCount() > 0);
 	}
 
 	public void setTablaBusqueda(Vector<Vector<String>> objetoCria) {
-		limpiarTabla();
 		if (objetoCria.size() == 0) {
+			limpiarTabla();
 			((DefaultTableModel) tabla.getModel()).setColumnCount(0);
 			((DefaultTableModel) tabla.getModel()).addColumn("Mensaje");
 			tabla.setEnabled(false); // Evitar clicks en la fila del mensaje
 			modeloTabla.addRow(new String[] { "NO SE ENCONTRARON RESULTADOS" });
-			return;
 		} else {
-			Vector<String> nuevaCria;
-			for (int i = 0; i < objetoCria.size(); i++) {
-				nuevaCria = new Vector<String>();
-				nuevaCria.add(objetoCria.get(i).get(0)); // ID
-				nuevaCria.add(objetoCria.get(i).get(1)); // Peso
-				nuevaCria.add(objetoCria.get(i).get(2)); // Color
-				nuevaCria.add(objetoCria.get(i).get(3)); // Grasa
-				nuevaCria.add(objetoCria.get(i).get(4)); // Fecha entrada
-				modeloTabla.addRow(nuevaCria);
-			}
+			setTabla(objetoCria);
 		}
 	}
 
 	private void limpiarTabla() {
 		((DefaultTableModel) tabla.getModel()).setNumRows(0);
 		if (((DefaultTableModel) tabla.getModel()).getColumnCount() != 5) {
-			((DefaultTableModel) tabla.getModel()).setColumnCount(0);
-			modeloTabla
-					.addColumn("<html><div style='color: yellow; text-decoration: underline;'><h3>ID Cría");
-			modeloTabla.addColumn("Peso");
-			modeloTabla.addColumn("Color músculo");
-			modeloTabla.addColumn("Porcentaje de grasa");
-			modeloTabla.addColumn("Fecha de entrada");
-
+			defineColumnas();
+			defineAnchoColumnas();
 			tabla.setEnabled(true); // Permitir clicks en las filas
-
-			TableColumnModel columnas = tabla.getColumnModel();
-			columnas.getColumn(0).setMaxWidth(85); // Cambiar ancho de la columna
-			columnas.getColumn(1).setMaxWidth(85);
-			columnas.getColumn(2).setMaxWidth(150);
-			columnas.getColumn(3).setMaxWidth(170);
-			columnas.getColumn(4).setMaxWidth(170);
 		}
 	}
 
+	private void defineColumnas() {
+		((DefaultTableModel) tabla.getModel()).setColumnCount(0); // Borramos las columnas que haya (en caso de)
+		modeloTabla.addColumn("<HTML><h2 style= text-decoration:underline>ID Cría");
+		modeloTabla.addColumn("Peso");
+		modeloTabla.addColumn("Color músculo");
+		modeloTabla.addColumn("Porcentaje de grasa");
+		modeloTabla.addColumn("Fecha de entrada");
+	}
+
+	private void defineAnchoColumnas() {
+		TableColumnModel columnas = tabla.getColumnModel();
+		columnas.getColumn(0).setMaxWidth(85);
+		columnas.getColumn(1).setMaxWidth(85);
+		columnas.getColumn(2).setMaxWidth(150);
+		columnas.getColumn(3).setMaxWidth(170);
+		columnas.getColumn(4).setMaxWidth(170);
+	}
+
 	public void showMessage(String msg, boolean error) {
-		ToastMessage toast = new ToastMessage();
-		if (error) {
+		ToastMessage toast = new ToastMessage(this);
+		if (error)
 			toast.setInfo(msg, MaterialColors.RED_500);
-		} else {
+		else
 			toast.setInfo(msg, MaterialColors.BLUE_500);
-		}
+
 		toast.showToast();
 	}
 }
@@ -231,5 +220,4 @@ class ModeloTabla extends DefaultTableModel {
 	public boolean isCellEditable(int row, int co) {
 		return false;
 	}
-
 }
