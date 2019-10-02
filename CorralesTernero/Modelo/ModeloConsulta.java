@@ -50,12 +50,6 @@ public class ModeloConsulta {
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return null;
-		} finally {
-			try {
-				consulta.close();
-			} catch (SQLException e) {
-				LOGGER.severe(e.getMessage());
-			}
 		}
 	}
 
@@ -92,17 +86,11 @@ public class ModeloConsulta {
 				aux.add(partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0]);
 				conjuntoCrias.add(aux);
 			}
-			LOGGER.info("TUPLAS FILTRADAS CON ÉXITO") ;
+			LOGGER.info("TUPLAS FILTRADAS CON ÉXITO");
 			return conjuntoCrias;
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return null;
-		} finally {
-			try {
-				consultaPreparada.close();
-			} catch (SQLException e) {
-				LOGGER.severe(e.getMessage());
-			}
 		}
 	}
 
@@ -115,21 +103,17 @@ public class ModeloConsulta {
 		try {
 			LOGGER.info("OBTENIENDO NÚMERO DE TUPLAS...");
 
-			ResultSet rs = (consulta = conexion.createStatement()).executeQuery(contarTuplas);
+			consulta = conexion.createStatement();
+			ResultSet rs = consulta.executeQuery(contarTuplas);
 			rs.next();
 			numCrias = rs.getInt(1);
+
 			LOGGER.info("SE OBTUVIERON " + numCrias + " TUPLAS");
+			return numCrias;
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return -1;
-		} finally {
-			try {
-				consulta.close();
-			} catch (SQLException e) {
-				LOGGER.severe(e.getMessage());
-			}
 		}
-		return numCrias;
 	}
 
 //	public Vector<Vector<String>> getConsultaCrias(String valor, String atributo) {
@@ -178,13 +162,7 @@ public class ModeloConsulta {
 //		} catch (SQLException e) {
 //			System.out.println("Error: " + e.getMessage());
 //			return null;
-//		} finally {
-//			try {
-//				consulta.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+//		} 
 //	}
 
 	private String getSentencia(String atributo) {

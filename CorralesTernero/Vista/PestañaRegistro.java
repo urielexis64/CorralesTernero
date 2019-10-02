@@ -9,7 +9,7 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DatePickerSettings.DateArea;
 
-import Controlador.Controlador_Registro;
+import Controlador.ControladorRegistro;
 import de.craften.ui.swingmaterial.*;
 import de.craften.ui.swingmaterial.MaterialButton.Type;
 import de.craften.ui.swingmaterial.fonts.Roboto;
@@ -203,7 +203,7 @@ public class PestañaRegistro extends JPanel {
 		calendario.setDate(LocalDate.of(año, mes, dia));
 	}
 
-	public void setControlador(Controlador_Registro controlador) {
+	public void setControlador(ControladorRegistro controlador) {
 		btnRegistrarCria.addActionListener(controlador);
 		btnLimpiar.addActionListener(controlador);
 		btnAleatorio.addActionListener(controlador);

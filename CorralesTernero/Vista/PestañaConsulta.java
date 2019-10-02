@@ -142,7 +142,7 @@ public class PestañaConsulta extends JPanel {
 		calendario.addDateChangeListener(controlador);
 	}
 
-	public void setControladorSeleccionTabla(ControladorSeleccionTabla controlador) {
+	public void setControladorSeleccionTabla(ControladorTabla controlador) {
 		tabla.addMouseListener(controlador);
 		itemEliminar.addActionListener(controlador);
 		itemEditar.addActionListener(controlador);

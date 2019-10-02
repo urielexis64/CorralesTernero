@@ -16,14 +16,14 @@ import Vista.VentanaPrincipal;
 import herramientas.AccionComponente;
 import mdlaf.utils.MaterialColors;
 
-public class ControladorSeleccionTabla extends MouseAdapter implements ActionListener {
+public class ControladorTabla extends MouseAdapter implements ActionListener {
 	private VentanaPrincipal vista;
 	private ModeloEliminaCria modelo;
 	private static JTable tabla;
 	private Timer timer;
 	private Color colorTabla;
 
-	public ControladorSeleccionTabla(VentanaPrincipal vista, ModeloEliminaCria modelo) {
+	public ControladorTabla(VentanaPrincipal vista, ModeloEliminaCria modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
 		timer = new Timer(1000, this);

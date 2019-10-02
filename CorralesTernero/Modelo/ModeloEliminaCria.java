@@ -20,6 +20,7 @@ public class ModeloEliminaCria {
 
 		try {
 			LOGGER.info("ELIMINANDO CRIA CON ID = " + id);
+			
 			consulta = conexion.createStatement();
 
 			consulta.executeUpdate(sentencia);
@@ -29,12 +30,6 @@ public class ModeloEliminaCria {
 		} catch (SQLException e) {
 			LOGGER.severe("CRIA NO ELIMINADA -> ID = " + id);
 			return false;
-		} finally {
-			try {
-				consulta.close();
-			} catch (SQLException e) {
-				LOGGER.severe(e.getMessage());
-			}
 		}
 	}
 
@@ -51,12 +46,6 @@ public class ModeloEliminaCria {
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return false;
-		} finally {
-			try {
-				consulta.close();
-			} catch (SQLException e) {
-				LOGGER.severe(e.getMessage());
-			}
 		}
 	}
 

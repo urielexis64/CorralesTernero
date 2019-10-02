@@ -35,12 +35,6 @@ public class ModeloActualiza {
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return false;
-		} finally {
-			try {
-				consultaPreparada.close();
-			} catch (SQLException e) {
-				LOGGER.severe(e.getMessage());
-			}
 		}
 	}
 

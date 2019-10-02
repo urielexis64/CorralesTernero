@@ -6,9 +6,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import Controlador.ControladorConsulta;
-import Controlador.ControladorSeleccionTabla;
+import Controlador.ControladorTabla;
 import Controlador.ControladorTitleBar;
-import Controlador.Controlador_Registro;
+import Controlador.ControladorRegistro;
 import Modelo.ConexionBDSingleton;
 import Modelo.ModeloConsulta;
 import Modelo.ModeloEliminaCria;
@@ -32,9 +32,9 @@ public class Ejecutar {
 		ModeloConsulta modeloConsulta = new ModeloConsulta();
 		ModeloEliminaCria modeloEliminaCria = new ModeloEliminaCria();
 
-		Controlador_Registro controladorRegistro = new Controlador_Registro(vista, modeloRegistro);
+		ControladorRegistro controladorRegistro = new ControladorRegistro(vista, modeloRegistro);
 		ControladorConsulta controladorConsulta = new ControladorConsulta(vista, modeloConsulta);
-		ControladorSeleccionTabla controladorSeleccionTabla = new ControladorSeleccionTabla(vista, modeloEliminaCria);
+		ControladorTabla controladorSeleccionTabla = new ControladorTabla(vista, modeloEliminaCria);
 		ControladorTitleBar controladorTitleBar = new ControladorTitleBar(vista);
 
 		vista.setControlador(controladorTitleBar);
@@ -52,9 +52,9 @@ public class Ejecutar {
 	}
 	
 	private static void login() {	
-		ConexionBDSingleton.host = "localhost";
+		ConexionBDSingleton.host = "LOCALHOST";
 		ConexionBDSingleton.port = "1433";
-		ConexionBDSingleton.databaseName = "prueba";
+		ConexionBDSingleton.databaseName = "PRUEBA";
 		ConexionBDSingleton.user = "sa";
 		ConexionBDSingleton.pwd = "123";
 //		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
