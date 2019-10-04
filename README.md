@@ -20,7 +20,7 @@ Proyecto de taller de base de datos que se encarga de gestionar las crías de un
 ### Tabla de consultas
 * _Se muestra la información con algunos atajos como: `Editar` o `Eliminar`_
 
-![github-large](https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/Screenshot_4.png)
+![github-large](https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/Screenshot_7.png)
 
 ### Modal
 * _Modal que permite actualizar datos sobre una cría en particular_
