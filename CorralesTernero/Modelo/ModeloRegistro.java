@@ -2,48 +2,65 @@ package Modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
+
+import EjecutarApp.Ejecutar;
 
 public class ModeloRegistro {
 	private static final Logger LOGGER = Logger.getLogger(ModeloRegistro.class.getName());
 
 	private Connection conexion;
+	private PreparedStatement consultaPreparada;
+	private Statement consultaIdentity;
 
 	public ModeloRegistro() {
 		conexion = ConexionBDSingleton.getConexion();
+		try {
+			consultaPreparada = conexion.prepareStatement("EXECUTE PA_INSERTACRIA ?, ?, ?, ?");
+			consultaIdentity = conexion.createStatement();
+		} catch (SQLException e) {
+		}
 	}
 
-	public boolean registrarCria(int id, int peso, String colorMusculo, int porcentajeGrasa, String fecha_entrada) {
-		String insercion = "EXECUTE PA_INSERTACRIA ?, ?, ?, ?, ?";
-
+	public int registrarCria(float peso, String colorMusculo, int porcentajeGrasa, String fecha_entrada) {
 		try {
-			LOGGER.info("INSERTANDO CRIA -> ID = " + id);
-			PreparedStatement consultaPreparada = conexion.prepareStatement(insercion);
+			LOGGER.info("INSERTANDO CRIA...");
 
-			consultaPreparada.setInt(1, id);
-			consultaPreparada.setInt(2, peso);
-			consultaPreparada.setString(3, colorMusculo);
-			consultaPreparada.setInt(4, porcentajeGrasa);
-			consultaPreparada.setString(5, fecha_entrada);
-
+			consultaPreparada.setFloat(1, peso);
+			consultaPreparada.setString(2, colorMusculo);
+			consultaPreparada.setInt(3, porcentajeGrasa);
+			consultaPreparada.setString(4, fecha_entrada);
 			consultaPreparada.executeUpdate();
-			LOGGER.info("INSERCIÓN REALIZADA CORRECTAMENTE -> ID = " + id);
-			return true;
+
+			ResultSet rs = consultaIdentity.executeQuery("SELECT IDENT_CURRENT ('CRIAS')");
+			rs.next();
+			int idGenerado = rs.getInt(1);
+
+			LOGGER.info("INSERCIÓN REALIZADA CORRECTAMENTE -> ID = " + idGenerado);
+			return idGenerado;
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
-			return false;
+			return -1;
 		}
 	}
 
 //	public boolean registrarCria(int id, int peso, String colorMusculo, int porcentajeGrasa, String fecha_entrada) { //Inyeccion SQL
-//		String insercion = " EXECUTE PA_INSERTACRIA " + id + ", " + peso + ", '" + colorMusculo + "', "
+//		String insercion = " EXECUTE PA_INSERTACRIA " + peso + ", '" + colorMusculo + "', "
 //				+ porcentajeGrasa + ", '" + fecha_entrada + "'";
 //
 //		try {
 //			Statement consultaPreparada = conexion.createStatement();
 //
 //			consultaPreparada.executeUpdate(insercion);
+
+//			ResultSet rs = consultaIdentity.executeQuery("SELECT IDENT_CURRENT ('CRIAS')");
+//			rs.next();
+//			int idGenerado = rs.getInt(1);
 //			LOGGER.info("INSERCIÓN REALIZADA CORRECTAMENTE (ID = " + id + ")");
 //			return true;
 //		} catch (Exception e) {

@@ -46,7 +46,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtPesoCria.setForeground(MaterialColors.WHITE);
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
 		txtPesoCria.setCaretColor(Color.WHITE);
-		txtPesoCria.setEnabledRegex(true);
+		txtPesoCria.setRegex(2);
 
 		txtColorCria = new MaterialTextField();
 		txtColorCria.setBounds(50, 140, 380, 70);
@@ -65,7 +65,7 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		txtGrasaCria.setForeground(MaterialColors.WHITE);
 		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
 		txtGrasaCria.setCaretColor(Color.WHITE);
-		txtGrasaCria.setEnabledRegex(true);
+		txtGrasaCria.setRegex(1);
 
 		btnLimpiar = new MaterialButton();
 		btnLimpiar.setText("Limpiar");
@@ -89,7 +89,6 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		add(txtPesoCria);
 		add(txtColorCria);
 		add(txtGrasaCria);
-
 		add(btnActualizar);
 		add(btnLimpiar);
 
@@ -116,32 +115,43 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 			return;
 		}
 
-		ToastMessage toast = new ToastMessage(this);
-
 		if (!verificarCampos()) {
-			toast.setInfo("Llene todos los campos.", MaterialColors.RED_400);
-			toast.showToast();
+			showMessage("Llene todos los campos.", true);
 			return;
 		}
 
-		int peso = Integer.parseInt(txtPesoCria.getText());
-		String color = txtColorCria.getText();
 		int grasa = Integer.parseInt(txtGrasaCria.getText());
+		if (grasa > 100) {
+			showMessage("El porcentaje de grasa no puede ser mayor al 100 %", true);
+			txtGrasaCria.requestFocus();
+			txtGrasaCria.selectAll();
+			return;
+		}
+
+		float peso = Float.parseFloat(txtPesoCria.getText());
+		String color = txtColorCria.getText();
 
 		if (modelo.actualizaCria(idActual, peso, color, grasa)) {
-			toast.setInfo("Actualizado con éxito", MaterialColors.BLUE_400);
+			showMessage("Actualizado con éxito", false);
 			setVisible(false);
 		} else {
-			toast.setInfo("Hubo un error...", MaterialColors.RED_400);
+			showMessage("Hubo un error...", true);
 		}
-		toast.showToast();
-
 	}
 
 	private void limpiar() {
 		txtPesoCria.setText("");
 		txtColorCria.setText("");
 		txtGrasaCria.setText("");
+	}
+
+	private void showMessage(String msg, boolean error) {
+		ToastMessage toast = new ToastMessage(this);
+		if (error)
+			toast.setInfo(msg, MaterialColors.RED_400);
+		else
+			toast.setInfo(msg, MaterialColors.BLUE_400);
+		toast.showToast();
 	}
 
 	public boolean verificarCampos() {

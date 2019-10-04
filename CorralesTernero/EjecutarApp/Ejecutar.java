@@ -43,12 +43,6 @@ public class Ejecutar {
 		vista.consulta.setControladorSeleccionTabla(controladorSeleccionTabla);
 		vista.setVisible(true);
 		
-		
-//		int a =123,b=48; //Operadores Bitwise
-//		System.out.println(b&=a); //b= a&b
-//		1111011
-//		0110000
-//		0110000 //Resultado
 	}
 	
 	private static void login() {	

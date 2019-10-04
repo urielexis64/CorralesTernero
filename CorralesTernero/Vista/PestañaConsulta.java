@@ -91,9 +91,10 @@ public class PestañaConsulta extends JPanel {
 		txtBuscar.setBounds(90, 25, 185, 30);
 
 		lblNumeroCrias = new JLabel("Total de crías: ");
+		lblNumeroCrias.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNumeroCrias.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblNumeroCrias.setBorder(new RoundedCornerBorder(MaterialColors.DARKLY_BLUE));
-		lblNumeroCrias.setBounds(610, 15, 150, 40);
+		lblNumeroCrias.setBounds(570, 15, 190, 40);
 		lblSegundosTransaccion = new JLabel("5");
 		lblSegundosTransaccion.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblSegundosTransaccion.setBounds(40, 280, 25, 25);

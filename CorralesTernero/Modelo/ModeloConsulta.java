@@ -35,7 +35,7 @@ public class ModeloConsulta {
 			while (tuplasBD.next()) {
 				Vector<String> aux = new Vector<>();
 				aux.add(tuplasBD.getInt(1) + "");
-				aux.add(tuplasBD.getInt(2) + " kg");
+				aux.add(tuplasBD.getFloat(2) + " kg");
 				aux.add(tuplasBD.getString(3));
 				aux.add(tuplasBD.getInt(4) + " %");
 
@@ -76,7 +76,7 @@ public class ModeloConsulta {
 			while (tuplasBD.next()) {
 				Vector<String> aux = new Vector<>();
 				aux.add(tuplasBD.getInt(1) + "");
-				aux.add(tuplasBD.getInt(2) + " kg");
+				aux.add(tuplasBD.getFloat(2) + " kg");
 				aux.add(tuplasBD.getString(3));
 				aux.add(tuplasBD.getInt(4) + " %");
 

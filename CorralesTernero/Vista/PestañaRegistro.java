@@ -20,7 +20,7 @@ import mdlaf.utils.MaterialColors;
 
 public class PestañaRegistro extends JPanel {
 
-	public MaterialTextField txtIdCria, txtPesoCria, txtColorCria, txtGrasaCria;
+	public MaterialTextField txtPesoCria, txtColorCria, txtGrasaCria;
 	public MaterialButton btnRegistrarCria, btnLimpiar, btnAleatorio;
 	private MaterialPanel panel;
 	public MaterialProgressSpinner bar;
@@ -41,28 +41,18 @@ public class PestañaRegistro extends JPanel {
 		panel.setLayout(null);
 		panel.setBounds(40, 25, 700, 600);
 
-		txtIdCria = new MaterialTextField();
-		txtIdCria.setBounds(100, 20, 500, 70);
-		txtIdCria.setLabel("ID");
-		txtIdCria.setUpperFilter(true);
-		txtIdCria.setAccent(MaterialColors.YELLOW_300);
-		txtIdCria.setForeground(MaterialColors.WHITE);
-		txtIdCria.setBackground(MaterialColor.TRANSPARENT);
-		txtIdCria.setCaretColor(Color.WHITE);
-		txtIdCria.setEnabledRegex(true);
-
 		txtPesoCria = new MaterialTextField();
-		txtPesoCria.setBounds(100, 100, 500, 70);
+		txtPesoCria.setBounds(100, 30, 500, 70);
 		txtPesoCria.setLabel("Peso de la cría");
 		txtPesoCria.setUpperFilter(true);
 		txtPesoCria.setAccent(MaterialColors.YELLOW_300);
 		txtPesoCria.setForeground(MaterialColors.WHITE);
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
 		txtPesoCria.setCaretColor(Color.WHITE);
-		txtPesoCria.setEnabledRegex(true);
+		txtPesoCria.setRegex(MaterialTextField.REGEX_DECIMAL);
 
 		txtColorCria = new MaterialTextField();
-		txtColorCria.setBounds(100, 180, 500, 70);
+		txtColorCria.setBounds(100, 130, 500, 70);
 		txtColorCria.setLabel("Color de músculo");
 		txtColorCria.setUpperFilter(true);
 		txtColorCria.setAccent(MaterialColors.YELLOW_300);
@@ -71,14 +61,14 @@ public class PestañaRegistro extends JPanel {
 		txtColorCria.setCaretColor(Color.WHITE);
 
 		txtGrasaCria = new MaterialTextField();
-		txtGrasaCria.setBounds(100, 260, 500, 70);
+		txtGrasaCria.setBounds(100, 230, 500, 70);
 		txtGrasaCria.setLabel("Porcentaje de grasa");
 		txtGrasaCria.setUpperFilter(true);
 		txtGrasaCria.setAccent(MaterialColors.YELLOW_300);
 		txtGrasaCria.setForeground(MaterialColors.WHITE);
 		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
 		txtGrasaCria.setCaretColor(Color.WHITE);
-		txtGrasaCria.setEnabledRegex(true);
+		txtGrasaCria.setRegex(MaterialTextField.REGEX_ENTERO);
 
 		Font fuente = Roboto.REGULAR.deriveFont(16f);
 
@@ -100,12 +90,12 @@ public class PestañaRegistro extends JPanel {
 		JLabel lblFechaEntrada = new JLabel("Fecha de entrada");
 		lblFechaEntrada.setFont(Roboto.BOLD.deriveFont(14f));
 		lblFechaEntrada.setForeground(MaterialColors.DARKLY_GRAY);
-		lblFechaEntrada.setBounds(100, 345, 150, 20);
+		lblFechaEntrada.setBounds(100, 335, 150, 20);
 
 		calendario = new DatePicker(dateSettings);
 		calendario.getComponentToggleCalendarButton().setText("");
 		calendario.getComponentToggleCalendarButton().setIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
-		calendario.setBounds(100, 370, 150, 40);
+		calendario.setBounds(100, 360, 150, 40);
 		calendario.getComponentDateTextField().setBorder(new RoundedCornerBorder(Color.WHITE));
 
 		btnRegistrarCria = new MaterialButton();
@@ -141,7 +131,6 @@ public class PestañaRegistro extends JPanel {
 		panel.add(btnRegistrarCria);
 		panel.add(btnLimpiar);
 		panel.add(btnAleatorio);
-		panel.add(txtIdCria);
 		panel.add(txtPesoCria);
 		panel.add(txtColorCria);
 		panel.add(txtGrasaCria);
@@ -162,7 +151,6 @@ public class PestañaRegistro extends JPanel {
 	}
 
 	public void limpiar() {
-		txtIdCria.setText("");
 		txtPesoCria.setText("");
 		txtColorCria.setText("");
 		txtGrasaCria.setText("");
@@ -171,10 +159,7 @@ public class PestañaRegistro extends JPanel {
 
 	public boolean verificarCampos() {
 		boolean estado = true;
-		if (txtIdCria.getText().equals("")) {
-			estado = false;
-			txtIdCria.requestFocus();
-		} else if (txtPesoCria.getText().equals("")) {
+		if (txtPesoCria.getText().equals("")) {
 			estado = false;
 			txtPesoCria.requestFocus();
 		} else if (txtColorCria.getText().trim().equals("")) {
@@ -191,8 +176,7 @@ public class PestañaRegistro extends JPanel {
 	}
 
 	public void procesoAleatorio() {
-		txtIdCria.setText(Rutinas.nextInt(1, 1_000_000) + "");
-		txtPesoCria.setText(Rutinas.nextInt(20, 200) + "");
+		txtPesoCria.setText(String.format("%.2f", Rutinas.nextFloat(20, 200)));
 		txtColorCria.setText(Rutinas.nextColor());
 		txtGrasaCria.setText(Rutinas.nextInt(1, 100) + "");
 

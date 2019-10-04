@@ -9,21 +9,22 @@ public class ModeloActualiza {
 	private static final Logger LOGGER = Logger.getLogger(ModeloActualiza.class.getName());
 
 	private Connection conexion;
+	private PreparedStatement consultaPreparada;
 
 	public ModeloActualiza() {
 		conexion = ConexionBDSingleton.getConexion();
+		try {
+			consultaPreparada = conexion.prepareStatement(
+					"UPDATE CRIAS SET PESO = ?, COLOR_MUSCULO = ?, PORCENTAJE_GRASA = ? WHERE ID_CRIA = ?");
+		} catch (SQLException e) {
+		}
 	}
 
-	public boolean actualizaCria(int id, int peso, String colorMusculo, int porcentajeGrasa) {
-		String insercion = "UPDATE CRIAS SET PESO = ?, COLOR_MUSCULO = ?, PORCENTAJE_GRASA = ? WHERE ID_CRIA = ?";
-
-		PreparedStatement consultaPreparada = null;
-
+	public boolean actualizaCria(int id, float peso, String colorMusculo, int porcentajeGrasa) {
 		try {
 			LOGGER.info("ACTUALIZANDO CRIA... -> ID = " + id);
-			consultaPreparada = conexion.prepareStatement(insercion);
 
-			consultaPreparada.setInt(1, peso);
+			consultaPreparada.setFloat(1, peso);
 			consultaPreparada.setString(2, colorMusculo);
 			consultaPreparada.setInt(3, porcentajeGrasa);
 			consultaPreparada.setInt(4, id);

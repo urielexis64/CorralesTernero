@@ -13,6 +13,7 @@ public class ModeloEliminaCria {
 
 	public ModeloEliminaCria() {
 		conexion = ConexionBDSingleton.getConexion();
+		try {consulta = conexion.createStatement();}catch(SQLException e) {}
 	}
 
 	public boolean eliminaCriaById(int id) {
@@ -21,8 +22,6 @@ public class ModeloEliminaCria {
 		try {
 			LOGGER.info("ELIMINANDO CRIA CON ID = " + id);
 			
-			consulta = conexion.createStatement();
-
 			consulta.executeUpdate(sentencia);
 
 			LOGGER.info("CRÍA ELIMINADA -> ID = " + id);
@@ -40,7 +39,6 @@ public class ModeloEliminaCria {
 			LOGGER.info("TRUNCANDO TABLA CRIAS...");
 			conexion.setAutoCommit(false);
 
-			consulta = conexion.createStatement();
 			consulta.executeUpdate(sentencia);
 			return true;
 		} catch (SQLException e) {
