@@ -7,10 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
 
-import javax.swing.JOptionPane;
-
-import EjecutarApp.Ejecutar;
-
 public class ModeloRegistro {
 	private static final Logger LOGGER = Logger.getLogger(ModeloRegistro.class.getName());
 
@@ -49,23 +45,23 @@ public class ModeloRegistro {
 		}
 	}
 
-//	public boolean registrarCria(int id, int peso, String colorMusculo, int porcentajeGrasa, String fecha_entrada) { //Inyeccion SQL
+//	public int registrarCria(float peso, String colorMusculo, int porcentajeGrasa, String fecha_entrada) { //Inyeccion SQL
 //		String insercion = " EXECUTE PA_INSERTACRIA " + peso + ", '" + colorMusculo + "', "
 //				+ porcentajeGrasa + ", '" + fecha_entrada + "'";
 //
 //		try {
-//			Statement consultaPreparada = conexion.createStatement();
+//			Statement consulta = conexion.createStatement();
 //
-//			consultaPreparada.executeUpdate(insercion);
-
+//			consulta.executeUpdate(insercion);
+//
 //			ResultSet rs = consultaIdentity.executeQuery("SELECT IDENT_CURRENT ('CRIAS')");
 //			rs.next();
 //			int idGenerado = rs.getInt(1);
-//			LOGGER.info("INSERCIÓN REALIZADA CORRECTAMENTE (ID = " + id + ")");
-//			return true;
+//			LOGGER.info("INSERCIÓN REALIZADA CORRECTAMENTE (ID = " +idGenerado + ")");
+//			return idGenerado;
 //		} catch (Exception e) {
 //			LOGGER.severe(e.getMessage());
-//			return false;
+//			return -1;
 //		}
 //	}
 }

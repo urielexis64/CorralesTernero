@@ -144,9 +144,10 @@ public class PestañaRegistro extends JPanel {
 		ToastMessage toast = new ToastMessage(this);
 		if (error)
 			toast.setInfo(msg, MaterialColors.RED_400);
-		else
+		else {
 			toast.setInfo(msg, MaterialColors.GREEN_600);
-
+			toast.setLocation(toast.getLocation().x, toast.getLocation().y+40);
+		}
 		toast.showToast();
 	}
 
@@ -155,6 +156,7 @@ public class PestañaRegistro extends JPanel {
 		txtColorCria.setText("");
 		txtGrasaCria.setText("");
 		calendario.setText("");
+		txtPesoCria.requestFocus();
 	}
 
 	public boolean verificarCampos() {

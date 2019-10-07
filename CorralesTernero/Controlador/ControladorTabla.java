@@ -11,7 +11,6 @@ import javax.swing.JTable;
 import javax.swing.Timer;
 
 import Modelo.ModeloEliminaCria;
-import Vista.ModalEditarCria;
 import Vista.VentanaPrincipal;
 import herramientas.AccionComponente;
 import mdlaf.utils.MaterialColors;
@@ -19,7 +18,7 @@ import mdlaf.utils.MaterialColors;
 public class ControladorTabla extends MouseAdapter implements ActionListener {
 	private VentanaPrincipal vista;
 	private ModeloEliminaCria modelo;
-	private static JTable tabla;
+	private JTable tabla;
 	private Timer timer;
 	private Color colorTabla;
 
@@ -27,17 +26,6 @@ public class ControladorTabla extends MouseAdapter implements ActionListener {
 		this.vista = vista;
 		this.modelo = modelo;
 		timer = new Timer(1000, this);
-	}
-
-	private void editarCria() {
-		int id = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
-		String peso = tabla.getValueAt(tabla.getSelectedRow(), 1).toString().split(" ")[0];
-		String color = tabla.getValueAt(tabla.getSelectedRow(), 2).toString();
-		String grasa = tabla.getValueAt(tabla.getSelectedRow(), 3).toString().split(" ")[0];
-
-		ModalEditarCria modal = new ModalEditarCria();
-		modal.setInfo(id, peso, color, grasa);
-		modal.setVisible(true);
 	}
 
 	private boolean seleccionaPunto(Point punto) {
@@ -51,7 +39,7 @@ public class ControladorTabla extends MouseAdapter implements ActionListener {
 
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2 && tabla.getColumnCount() == 5) // Editar cría desde doble click
-			editarCria();
+			vista.consulta.editarCria();
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -112,7 +100,7 @@ public class ControladorTabla extends MouseAdapter implements ActionListener {
 		if (e.getSource() instanceof JMenuItem) { // Eliminar cría (Menú emergente)
 
 			if (((JMenuItem) e.getSource()).getName().equals("Editar")) {// Si es el item Editar
-				editarCria(); // Editar cría (Menú emergente)
+				vista.consulta.editarCria(); // Editar cría (Menú emergente)
 				return;
 			}
 

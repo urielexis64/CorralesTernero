@@ -73,6 +73,7 @@ public class ControladorRegistro implements ActionListener {
 				JOptionPane.showOptionDialog(vista, "ID generado: " + idGenerado, "Mensaje", 0, 0, null,
 						new Object[] { btnCopiar, "Cerrar" }, "Cerrar");
 			} else {
+				vista.registro.bar.setVisible(false);
 				vista.registro.showMessage("Hubo un error...", true);
 			}
 

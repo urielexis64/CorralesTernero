@@ -11,6 +11,7 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import Controlador.*;
+import EjecutarApp.Ejecutar;
 import de.craften.ui.swingmaterial.MaterialButton;
 import de.craften.ui.swingmaterial.MaterialButton.Type;
 import de.craften.ui.swingmaterial.MaterialComboBox;
@@ -37,6 +38,8 @@ public class PestañaConsulta extends JPanel {
 	public MaterialComboBox<String> comboBox;
 	public DatePicker calendario;
 
+	public ModalActualiza modal;
+
 	public PestañaConsulta() {
 		hazInterfaz();
 	}
@@ -44,6 +47,7 @@ public class PestañaConsulta extends JPanel {
 	private void hazInterfaz() {
 		setLayout(null);
 		iniciarTabla();
+		modal = new ModalActualiza();
 
 		scrollTable = new JScrollPane(tabla);
 		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
@@ -213,6 +217,17 @@ public class PestañaConsulta extends JPanel {
 			toast.setInfo(msg, MaterialColors.BLUE_500);
 
 		toast.showToast();
+	}
+
+	public void editarCria() {
+		modal.setLocationRelativeTo(Ejecutar.getInstance()); //lo reubico 
+		int id = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+		String peso = tabla.getValueAt(tabla.getSelectedRow(), 1).toString().split(" ")[0];
+		String color = tabla.getValueAt(tabla.getSelectedRow(), 2).toString();
+		String grasa = tabla.getValueAt(tabla.getSelectedRow(), 3).toString().split(" ")[0];
+
+		modal.setInfo(id, peso, color, grasa);
+		modal.setVisible(true);
 	}
 }
 

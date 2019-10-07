@@ -1,15 +1,16 @@
 package EjecutarApp;
 
-import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import Controlador.ControladorConsulta;
+import Controlador.ControladorModal;
 import Controlador.ControladorTabla;
 import Controlador.ControladorTitleBar;
 import Controlador.ControladorRegistro;
 import Modelo.ConexionBDSingleton;
+import Modelo.ModeloActualiza;
 import Modelo.ModeloConsulta;
 import Modelo.ModeloEliminaCria;
 import Modelo.ModeloRegistro;
@@ -23,7 +24,7 @@ public class Ejecutar {
 
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {
 		login();
-		
+
 		UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
 
 		vista = new VentanaPrincipal();
@@ -31,21 +32,24 @@ public class Ejecutar {
 		ModeloRegistro modeloRegistro = new ModeloRegistro();
 		ModeloConsulta modeloConsulta = new ModeloConsulta();
 		ModeloEliminaCria modeloEliminaCria = new ModeloEliminaCria();
+		ModeloActualiza modeloActualiza = new ModeloActualiza();
 
 		ControladorRegistro controladorRegistro = new ControladorRegistro(vista, modeloRegistro);
 		ControladorConsulta controladorConsulta = new ControladorConsulta(vista, modeloConsulta);
 		ControladorTabla controladorSeleccionTabla = new ControladorTabla(vista, modeloEliminaCria);
+		ControladorModal controladorModal = new ControladorModal(vista, modeloActualiza);
 		ControladorTitleBar controladorTitleBar = new ControladorTitleBar(vista);
 
 		vista.setControlador(controladorTitleBar);
 		vista.registro.setControlador(controladorRegistro);
 		vista.consulta.setControladorConsulta(controladorConsulta);
 		vista.consulta.setControladorSeleccionTabla(controladorSeleccionTabla);
+		vista.consulta.modal.setControlador(controladorModal);
 		vista.setVisible(true);
-		
+
 	}
-	
-	private static void login() {	
+
+	private static void login() {
 		ConexionBDSingleton.host = "LOCALHOST";
 		ConexionBDSingleton.port = "1433";
 		ConexionBDSingleton.databaseName = "PRUEBA";
@@ -64,7 +68,7 @@ public class Ejecutar {
 		}
 	}
 
-	public static Component getInstance() { // Para centrar el Toast respecto a la posicion
+	public static VentanaPrincipal getInstance() { // Para centrar el Toast respecto a la posicion
 		return vista;
 	}
 

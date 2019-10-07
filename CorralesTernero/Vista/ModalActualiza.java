@@ -1,28 +1,24 @@
 package Vista;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import Controlador.ControladorModal;
 import EjecutarApp.Ejecutar;
-import Modelo.ModeloActualiza;
 import de.craften.ui.swingmaterial.*;
 import herramientas.ToastMessage;
 import mdlaf.utils.MaterialColors;
 
-public class ModalEditarCria extends JDialog implements ActionListener {
+public class ModalActualiza extends JDialog {
 	public MaterialTextField txtPesoCria, txtColorCria, txtGrasaCria;
-	private MaterialButton btnLimpiar, btnActualizar;
-	private ModeloActualiza modelo;
+	public MaterialButton btnLimpiar, btnActualizar;
 	private JLabel lblInfo;
-	private int idActual;
+	public int idActual;
 
-	public ModalEditarCria() {
+	public ModalActualiza() {
 		hazInterfaz();
-		hazEscuchas();
 	}
 
 	public void hazInterfaz() {
@@ -91,7 +87,6 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		add(txtGrasaCria);
 		add(btnActualizar);
 		add(btnLimpiar);
-
 	}
 
 	public void setInfo(int id, String peso, String color, String grasa) {
@@ -102,50 +97,19 @@ public class ModalEditarCria extends JDialog implements ActionListener {
 		lblInfo.setText("Información de la cría #" + idActual);
 	}
 
-	private void hazEscuchas() {
-		btnLimpiar.addActionListener(this);
-		btnActualizar.addActionListener(this);
-		modelo = new ModeloActualiza();
+	public void setControlador(ControladorModal controlador) {
+		btnLimpiar.addActionListener(controlador);
+		btnActualizar.addActionListener(controlador);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnLimpiar) {
-			limpiar();
-			return;
-		}
-
-		if (!verificarCampos()) {
-			showMessage("Llene todos los campos.", true);
-			return;
-		}
-
-		int grasa = Integer.parseInt(txtGrasaCria.getText());
-		if (grasa > 100) {
-			showMessage("El porcentaje de grasa no puede ser mayor al 100 %", true);
-			txtGrasaCria.requestFocus();
-			txtGrasaCria.selectAll();
-			return;
-		}
-
-		float peso = Float.parseFloat(txtPesoCria.getText());
-		String color = txtColorCria.getText();
-
-		if (modelo.actualizaCria(idActual, peso, color, grasa)) {
-			showMessage("Actualizado con éxito", false);
-			setVisible(false);
-		} else {
-			showMessage("Hubo un error...", true);
-		}
-	}
-
-	private void limpiar() {
+	public void limpiar() {
 		txtPesoCria.setText("");
 		txtColorCria.setText("");
 		txtGrasaCria.setText("");
+		txtPesoCria.requestFocus();
 	}
 
-	private void showMessage(String msg, boolean error) {
+	public void showMessage(String msg, boolean error) {
 		ToastMessage toast = new ToastMessage(this);
 		if (error)
 			toast.setInfo(msg, MaterialColors.RED_400);

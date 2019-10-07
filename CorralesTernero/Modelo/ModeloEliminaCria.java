@@ -33,11 +33,11 @@ public class ModeloEliminaCria {
 	}
 
 	public boolean vaciarTabla() {
-		String sentencia = "BEGIN TRAN TRANSACCION_TRUNCAR TRUNCATE TABLE CRIAS";
+		String sentencia = "TRUNCATE TABLE CRIAS";
 
 		try {
 			LOGGER.info("TRUNCANDO TABLA CRIAS...");
-			conexion.setAutoCommit(false);
+			conexion.setAutoCommit(false); //Es como un BEGIN TRAN
 
 			consulta.executeUpdate(sentencia);
 			return true;
@@ -50,11 +50,9 @@ public class ModeloEliminaCria {
 	public void commitTransaccion(boolean commit) {
 		try {
 			if (commit) {
-				conexion.prepareStatement("COMMIT TRAN TRANSACCION_TRUNCAR");
 				conexion.commit();
 				LOGGER.info("HICE COMMIT");
 			} else {
-				conexion.prepareStatement("ROLLBACK TRAN TRANSACCION_TRUNCAR");
 				conexion.rollback();
 				LOGGER.info("HICE ROLLBACK");
 			}
