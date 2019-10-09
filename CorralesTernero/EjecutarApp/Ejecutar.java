@@ -46,7 +46,6 @@ public class Ejecutar {
 		vista.consulta.setControladorSeleccionTabla(controladorSeleccionTabla);
 		vista.consulta.modal.setControlador(controladorModal);
 		vista.setVisible(true);
-
 	}
 
 	private static void login() {

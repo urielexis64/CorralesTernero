@@ -9,7 +9,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 public class ModeloConsulta {
-	private static final Logger LOGGER = Logger.getLogger(ModeloConsulta.class.getName());
+	private final Logger LOGGER = Logger.getLogger(ModeloConsulta.class.getName());
 
 	private Connection conexion;
 	private byte tipo;

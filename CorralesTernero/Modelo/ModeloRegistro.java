@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.logging.Logger;
 
 public class ModeloRegistro {
-	private static final Logger LOGGER = Logger.getLogger(ModeloRegistro.class.getName());
+	private final Logger LOGGER = Logger.getLogger(ModeloRegistro.class.getName());
 
 	private Connection conexion;
 	private PreparedStatement consultaPreparada;

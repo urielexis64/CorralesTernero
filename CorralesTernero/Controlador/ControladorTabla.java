@@ -12,7 +12,7 @@ import javax.swing.Timer;
 
 import Modelo.ModeloEliminaCria;
 import Vista.VentanaPrincipal;
-import herramientas.AccionComponente;
+import material.extras.AccionComponente;
 import mdlaf.utils.MaterialColors;
 
 public class ControladorTabla extends MouseAdapter implements ActionListener {

@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.logging.Logger;
 
 public class ModeloEliminaCria {
-	private static final Logger LOGGER = Logger.getLogger(ModeloEliminaCria.class.getName());
+	private final Logger LOGGER = Logger.getLogger(ModeloEliminaCria.class.getName());
 
 	private Connection conexion;
 	private Statement consulta;

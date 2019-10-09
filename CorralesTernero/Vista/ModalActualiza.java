@@ -1,14 +1,18 @@
 package Vista;
 
 import java.awt.*;
+import java.util.ArrayList;
+
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import Controlador.ControladorModal;
 import EjecutarApp.Ejecutar;
-import de.craften.ui.swingmaterial.*;
-import herramientas.ToastMessage;
+import material.componentes.*;
+import material.extras.AccionComponente;
+import material.extras.ToastMessage;
 import mdlaf.utils.MaterialColors;
 
 public class ModalActualiza extends JDialog {
@@ -70,7 +74,6 @@ public class ModalActualiza extends JDialog {
 		btnLimpiar.setBackground(MaterialColors.GREEN_300);
 		btnLimpiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnLimpiar.setBorderRadius(6);
-		btnLimpiar.setType(MaterialButton.Type.RAISED);
 
 		btnActualizar = new MaterialButton();
 		btnActualizar.setText("Actualizar cría");
@@ -79,7 +82,6 @@ public class ModalActualiza extends JDialog {
 		btnActualizar.setBackground(MaterialColors.GREEN_300);
 		btnActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnActualizar.setBorderRadius(6);
-		btnActualizar.setType(MaterialButton.Type.RAISED);
 
 		add(lblInfo);
 		add(txtPesoCria);
@@ -100,6 +102,7 @@ public class ModalActualiza extends JDialog {
 	public void setControlador(ControladorModal controlador) {
 		btnLimpiar.addActionListener(controlador);
 		btnActualizar.addActionListener(controlador);
+		txtGrasaCria.addActionListener(controlador);
 	}
 
 	public void limpiar() {
@@ -120,15 +123,24 @@ public class ModalActualiza extends JDialog {
 
 	public boolean verificarCampos() {
 		boolean estado = true;
+		ArrayList<JComponent> componentes = new ArrayList<JComponent>();
+
 		if (txtPesoCria.getText().equals("")) {
 			estado = false;
-			txtPesoCria.requestFocus();
-		} else if (txtColorCria.getText().trim().equals("")) {
+			componentes.add(txtPesoCria);
+		}
+		if (txtColorCria.getText().trim().equals("")) {
 			estado = false;
-			txtColorCria.requestFocus();
-		} else if (txtGrasaCria.getText().equals("")) {
+			componentes.add(txtColorCria);
+		}
+		if (txtGrasaCria.getText().equals("")) {
 			estado = false;
-			txtGrasaCria.requestFocus();
+			componentes.add(txtGrasaCria);
+		}
+		if (!estado) {
+			componentes.get(0).requestFocus();
+			for (int i = 0; i < componentes.size(); i++)
+				AccionComponente.sacudir(componentes.get(i), 300, 10);
 		}
 		return estado;
 	}

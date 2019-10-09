@@ -1,6 +1,8 @@
 package Vista;
 
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -12,13 +14,13 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import Controlador.*;
 import EjecutarApp.Ejecutar;
-import de.craften.ui.swingmaterial.MaterialButton;
-import de.craften.ui.swingmaterial.MaterialButton.Type;
-import de.craften.ui.swingmaterial.MaterialComboBox;
-import de.craften.ui.swingmaterial.fonts.MaterialIcons;
-import herramientas.IconTextField;
-import herramientas.Rutinas;
-import herramientas.ToastMessage;
+import material.componentes.MaterialButton;
+import material.componentes.MaterialComboBox;
+import material.componentes.MaterialButton.Type;
+import material.extras.IconTextField;
+import material.extras.Rutinas;
+import material.extras.ToastMessage;
+import material.fonts.MaterialIcons;
 import mdlaf.utils.MaterialColors;
 import mdlaf.shadows.DropShadowBorder;
 import mdlaf.shadows.RoundedCornerBorder;

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class ModeloActualiza {
-	private static final Logger LOGGER = Logger.getLogger(ModeloActualiza.class.getName());
+	private final Logger LOGGER = Logger.getLogger(ModeloActualiza.class.getName());
 
 	private Connection conexion;
 	private PreparedStatement consultaPreparada;

@@ -2,6 +2,7 @@ package Vista;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -10,11 +11,12 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DatePickerSettings.DateArea;
 
 import Controlador.ControladorRegistro;
-import de.craften.ui.swingmaterial.*;
-import de.craften.ui.swingmaterial.MaterialButton.Type;
-import de.craften.ui.swingmaterial.fonts.Roboto;
-import herramientas.Rutinas;
-import herramientas.ToastMessage;
+import material.componentes.*;
+import material.componentes.MaterialButton.Type;
+import material.extras.AccionComponente;
+import material.extras.Rutinas;
+import material.extras.ToastMessage;
+import material.fonts.Roboto;
 import mdlaf.shadows.RoundedCornerBorder;
 import mdlaf.utils.MaterialColors;
 
@@ -146,7 +148,7 @@ public class PestañaRegistro extends JPanel {
 			toast.setInfo(msg, MaterialColors.RED_400);
 		else {
 			toast.setInfo(msg, MaterialColors.GREEN_600);
-			toast.setLocation(toast.getLocation().x, toast.getLocation().y+40);
+			toast.setLocation(toast.getLocation().x, toast.getLocation().y + 40);
 		}
 		toast.showToast();
 	}
@@ -161,18 +163,29 @@ public class PestañaRegistro extends JPanel {
 
 	public boolean verificarCampos() {
 		boolean estado = true;
+		ArrayList<JComponent> componentes = new ArrayList<JComponent>();
+
 		if (txtPesoCria.getText().equals("")) {
 			estado = false;
-			txtPesoCria.requestFocus();
-		} else if (txtColorCria.getText().trim().equals("")) {
+			componentes.add(txtPesoCria);
+		}
+		if (txtColorCria.getText().trim().equals("")) {
 			estado = false;
-			txtColorCria.requestFocus();
-		} else if (txtGrasaCria.getText().equals("")) {
+			componentes.add(txtColorCria);
+		}
+		if (txtGrasaCria.getText().equals("")) {
 			estado = false;
-			txtGrasaCria.requestFocus();
-		} else if (calendario.getText().equals("")) {
+			componentes.add(txtGrasaCria);
+		}
+		if (calendario.getText().equals("")) {
 			estado = false;
 			calendario.getComponentDateTextField().setBackground(MaterialColors.RED_400);
+			componentes.add(calendario);
+		}
+		if (!estado) {
+			componentes.get(0).requestFocus();
+			for (int i = 0; i < componentes.size(); i++)
+				AccionComponente.sacudir(componentes.get(i), 300, 10);
 		}
 		return estado;
 	}
@@ -193,6 +206,7 @@ public class PestañaRegistro extends JPanel {
 		btnRegistrarCria.addActionListener(controlador);
 		btnLimpiar.addActionListener(controlador);
 		btnAleatorio.addActionListener(controlador);
+		txtGrasaCria.addActionListener(controlador);
 	}
 
 }

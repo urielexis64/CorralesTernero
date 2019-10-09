@@ -2,7 +2,6 @@ package Vista;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,9 +10,9 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
 import Controlador.ControladorModoOscuro;
 import Controlador.ControladorTitleBar;
-import de.craften.ui.swingmaterial.MaterialColor;
-import de.craften.ui.swingmaterial.MaterialPanel;
-import herramientas.Rutinas;
+import material.componentes.MaterialColor;
+import material.componentes.MaterialPanel;
+import material.extras.Rutinas;
 import mdlaf.*;
 import mdlaf.shadows.RoundedCornerBorder;
 import mdlaf.themes.MaterialLiteTheme;
@@ -25,7 +24,7 @@ public class VentanaPrincipal extends JFrame {
 	private JToggleButton btnModoOscuro;
 	private JButton btnCerrar, btnMinimizar, btnInfo;
 	private MaterialPanel panelSuperior;
-	private JLabel lblTitulo;
+	public JLabel lblTitulo;
 
 	public PestañaRegistro registro;
 	public PestañaClasifcacion clasificacion;
@@ -91,10 +90,10 @@ public class VentanaPrincipal extends JFrame {
 		setLocationRelativeTo(null);
 		setBackground(new Color(40, 65, 91, 240));
 
-		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 40, 40));
+		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
 		setIconImage(Rutinas.AjustarImagen("Resources\\cow.png", 100, 100).getImage());
 		setLayout(null);
-
+		
 		add(btnModoOscuro);
 		add(pestañas);
 		add(panelSuperior);

@@ -31,7 +31,7 @@ public class ControladorRegistro implements ActionListener {
 			return;
 		}
 
-		procesoRegistrarCria(); // Botón Registrar
+		procesoRegistrarCria(); // Botón Registrar o Enter
 	}
 
 	private void procesoRegistrarCria() {
