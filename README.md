@@ -6,8 +6,14 @@ Proyecto de taller de base de datos que se encarga de gestionar las crías de un
 * _Se introducen los datos y se genera un ID_
 
 <p float="center">
-  <img src="https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/registro.gif" width="100%" />
+  <img src="https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/Screenshot_1.png" width="75%" />
 </p>
+
+<p float="center">
+  <img src="https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/registro.gif" width="75%" />
+</p>
+
+
 
 ## Generación de ID
 * _Se muestra el ID generado y se da la posibilidad de copiarlo directo al portapapeles_
