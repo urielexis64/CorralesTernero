@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import Modelo.ModeloRegistro;
 import Vista.VentanaPrincipal;
+import material.extras.AccionComponente;
 
 public class ControladorRegistro implements ActionListener {
 	private VentanaPrincipal vista;
@@ -65,7 +66,7 @@ public class ControladorRegistro implements ActionListener {
 							null);
 					vista.registro.showMessage("Texto copiado", false);
 				});
-				
+
 				vista.registro.bar.setVisible(false);
 				vista.registro.showMessage("¡Cría insertada con éxito!", false);
 				vista.consulta.btnRefrescar.doClick(); // Actualizar tabla de consultas
@@ -79,5 +80,6 @@ public class ControladorRegistro implements ActionListener {
 
 			vista.registro.limpiar();
 		}).start();
+		AccionComponente.codifica(vista.registro.btnRegistrarCria, 30, 15);
 	}
 }

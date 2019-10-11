@@ -108,6 +108,7 @@ public class PestañaRegistro extends JPanel {
 		btnRegistrarCria.setBorderRadius(6);
 		btnRegistrarCria.setType(Type.RAISED);
 		btnRegistrarCria.setBounds(250, 470, 200, 70);
+		btnRegistrarCria.setAnimado(true);
 
 		btnLimpiar = new MaterialButton(Rutinas.AjustarImagen("Resources\\clean.png", 30, 30).getImage());
 		btnLimpiar.setRippleColor(MaterialColor.GREEN_500);
