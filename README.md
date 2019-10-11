@@ -5,9 +5,9 @@ Proyecto de taller de base de datos que se encarga de gestionar las crías de un
 ## Pestaña registro
 * _Se introducen los datos y se genera un ID_
 
-  <img align="left" src="https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/Screenshot_1.png" width="75%" />
+  <img align="center" src="https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/Screenshot_1.png" width="75%" />
 
-  <img align="left" src="https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/registro.gif" width="75%" />
+  <img align="center" src="https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/registro.gif" width="75%" />
 
 
 
