@@ -33,5 +33,8 @@ Proyecto de taller de base de datos que se encarga de gestionar las crías de un
 ![github-large](https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/Screenshot_6.png)
 
 ## Demo
-* ___Registro___
+* ___Registro___ 
 <img src="https://github.com/urielexis64/CorralesTernero/blob/master/ScreenShots/Versi%C3%B3n%200.38/registro.gif" width="100%" />
+
+* ___Consulta___ 
+<img src="https://github.com/urielexis64/CorralesTernero/blob/master/consulta.gif" width="100%" />
