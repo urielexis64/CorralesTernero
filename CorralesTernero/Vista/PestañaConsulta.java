@@ -132,7 +132,6 @@ public class PestañaConsulta extends JPanel {
 	private void iniciarTabla() {
 		modeloTabla = new ModeloTabla();
 		tabla = new JTable(modeloTabla);
-
 		defineColumnas();
 		defineAnchoColumnas(); // Cambio tamaño máximo de las columnas
 

@@ -68,9 +68,11 @@ public class ModeloConsulta {
 				consultaPreparada.setInt(1, Integer.parseInt(valor)); // Si es valor numérico
 			else if (tipo == 2)
 				consultaPreparada.setString(1, "%" + valor + "%");// Si es varchar
-			else
-				consultaPreparada.setString(1, valor); // Si es fecha
-
+			else {// Si es fecha
+				String[] partesFecha = valor.split("-");
+				String fechaSQL = partesFecha[2] + partesFecha[1] + partesFecha[0]; // año-mes-dia
+				consultaPreparada.setString(1, fechaSQL);
+			}
 			ResultSet tuplasBD = consultaPreparada.executeQuery();
 
 			while (tuplasBD.next()) {
@@ -135,7 +137,7 @@ public class ModeloConsulta {
 //			break;
 //		default: // Case FECHA_ENTRADA
 //			tipo = 3;
-//			sentencia = "SELECT * FROM CRIAS WHERE " + atributo + " >= " + valor;
+//			sentencia = "SELECT * FROM CRIAS WHERE " + atributo + " = " + valor;
 //		}
 //
 //		Statement consulta = null;
@@ -179,7 +181,7 @@ public class ModeloConsulta {
 			return "SELECT * FROM CRIAS WHERE " + atributo + " LIKE ?";
 		default: // Case FECHA_ENTRADA
 			tipo = 3;
-			return "SELECT * FROM CRIAS WHERE " + atributo + " >= ?";
+			return "SELECT * FROM CRIAS WHERE " + atributo + " = ?";
 		}
 	}
 }
