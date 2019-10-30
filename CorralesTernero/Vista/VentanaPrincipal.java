@@ -75,8 +75,9 @@ public class VentanaPrincipal extends JFrame {
 		pestañas.addTab("Clasificación", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18),
 				clasificacion);
 		pestañas.addTab("Consulta", Rutinas.AjustarImagen("Resources\\consulta_icon.png", 22, 22), consulta);
-		pestañas.addTab("Sacrificios", Rutinas.AjustarImagen("Resources\\sacrificio_icon.png", 26, 26), sacrificios);
 		pestañas.addTab("Cuidados", Rutinas.AjustarImagen("Resources\\cuidados_icon.png", 22, 22), cuidados);
+		pestañas.addTab("Sacrificios", Rutinas.AjustarImagen("Resources\\sacrificio_icon.png", 26, 26), sacrificios);
+		
 //		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
 		
 		btnModoOscuro = new JToggleButton("Modo claro (BETA)");

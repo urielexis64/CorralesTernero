@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -15,8 +16,8 @@ public class ModeloCuidados {
 	public ModeloCuidados() {
 		conexion = ConexionBDSingleton.getConexion();
 	}
-	
-	public Vector<Vector<Object>> getCriasTabla(){
+
+	public Vector<Vector<Object>> getCriasTabla() {
 		Vector<Vector<Object>> crias = new Vector<Vector<Object>>();
 
 		String sentencia = "SELECT ID_CRIA, CORRAL_ID FROM CRIAS";
@@ -41,6 +42,29 @@ public class ModeloCuidados {
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 			return null;
+		}
+	}
+
+	public void actualizaSalud(Vector<Vector<String>> crias) {
+		String sentenciaEnferma = "UPDATE CRIAS SET CORRAL_ID = 2, ALIM_ID = 2, VECES_CUARENTENA = VECES_CUARENTENA+1 WHERE ID_CRIA = ";
+		String sentenciaSana = "UPDATE CRIAS SET CORRAL_ID = 1, ALIM_ID = 1 WHERE ID_CRIA = ";
+
+		Statement consulta = null;
+
+		try {
+			LOGGER.info("ACTUALIZANDO SALUD DE CRIAS...");
+
+			consulta = conexion.createStatement();
+			for (int i = 0; i < crias.size(); i++) {
+				if (crias.get(i).get(1).equals("true"))
+					consulta.executeUpdate(sentenciaEnferma + crias.get(i).get(0));
+				else
+					consulta.executeUpdate(sentenciaSana + crias.get(i).get(0));
+			}
+
+			LOGGER.info("TUPLAS ACTUALIZADAS CON ÉXITO");
+		} catch (SQLException e) {
+			LOGGER.severe(e.getMessage());
 		}
 	}
 }
