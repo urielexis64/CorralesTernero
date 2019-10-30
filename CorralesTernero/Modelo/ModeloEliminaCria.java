@@ -17,12 +17,12 @@ public class ModeloEliminaCria {
 	}
 
 	public boolean eliminaCriaById(int id) {
-		String sentencia = "DELETE FROM CRIAS WHERE ID_CRIA = " + id;
-
+		String sentenciaBorraCria = "EXEC PA_ELIMINA_CRIA " + id;
+		
 		try {
 			LOGGER.info("ELIMINANDO CRIA CON ID = " + id);
 			
-			consulta.executeUpdate(sentencia);
+			consulta.executeUpdate(sentenciaBorraCria);
 
 			LOGGER.info("CRÍA ELIMINADA -> ID = " + id);
 			return true;
@@ -33,7 +33,7 @@ public class ModeloEliminaCria {
 	}
 
 	public boolean vaciarTabla() {
-		String sentencia = "TRUNCATE TABLE CRIAS";
+		String sentencia = "EXEC PA_TRUNCA_CRIAS";
 
 		try {
 			LOGGER.info("TRUNCANDO TABLA CRIAS...");

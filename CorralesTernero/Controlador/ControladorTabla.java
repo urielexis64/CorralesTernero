@@ -105,7 +105,7 @@ public class ControladorTabla extends MouseAdapter implements ActionListener {
 			}
 
 			int id = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0).toString()); // Si es el item Eliminar
-			if (JOptionPane.showConfirmDialog(vista, "¿Está seguro de eliminar a la cría con el ID #" + id) == 0) {
+			if (JOptionPane.showConfirmDialog(vista, "¿Está seguro de eliminar a la cría con el ID #" + id+"?") == 0) {
 				modelo.eliminaCriaById(id);
 				vista.consulta.btnRefrescar.doClick();
 				vista.consulta.showMessage("Cría eliminada", false);

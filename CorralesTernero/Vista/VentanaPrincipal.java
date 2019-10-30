@@ -2,9 +2,12 @@ package Vista;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Robot;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.*;
@@ -29,6 +32,8 @@ public class VentanaPrincipal extends JFrame {
 	public PestañaRegistro registro;
 	public PestañaClasifcacion clasificacion;
 	public PestañaConsulta consulta;
+	public PestañaSacrificios sacrificios;
+	public PestañaCuidados cuidados;
 
 	public VentanaPrincipal() {
 		hazInterfaz();
@@ -63,13 +68,17 @@ public class VentanaPrincipal extends JFrame {
 		registro = new PestañaRegistro();
 		clasificacion = new PestañaClasifcacion();
 		consulta = new PestañaConsulta();
+		sacrificios= new PestañaSacrificios();
+		cuidados = new PestañaCuidados();
 
 		pestañas.addTab("Registro", Rutinas.AjustarImagen("Resources\\registro_icon[nuevo].png", 20, 20), registro);
 		pestañas.addTab("Clasificación", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18),
 				clasificacion);
 		pestañas.addTab("Consulta", Rutinas.AjustarImagen("Resources\\consulta_icon.png", 22, 22), consulta);
+		pestañas.addTab("Sacrificios", Rutinas.AjustarImagen("Resources\\sacrificio_icon.png", 26, 26), sacrificios);
+		pestañas.addTab("Cuidados", Rutinas.AjustarImagen("Resources\\cuidados_icon.png", 22, 22), cuidados);
 //		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
-
+		
 		btnModoOscuro = new JToggleButton("Modo claro (BETA)");
 		btnModoOscuro.setSelected(true);
 		btnModoOscuro.setBackground(new Color(40, 65, 91, 0));
@@ -88,6 +97,7 @@ public class VentanaPrincipal extends JFrame {
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
+//		setAlwaysOnTop(true);
 		setBackground(new Color(40, 65, 91, 240));
 
 		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));

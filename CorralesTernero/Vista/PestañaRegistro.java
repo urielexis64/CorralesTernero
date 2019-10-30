@@ -30,6 +30,8 @@ public class PestañaRegistro extends JPanel {
 	private DatePickerSettings dateSettings;
 	public DatePicker calendario;
 
+	private String[] coloresMusculo = { "Rojo Vivo", "Rojo Purpura", "Rojo Pardo" };
+
 	public PestañaRegistro() {
 		hazInterfaz();
 	}
@@ -193,7 +195,7 @@ public class PestañaRegistro extends JPanel {
 
 	public void procesoAleatorio() {
 		txtPesoCria.setText(String.format("%.2f", Rutinas.nextFloat(20, 200)));
-		txtColorCria.setText(Rutinas.nextColor());
+		txtColorCria.setText(coloresMusculo[Rutinas.nextInt(0, 2)]);
 		txtGrasaCria.setText(Rutinas.nextInt(1, 100) + "");
 
 		int año = Rutinas.nextInt(2000, 2020);

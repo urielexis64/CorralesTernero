@@ -1,8 +1,6 @@
 package Vista;
 
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -14,6 +12,7 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import Controlador.*;
 import EjecutarApp.Ejecutar;
+import EjecutarApp.ModeloTabla;
 import material.componentes.MaterialButton;
 import material.componentes.MaterialComboBox;
 import material.componentes.MaterialButton.Type;
@@ -229,12 +228,5 @@ public class PestañaConsulta extends JPanel {
 
 		modal.setInfo(id, peso, color, grasa);
 		modal.setVisible(true);
-	}
-}
-
-class ModeloTabla extends DefaultTableModel {
-
-	public boolean isCellEditable(int row, int co) {
-		return false;
 	}
 }
