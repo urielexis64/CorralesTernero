@@ -70,7 +70,10 @@ public class ControladorRegistro implements ActionListener {
 				vista.registro.bar.setVisible(false);
 				vista.registro.showMessage("¡Cría insertada con éxito!", false);
 				vista.consulta.btnRefrescar.doClick(); // Actualizar tabla de consultas
-
+				vista.clasificacion.btnRefrescar.doClick();// Actualizar tabla de clasificación
+				vista.cuidados.btnRefrescar.doClick();// Actualizar tabla de cuidados
+				vista.sacrificios.btnRefrescar.doClick();// Actualizar tabla de sacrificios
+				
 				JOptionPane.showOptionDialog(vista, "ID generado: " + idGenerado, "Mensaje", 0, 0, null,
 						new Object[] { btnCopiar, "Cerrar" }, "Cerrar");
 			} else {

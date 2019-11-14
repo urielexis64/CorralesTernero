@@ -2,12 +2,9 @@ package Vista;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.Robot;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.*;
@@ -34,6 +31,7 @@ public class VentanaPrincipal extends JFrame {
 	public PestañaConsulta consulta;
 	public PestañaSacrificios sacrificios;
 	public PestañaCuidados cuidados;
+	public PestañaSensores sensores;
 
 	public VentanaPrincipal() {
 		hazInterfaz();
@@ -70,13 +68,21 @@ public class VentanaPrincipal extends JFrame {
 		consulta = new PestañaConsulta();
 		sacrificios= new PestañaSacrificios();
 		cuidados = new PestañaCuidados();
+		sensores= new PestañaSensores();
 
-		pestañas.addTab("Registro", Rutinas.AjustarImagen("Resources\\registro_icon[nuevo].png", 20, 20), registro);
-		pestañas.addTab("Clasificación", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18),
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\registro_icon[nuevo].png", 20, 20), registro);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18),
 				clasificacion);
-		pestañas.addTab("Consulta", Rutinas.AjustarImagen("Resources\\consulta_icon.png", 22, 22), consulta);
-		pestañas.addTab("Cuidados", Rutinas.AjustarImagen("Resources\\cuidados_icon.png", 22, 22), cuidados);
-		pestañas.addTab("Sacrificios", Rutinas.AjustarImagen("Resources\\sacrificio_icon.png", 26, 26), sacrificios);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\consulta_icon.png", 22, 22), consulta);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\cuidados_icon.png", 22, 22), cuidados);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sacrificio_icon.png", 26, 26), sacrificios);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sensor_icon.png", 26, 26), sensores);
+		pestañas.setToolTipTextAt(0, "Registro");
+		pestañas.setToolTipTextAt(1, "Clasificación");
+		pestañas.setToolTipTextAt(2, "Consulta");
+		pestañas.setToolTipTextAt(3, "Cuidados");
+		pestañas.setToolTipTextAt(4, "Sacrificios");
+		pestañas.setToolTipTextAt(5, "Sensores");
 		
 //		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
 		

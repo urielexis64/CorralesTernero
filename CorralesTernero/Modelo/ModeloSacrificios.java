@@ -20,12 +20,12 @@ public class ModeloSacrificios {
 	public Vector<Vector<Object>> getCriasSacrificar(){
 		Vector<Vector<Object>> crias = new Vector<Vector<Object>>();
 
-		String sentencia = "SELECT ID_CRIA, CLASIFICACION, FECHA_ENTRADA, VECES_CUARENTENA FROM CRIAS";
+		String sentencia = "SELECT * FROM VW_CRIAS_LISTAS_SACRIFICIO";
 
 		Statement consulta = null;
 
 		try {
-			LOGGER.info("OBTENIENDO TUPLAS DE LA TABLA CRIAS...");
+			LOGGER.info("OBTENIENDO TUPLAS DE CRÍAS LISTAS PARA SACRIFICAR...");
 
 			consulta = conexion.createStatement();
 
@@ -37,6 +37,7 @@ public class ModeloSacrificios {
 				aux.add(tuplasBD.getString(2) + "");
 				aux.add(tuplasBD.getString(3)+"");
 				aux.add(tuplasBD.getInt(4) + "");
+				aux.add(tuplasBD.getInt(5) + "");
 				crias.add(aux);
 			}
 			LOGGER.info("TUPLAS OBTENIDAS CON ÉXITO");
@@ -45,6 +46,24 @@ public class ModeloSacrificios {
 			LOGGER.severe(e.getMessage());
 			return null;
 		}
+	}
+	
+	public boolean cuelloCria(int criaId) {
+		String sentencia = "EXEC PA_BAJA_CRIA "+criaId;
+		
+		try {
+			LOGGER.info("DANDO CUELLO A CRÍA #"+criaId+"...");
+
+			Statement consulta = conexion.createStatement();
+			consulta.executeUpdate(sentencia);
+			LOGGER.info("CRÍA DADA DE BAJA CON ÉXITO");
+			
+			return true;
+		}catch(SQLException e) {
+			LOGGER.severe(e.getMessage());
+			return false;
+		}
+		
 	}
 	
 }

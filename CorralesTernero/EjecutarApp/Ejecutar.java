@@ -12,6 +12,7 @@ import Controlador.ControladorTabla;
 import Controlador.ControladorTitleBar;
 import Controlador.ControladorRegistro;
 import Controlador.ControladorSacrificios;
+import Controlador.ControladorSensores;
 import Modelo.ConexionBDSingleton;
 import Modelo.ModeloActualiza;
 import Modelo.ModeloClasificacion;
@@ -20,6 +21,7 @@ import Modelo.ModeloCuidados;
 import Modelo.ModeloEliminaCria;
 import Modelo.ModeloRegistro;
 import Modelo.ModeloSacrificios;
+import Modelo.ModeloSensores;
 import Vista.VentanaPrincipal;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialOceanicTheme;
@@ -42,6 +44,7 @@ public class Ejecutar {
 		ModeloActualiza modeloActualiza = new ModeloActualiza();
 		ModeloSacrificios  modeloSacrificios = new ModeloSacrificios();
 		ModeloCuidados modeloCuidados = new ModeloCuidados();
+		ModeloSensores modeloSensores = new ModeloSensores();
 		
 		ControladorRegistro controladorRegistro = new ControladorRegistro(vista, modeloRegistro);
 		ControladorClasificacion controladorClasificacion = new ControladorClasificacion(vista, modeloClasificaicon);
@@ -51,6 +54,7 @@ public class Ejecutar {
 		ControladorSacrificios controladorSacrificios = new ControladorSacrificios(vista, modeloSacrificios);
 		ControladorTitleBar controladorTitleBar = new ControladorTitleBar(vista);
 		ControladorCuidados controladorCuidados = new ControladorCuidados(vista, modeloCuidados);
+		ControladorSensores controladorSensores = new ControladorSensores(vista, modeloSensores);
 		
 		vista.setControlador(controladorTitleBar);
 		vista.registro.setControlador(controladorRegistro);
@@ -60,7 +64,9 @@ public class Ejecutar {
 		vista.consulta.modal.setControlador(controladorModal);
 		vista.sacrificios.setControlador(controladorSacrificios);
 		vista.cuidados.setControladorCuidados(controladorCuidados);
+		vista.sensores.setControladorSensores(controladorSensores);
 		vista.setVisible(true);
+
 	}
 
 	private static void login() {
@@ -69,16 +75,15 @@ public class Ejecutar {
 		ConexionBDSingleton.databaseName = "CORRALESTERNERO";
 		ConexionBDSingleton.user = "sa";
 		ConexionBDSingleton.pwd = "123";
-//		ConexionBD.host = JOptionPane.showInputDialog("Host: ");
-//		ConexionBD.port = JOptionPane.showInputDialog("Puerto: ");
-//		ConexionBD.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
-//		ConexionBD.user = JOptionPane.showInputDialog("User: ");
-//		ConexionBD.pwd = JOptionPane.showInputDialog("Password: ");
+//		ConexionBDSingleton.host = JOptionPane.showInputDialog("Host: ");
+//		ConexionBDSingleton.port = JOptionPane.showInputDialog("Puerto: ");
+//		ConexionBDSingleton.databaseName = JOptionPane.showInputDialog("Nombre de la base de datos: ");
+//		ConexionBDSingleton.user = JOptionPane.showInputDialog("User: ");
+//		ConexionBDSingleton.pwd = JOptionPane.showInputDialog("Password: ");
 
 		if (ConexionBDSingleton.getConexion() == null) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CONECTARSE A LA BASE DE DATOS", "ERROR",
 					JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
 		}
 	}
 

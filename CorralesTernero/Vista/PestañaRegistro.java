@@ -26,6 +26,8 @@ public class PestañaRegistro extends JPanel {
 	public MaterialButton btnRegistrarCria, btnLimpiar, btnAleatorio;
 	private MaterialPanel panel;
 	public MaterialProgressSpinner bar;
+	
+	public JLabel lblTitulo;
 
 	private DatePickerSettings dateSettings;
 	public DatePicker calendario;
@@ -43,10 +45,14 @@ public class PestañaRegistro extends JPanel {
 		panel = new MaterialPanel();
 		panel.setElevation(2);
 		panel.setLayout(null);
-		panel.setBounds(40, 25, 700, 600);
+		panel.setBounds(40, 10, 700, 620);
 
+		lblTitulo= new JLabel("Registro");
+		lblTitulo.setFont(Roboto.BLACK.deriveFont(26f));
+		lblTitulo.setBounds(290, 10, 100, 40);
+		
 		txtPesoCria = new MaterialTextField();
-		txtPesoCria.setBounds(100, 30, 500, 70);
+		txtPesoCria.setBounds(100, 40, 500, 70);
 		txtPesoCria.setLabel("Peso de la cría");
 		txtPesoCria.setUpperFilter(true);
 		txtPesoCria.setAccent(MaterialColors.YELLOW_300);
@@ -56,7 +62,7 @@ public class PestañaRegistro extends JPanel {
 		txtPesoCria.setRegex(MaterialTextField.REGEX_DECIMAL);
 
 		txtColorCria = new MaterialTextField();
-		txtColorCria.setBounds(100, 130, 500, 70);
+		txtColorCria.setBounds(100, 140, 500, 70);
 		txtColorCria.setLabel("Color de músculo");
 		txtColorCria.setUpperFilter(true);
 		txtColorCria.setAccent(MaterialColors.YELLOW_300);
@@ -65,7 +71,7 @@ public class PestañaRegistro extends JPanel {
 		txtColorCria.setCaretColor(Color.WHITE);
 
 		txtGrasaCria = new MaterialTextField();
-		txtGrasaCria.setBounds(100, 230, 500, 70);
+		txtGrasaCria.setBounds(100, 240, 500, 70);
 		txtGrasaCria.setLabel("Porcentaje de grasa");
 		txtGrasaCria.setUpperFilter(true);
 		txtGrasaCria.setAccent(MaterialColors.YELLOW_300);
@@ -94,12 +100,12 @@ public class PestañaRegistro extends JPanel {
 		JLabel lblFechaEntrada = new JLabel("Fecha de entrada");
 		lblFechaEntrada.setFont(Roboto.BOLD.deriveFont(14f));
 		lblFechaEntrada.setForeground(MaterialColors.DARKLY_GRAY);
-		lblFechaEntrada.setBounds(100, 335, 150, 20);
+		lblFechaEntrada.setBounds(100, 345, 150, 20);
 
 		calendario = new DatePicker(dateSettings);
 		calendario.getComponentToggleCalendarButton().setText("");
 		calendario.getComponentToggleCalendarButton().setIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
-		calendario.setBounds(100, 360, 150, 40);
+		calendario.setBounds(100, 370, 150, 40);
 		calendario.getComponentDateTextField().setBorder(new RoundedCornerBorder(Color.WHITE));
 
 		btnRegistrarCria = new MaterialButton();
@@ -132,6 +138,7 @@ public class PestañaRegistro extends JPanel {
 		bar.setBounds(300, 200, 100, 100);
 		bar.setVisible(false);
 
+		panel.add(lblTitulo);
 		panel.add(bar);
 		panel.add(btnRegistrarCria);
 		panel.add(btnLimpiar);
@@ -198,8 +205,8 @@ public class PestañaRegistro extends JPanel {
 		txtColorCria.setText(coloresMusculo[Rutinas.nextInt(0, 2)]);
 		txtGrasaCria.setText(Rutinas.nextInt(1, 100) + "");
 
-		int año = Rutinas.nextInt(2000, 2020);
-		int mes = Rutinas.nextInt(1, 12);
+		int año = 2019;
+		int mes = Rutinas.nextInt(1, 10);
 		int dia = mes == 2 ? Rutinas.nextInt(1, 28)
 				: mes == 4 || mes == 6 || mes == 9 || mes == 11 ? Rutinas.nextInt(1, 30) : Rutinas.nextInt(1, 31);
 		calendario.setDate(LocalDate.of(año, mes, dia));

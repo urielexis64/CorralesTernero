@@ -1,5 +1,6 @@
 package Controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -7,6 +8,7 @@ import java.awt.event.ItemListener;
 import java.util.Vector;
 
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
@@ -15,6 +17,7 @@ import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
 
 import Modelo.ModeloConsulta;
 import Vista.VentanaPrincipal;
+import mdlaf.utils.MaterialColors;
 
 public class ControladorConsulta implements ActionListener, CaretListener, ItemListener, DateChangeListener {
 	private VentanaPrincipal vista;
@@ -33,6 +36,18 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() instanceof JToggleButton) {
+			JToggleButton btn = (JToggleButton) e.getSource();
+			if (btn.isSelected()) {
+				modelo.vivas = true;
+				btn.setForeground(Color.GREEN);
+				btn.setText("CRÍAS VIVAS");
+			} else {
+				modelo.vivas = false;
+				btn.setForeground(Color.RED);
+				btn.setText("CRÍAS SACRIFICADAS");
+			}
+		}
 		llenaTabla(); // Boton refrescar
 	}
 

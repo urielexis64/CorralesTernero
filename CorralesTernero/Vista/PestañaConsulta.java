@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;
 
@@ -20,6 +21,7 @@ import material.extras.IconTextField;
 import material.extras.Rutinas;
 import material.extras.ToastMessage;
 import material.fonts.MaterialIcons;
+import material.fonts.Roboto;
 import mdlaf.utils.MaterialColors;
 import mdlaf.shadows.DropShadowBorder;
 import mdlaf.shadows.RoundedCornerBorder;
@@ -30,7 +32,7 @@ public class PestañaConsulta extends JPanel {
 	private JScrollPane scrollTable;
 
 	public MaterialButton btnRefrescar, btnVaciar, btnUndo;
-	public JLabel lblNumeroCrias, lblSegundosTransaccion;
+	public JLabel lblNumeroCrias, lblSegundosTransaccion, lblTitulo;
 
 	public JPopupMenu menuFlotante;
 	public JMenuItem itemEliminar, itemEditar;
@@ -40,6 +42,8 @@ public class PestañaConsulta extends JPanel {
 	public DatePicker calendario;
 
 	public ModalActualiza modal;
+	
+	public JToggleButton btnEstado;
 
 	public PestañaConsulta() {
 		hazInterfaz();
@@ -50,37 +54,46 @@ public class PestañaConsulta extends JPanel {
 		iniciarTabla();
 		modal = new ModalActualiza();
 
+		lblTitulo = new JLabel("Consulta");
+		lblTitulo.setFont(Roboto.BLACK.deriveFont(26f));
+		lblTitulo.setBounds(90, 10, 190, 40);
+
 		scrollTable = new JScrollPane(tabla);
 		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
-		scrollTable.setBounds(75, 60, 700, 550);
+		scrollTable.setBounds(75, 90, 700, 520);
 
 		comboBox = new MaterialComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(
 				new String[] { "ID_CRIA", "PESO", "COLOR_MUSCULO", "PORCENTAJE_GRASA", "FECHA_ENTRADA" }));
-		comboBox.setBounds(290, 16, 180, 45);
+		comboBox.setBounds(290, 50, 180, 45);
 		comboBox.setAccent(MaterialColors.YELLOW_500);
 		SwingUtilities.updateComponentTreeUI(comboBox); // Actualizar la apariencia (error)
+		
+		btnEstado = new JToggleButton("CRÍAS VIVAS");
+		btnEstado.setSelected(true);
+		btnEstado.setForeground(Color.GREEN);
+		btnEstado.setBounds(280, 35, 190, 15);
 
 		btnRefrescar = new MaterialButton();
 		btnRefrescar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
 		btnRefrescar.setType(Type.RAISED);
 		btnRefrescar.setBorder(new DropShadowBorder());
-		btnRefrescar.setBounds(5, 70, 80, 80);
+		btnRefrescar.setBounds(5, 90, 80, 80);
 
 		btnVaciar = new MaterialButton();
 		btnVaciar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnVaciar.setText(String.valueOf(MaterialIcons.DELETE_FOREVER));
 		btnVaciar.setType(Type.RAISED);
 		btnVaciar.setBorder(new DropShadowBorder());
-		btnVaciar.setBounds(5, 140, 80, 80);
+		btnVaciar.setBounds(5, 160, 80, 80);
 
 		btnUndo = new MaterialButton();
 		btnUndo.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnUndo.setText(String.valueOf(MaterialIcons.UNDO));
 		btnUndo.setType(Type.FLAT);
 		btnUndo.setBorder(new DropShadowBorder());
-		btnUndo.setBounds(5, 220, 80, 80);
+		btnUndo.setBounds(5, 240, 80, 80);
 		btnUndo.setVisible(false);
 
 		menuFlotante = new JPopupMenu();
@@ -93,16 +106,16 @@ public class PestañaConsulta extends JPanel {
 		menuFlotante.add(itemEditar);
 
 		txtBuscar = new IconTextField("Resources\\search_icon.png", "Buscar", 20);
-		txtBuscar.setBounds(90, 25, 185, 30);
+		txtBuscar.setBounds(90, 55, 185, 30);
 
 		lblNumeroCrias = new JLabel("Total de crías: ");
 		lblNumeroCrias.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNumeroCrias.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblNumeroCrias.setBorder(new RoundedCornerBorder(MaterialColors.DARKLY_BLUE));
-		lblNumeroCrias.setBounds(570, 15, 190, 40);
+		lblNumeroCrias.setBounds(570, 45, 190, 40);
 		lblSegundosTransaccion = new JLabel("5");
 		lblSegundosTransaccion.setFont(new Font("Roboto", Font.BOLD, 16));
-		lblSegundosTransaccion.setBounds(40, 280, 25, 25);
+		lblSegundosTransaccion.setBounds(40, 320, 25, 25);
 		lblSegundosTransaccion.setVisible(false);
 
 		DatePickerSettings dateSettings = new DatePickerSettings();
@@ -115,13 +128,15 @@ public class PestañaConsulta extends JPanel {
 		calendario.setEnabled(false);
 		calendario.getComponentToggleCalendarButton()
 				.setDisabledIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
-		calendario.setBounds(480, 15, 45, 45);
+		calendario.setBounds(480, 45, 45, 45);
 
+		add(lblTitulo);
 		add(btnRefrescar);
 		add(btnVaciar);
 		add(txtBuscar);
 		add(scrollTable);
 		add(comboBox);
+		add(btnEstado);
 		add(calendario);
 		add(btnUndo);
 		add(lblNumeroCrias);
@@ -145,6 +160,7 @@ public class PestañaConsulta extends JPanel {
 		txtBuscar.addCaretListener(controlador);
 		comboBox.addItemListener(controlador);
 		calendario.addDateChangeListener(controlador);
+		btnEstado.addActionListener(controlador);
 	}
 
 	public void setControladorSeleccionTabla(ControladorTabla controlador) {

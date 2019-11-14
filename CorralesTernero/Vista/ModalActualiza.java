@@ -69,7 +69,7 @@ public class ModalActualiza extends JDialog {
 
 		btnLimpiar = new MaterialButton();
 		btnLimpiar.setText("Limpiar");
-		btnLimpiar.setBounds(30, 300, 200, 60);
+		btnLimpiar.setBounds(250, 300, 200, 60);
 		btnLimpiar.setRippleColor(MaterialColor.GREEN_800);
 		btnLimpiar.setBackground(MaterialColors.GREEN_300);
 		btnLimpiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -77,7 +77,7 @@ public class ModalActualiza extends JDialog {
 
 		btnActualizar = new MaterialButton();
 		btnActualizar.setText("Actualizar cría");
-		btnActualizar.setBounds(250, 300, 200, 60);
+		btnActualizar.setBounds(30, 300, 200, 60);
 		btnActualizar.setRippleColor(MaterialColor.GREEN_800);
 		btnActualizar.setBackground(MaterialColors.GREEN_300);
 		btnActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));

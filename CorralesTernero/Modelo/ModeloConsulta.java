@@ -12,16 +12,17 @@ public class ModeloConsulta {
 	private final Logger LOGGER = Logger.getLogger(ModeloConsulta.class.getName());
 
 	private Connection conexion;
-	private byte tipo;
+	public boolean vivas;
 
 	public ModeloConsulta() {
 		conexion = ConexionBDSingleton.getConexion();
+		vivas = true;
 	}
 
 	public Vector<Vector<String>> getTotalCrias() {
 		Vector<Vector<String>> crias = new Vector<Vector<String>>();
 
-		String sentencia = "SELECT * FROM CRIAS";
+		String sentencia = "EXEC PA_CRIAS_CONSULTA NULL, NULL, " + (vivas ? 1 : 0);
 
 		Statement consulta = null;
 
@@ -53,26 +54,25 @@ public class ModeloConsulta {
 		}
 	}
 
-	public Vector<Vector<String>> getConsultaCrias(String valor, String atributo) {
+	public Vector<Vector<String>> getConsultaCrias(String valor, String criterio) {
 		Vector<Vector<String>> conjuntoCrias = new Vector<Vector<String>>();
 
-		String sentencia = getSentencia(atributo);
+		String sentencia = "EXEC PA_CRIAS_CONSULTA " + criterio + ", ?, " + (vivas ? 1 : 0);
 
 		PreparedStatement consultaPreparada = null;
 
 		try {
-			LOGGER.info("OBTENIENDO TUPLAS FILTRADAS POR " + atributo);
+			LOGGER.info("OBTENIENDO TUPLAS FILTRADAS POR " + criterio);
 			consultaPreparada = conexion.prepareStatement(sentencia);
 
-			if (tipo == 1)
-				consultaPreparada.setInt(1, Integer.parseInt(valor)); // Si es valor numérico
-			else if (tipo == 2)
-				consultaPreparada.setString(1, "%" + valor + "%");// Si es varchar
-			else {// Si es fecha
+			if (criterio.equals("FECHA_ENTRADA")) {// Si es fecha
 				String[] partesFecha = valor.split("-");
 				String fechaSQL = partesFecha[2] + partesFecha[1] + partesFecha[0]; // año-mes-dia
 				consultaPreparada.setString(1, fechaSQL);
+			} else {
+				consultaPreparada.setString(1, valor);
 			}
+
 			ResultSet tuplasBD = consultaPreparada.executeQuery();
 
 			while (tuplasBD.next()) {
@@ -166,22 +166,4 @@ public class ModeloConsulta {
 //			return null;
 //		} 
 //	}
-
-	private String getSentencia(String atributo) {
-		switch (atributo) {
-		case "ID_CRIA":
-			tipo = 1;
-			return "SELECT * FROM CRIAS WHERE " + atributo + " = ?";
-		case "PESO":
-		case "PORCENTAJE_GRASA":
-			tipo = 1;
-			return "SELECT * FROM CRIAS WHERE " + atributo + " >= ?";
-		case "COLOR_MUSCULO":
-			tipo = 2;
-			return "SELECT * FROM CRIAS WHERE " + atributo + " LIKE ?";
-		default: // Case FECHA_ENTRADA
-			tipo = 3;
-			return "SELECT * FROM CRIAS WHERE " + atributo + " = ?";
-		}
-	}
 }

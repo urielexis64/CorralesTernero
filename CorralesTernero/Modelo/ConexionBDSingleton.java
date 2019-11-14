@@ -21,7 +21,7 @@ public class ConexionBDSingleton {
 					+ user + ";password=" + pwd;
 			try {
 				conn = DriverManager.getConnection(url);
-				LOGGER.info("Conectado a base de datos : " + databaseName);
+//				LOGGER.info("Conectado a base de datos : " + databaseName);
 			} catch (SQLException e) {
 				LOGGER.severe(e.getMessage());
 				return null;
@@ -33,7 +33,7 @@ public class ConexionBDSingleton {
 	public static void cierraConexion() {
 		try {
 			conn.close();
-			LOGGER.info("Conexión cerrada exitosamente");
+//			LOGGER.info("Conexión cerrada exitosamente");
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
 		}

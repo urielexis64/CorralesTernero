@@ -2,6 +2,8 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import Modelo.ModeloSacrificios;
@@ -24,9 +26,20 @@ public class ControladorSacrificios extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JTable tabla = (JTable) e.getSource();
-		String idCria = tabla.getValueAt(tabla.getSelectedRow(), 0) + "";
-		System.out.println("ID " + idCria);
-	}
+		if (e.getSource() instanceof JButton) {
+			llenaTabla();
+			return;
+		}
 
+		JTable tabla = (JTable) e.getSource();
+		int idCria = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0) + "");
+
+		if (JOptionPane.showConfirmDialog(vista, "¿Está seguro de dar de baja a la cría #" + idCria + "?") == 0) {
+			if (modelo.cuelloCria(idCria))
+				vista.sacrificios.showMessage("Cría dada de baja con éxito", false);
+			else
+				vista.sacrificios.showMessage("Hubo un error...", true);
+			llenaTabla();
+		}
+	}
 }

@@ -2,7 +2,6 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import Modelo.ModeloCuidados;
@@ -25,6 +24,10 @@ public class ControladorCuidados implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == vista.cuidados.btnRefrescar) {
+			vista.cuidados.setTabla(modelo.getCriasTabla());
+			return;
+		}
 		Vector<Vector<String>> saludCrias = new Vector<Vector<String>>();
 
 		for (int i = 0; i < vista.cuidados.tabla.getRowCount(); i++) {
@@ -39,7 +42,11 @@ public class ControladorCuidados implements ActionListener {
 			saludCrias.add(aux);
 		}
 
-		modelo.actualizaSalud(saludCrias);
+		if(modelo.actualizaSalud(saludCrias)) {
+			vista.cuidados.showMessage("Cambios guardados con éxito.", false);
+		}else {
+			vista.cuidados.showMessage("Hubo un error...", true);
+		}
 	}
 
 }

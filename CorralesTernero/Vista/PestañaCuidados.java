@@ -6,20 +6,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import Controlador.ControladorCuidados;
 import EjecutarApp.JCheckBoxColumn;
-import EjecutarApp.ModeloTabla;
 import material.componentes.MaterialButton;
+import material.componentes.MaterialButton.Type;
+import material.extras.ToastMessage;
 import material.fonts.MaterialIcons;
 import material.fonts.Roboto;
+import mdlaf.shadows.DropShadowBorder;
+import mdlaf.utils.MaterialColors;
 
 public class PestañaCuidados extends JPanel {
 	private JLabel lblTitulo;
 	public JTable tabla;
 	private JCheckBoxColumn modeloTabla;
 	private JScrollPane scrollPane;
-	private MaterialButton btnGuardar;
+	public MaterialButton btnGuardar, btnRefrescar;
 	
 	public PestañaCuidados() {
 		hazInterfaz();
@@ -42,9 +46,17 @@ public class PestañaCuidados extends JPanel {
 		btnGuardar.setText(String.valueOf(MaterialIcons.SAVE));
 		btnGuardar.setBounds(455, 90, 80, 80);
 		
+		btnRefrescar = new MaterialButton();
+		btnRefrescar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
+		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
+		btnRefrescar.setType(Type.RAISED);
+		btnRefrescar.setBorder(new DropShadowBorder());
+		btnRefrescar.setBounds(455, 150, 80, 80);
+		
 		add(lblTitulo);
 		add(scrollPane);
 		add(btnGuardar);
+		add(btnRefrescar);
 	}
 
 	private void hazTabla() {
@@ -57,7 +69,7 @@ public class PestañaCuidados extends JPanel {
 
 	public void setTabla(Vector<Vector<Object>> objetoCria) {
 
-//		limpiarTabla();
+		limpiarTabla();
 
 		Vector<Object> nuevaCria;
 		for (int i = 0; i < objetoCria.size(); i++) {
@@ -71,7 +83,22 @@ public class PestañaCuidados extends JPanel {
 
 	}
 	
+
+	private void limpiarTabla() {
+		((DefaultTableModel) tabla.getModel()).setNumRows(0);
+	}
+
+	public void showMessage(String msg, boolean error) {
+		ToastMessage toast = new ToastMessage(this);
+		if (error)
+			toast.setInfo(msg, MaterialColors.RED_400);
+		else
+			toast.setInfo(msg, MaterialColors.BLUE_400);
+		toast.showToast();
+	}
+	
 	public void setControladorCuidados(ControladorCuidados controlador) {
 		btnGuardar.addActionListener(controlador);
+		btnRefrescar.addActionListener(controlador);
 	}
 }

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -20,7 +19,7 @@ public class ModeloCuidados {
 	public Vector<Vector<Object>> getCriasTabla() {
 		Vector<Vector<Object>> crias = new Vector<Vector<Object>>();
 
-		String sentencia = "SELECT ID_CRIA, CORRAL_ID FROM CRIAS";
+		String sentencia = "SELECT * FROM VW_CRIAS_FINAS";
 
 		Statement consulta = null;
 
@@ -45,7 +44,7 @@ public class ModeloCuidados {
 		}
 	}
 
-	public void actualizaSalud(Vector<Vector<String>> crias) {
+	public boolean actualizaSalud(Vector<Vector<String>> crias) {
 		String sentenciaEnferma = "UPDATE CRIAS SET CORRAL_ID = 2, ALIM_ID = 2, VECES_CUARENTENA = VECES_CUARENTENA+1 WHERE ID_CRIA = ";
 		String sentenciaSana = "UPDATE CRIAS SET CORRAL_ID = 1, ALIM_ID = 1 WHERE ID_CRIA = ";
 
@@ -63,8 +62,10 @@ public class ModeloCuidados {
 			}
 
 			LOGGER.info("TUPLAS ACTUALIZADAS CON ÉXITO");
+			return true;
 		} catch (SQLException e) {
 			LOGGER.severe(e.getMessage());
+			return false;
 		}
 	}
 }

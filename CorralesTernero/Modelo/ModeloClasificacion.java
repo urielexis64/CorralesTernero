@@ -20,7 +20,7 @@ public class ModeloClasificacion {
 	public Vector<Vector<String>> getCriasTabla(){
 		Vector<Vector<String>> crias = new Vector<Vector<String>>();
 
-		String sentencia = "SELECT ID_CRIA, CORRAL_ID, ALIM_ID, SENSOR_ID, CLASIFICACION FROM CRIAS";
+		String sentencia = "SELECT * FROM VW_CRIAS_CLASIFICADAS";
 
 		Statement consulta = null;
 

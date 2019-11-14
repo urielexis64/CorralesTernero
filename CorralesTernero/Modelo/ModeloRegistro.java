@@ -31,8 +31,8 @@ public class ModeloRegistro {
 			consultaPreparada.setString(2, colorMusculo);
 			consultaPreparada.setInt(3, porcentajeGrasa);
 			consultaPreparada.setString(4, fecha_entrada);
-			consultaPreparada.executeUpdate();
-
+			consultaPreparada.execute();
+			
 			ResultSet rs = consultaIdentity.executeQuery("SELECT IDENT_CURRENT ('CRIAS')");
 			rs.next();
 			int idGenerado = rs.getInt(1);
