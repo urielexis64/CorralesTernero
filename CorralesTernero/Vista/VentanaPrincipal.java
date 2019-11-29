@@ -3,6 +3,8 @@ package Vista;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
@@ -24,7 +26,7 @@ public class VentanaPrincipal extends JFrame {
 	private JToggleButton btnModoOscuro;
 	private JButton btnCerrar, btnMinimizar, btnInfo;
 	private MaterialPanel panelSuperior;
-	public JLabel lblTitulo;
+	private LabelColores lblTitulo;
 
 	public PestañaRegistro registro;
 	public PestañaClasifcacion clasificacion;
@@ -32,6 +34,7 @@ public class VentanaPrincipal extends JFrame {
 	public PestañaSacrificios sacrificios;
 	public PestañaCuidados cuidados;
 	public PestañaSensores sensores;
+	public PestañaLog log;
 
 	public VentanaPrincipal() {
 		hazInterfaz();
@@ -42,12 +45,12 @@ public class VentanaPrincipal extends JFrame {
 		panelSuperior.setBounds(0, 0, 800, 75);
 		panelSuperior.setLayout(null);
 
-		lblTitulo = new JLabel("Corrales Ternero");
+		lblTitulo = new LabelColores("Corrales Ternero");
 		lblTitulo.setFont(new Font("Forte", Font.PLAIN, 20));
 		lblTitulo.setIcon(Rutinas.AjustarImagen("Resources\\cow.png", 30, 30));
 		lblTitulo.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblTitulo.setBounds(25, 12, 190, 40);
-		lblTitulo.setBorder(new RoundedCornerBorder(MaterialColor.BLUEGREY_500));
+		lblTitulo.setAnimado(true);
 
 		btnInfo = new JButton(Rutinas.AjustarImagen("Resources\\info.png", 20, 20));
 		btnInfo.setBounds(660, 15, 35, 35);
@@ -60,32 +63,33 @@ public class VentanaPrincipal extends JFrame {
 		btnMinimizar.setActionCommand("minimizar");
 
 		pestañas = new JTabbedPane();
-
 		pestañas.setBounds(10, 50, 780, 730);
 
 		registro = new PestañaRegistro();
 		clasificacion = new PestañaClasifcacion();
 		consulta = new PestañaConsulta();
-		sacrificios= new PestañaSacrificios();
+		sacrificios = new PestañaSacrificios();
 		cuidados = new PestañaCuidados();
-		sensores= new PestañaSensores();
+		sensores = new PestañaSensores();
+		log = new PestañaLog();
 
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\registro_icon[nuevo].png", 20, 20), registro);
-		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18),
-				clasificacion);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18), clasificacion);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\consulta_icon.png", 22, 22), consulta);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\cuidados_icon.png", 22, 22), cuidados);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sacrificio_icon.png", 26, 26), sacrificios);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sensor_icon.png", 26, 26), sensores);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\log_icon.png", 26, 26), log);
 		pestañas.setToolTipTextAt(0, "Registro");
 		pestañas.setToolTipTextAt(1, "Clasificación");
 		pestañas.setToolTipTextAt(2, "Consulta");
 		pestañas.setToolTipTextAt(3, "Cuidados");
 		pestañas.setToolTipTextAt(4, "Sacrificios");
 		pestañas.setToolTipTextAt(5, "Sensores");
-		
+		pestañas.setToolTipTextAt(6, "Log de acciones");
+
 //		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
-		
+
 		btnModoOscuro = new JToggleButton("Modo claro (BETA)");
 		btnModoOscuro.setSelected(true);
 		btnModoOscuro.setBackground(new Color(40, 65, 91, 0));
@@ -103,14 +107,14 @@ public class VentanaPrincipal extends JFrame {
 		setSize(800, 800);
 		setResizable(false);
 		setUndecorated(true);
+		setShape(new RoundRectangle2D.Double(getWidth() / 2, getHeight() / 2, 1, 1, 30, 30));
 		setLocationRelativeTo(null);
 //		setAlwaysOnTop(true);
 		setBackground(new Color(40, 65, 91, 240));
 
-		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
 		setIconImage(Rutinas.AjustarImagen("Resources\\cow.png", 100, 100).getImage());
 		setLayout(null);
-		
+
 		add(btnModoOscuro);
 		add(pestañas);
 		add(panelSuperior);
@@ -121,7 +125,8 @@ public class VentanaPrincipal extends JFrame {
 		btnInfo.addActionListener(controladorTitle);
 		btnCerrar.addActionListener(controladorTitle);
 		btnMinimizar.addActionListener(controladorTitle);
-
+		pestañas.addChangeListener(controladorTitle);
+		
 		FrameDragListener frameDragListener = new FrameDragListener(this);
 		addMouseListener(frameDragListener);
 		addMouseMotionListener(frameDragListener);
@@ -136,6 +141,24 @@ public class VentanaPrincipal extends JFrame {
 			btnModoOscuro.setText("Modo oscuro (BETA)");
 		}
 		SwingUtilities.updateComponentTreeUI(this);
+	}
+
+	public void setVisible(boolean b) {
+		super.setVisible(true);
+		new Thread() {
+			int w = 0, h = 0;
+			public void run() {
+				while (w < getWidth()) {
+					setShape(new RoundRectangle2D.Double(getWidth() / 2 - w / 2 - 20, getHeight() / 2 - h / 2 - 20,
+							w += 40, h += 40, 50, 50));
+					try {
+						sleep(10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 	}
 
 	public static class FrameDragListener extends MouseAdapter {
@@ -161,4 +184,42 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
+}
+
+class LabelColores extends JLabel implements ActionListener {
+
+	private Timer t;
+	private int i;
+	private boolean asc;
+	private Color[] colores = { MaterialColor.BLUEGREY_100, MaterialColor.BLUEGREY_200, MaterialColor.BLUEGREY_300,
+			MaterialColor.BLUEGREY_400, MaterialColor.BLUEGREY_500, MaterialColor.BLUEGREY_600,
+			MaterialColor.BLUEGREY_700, MaterialColor.BLUEGREY_800, MaterialColor.BLUEGREY_900 };
+
+	public LabelColores(String s) {
+		super(s);
+		t = new Timer(200, this);
+		i = 0;
+		asc = true;
+	}
+
+	public void setAnimado(boolean b) {
+		if (b) {
+			t.start();
+		} else {
+			t.stop();
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (i == 8)
+			asc = false;
+		else if (i == 0)
+			asc = true;
+
+		if (asc)
+			setBorder(new RoundedCornerBorder(colores[++i]));
+		else
+			setBorder(new RoundedCornerBorder(colores[--i]));
+	}
 }

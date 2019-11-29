@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import Modelo.ModeloLog;
 import Modelo.ModeloSacrificios;
 import Vista.VentanaPrincipal;
 
@@ -35,9 +36,10 @@ public class ControladorSacrificios extends AbstractAction {
 		int idCria = Integer.parseInt(tabla.getValueAt(tabla.getSelectedRow(), 0) + "");
 
 		if (JOptionPane.showConfirmDialog(vista, "¿Está seguro de dar de baja a la cría #" + idCria + "?") == 0) {
-			if (modelo.cuelloCria(idCria))
+			if (modelo.cuelloCria(idCria)) {
 				vista.sacrificios.showMessage("Cría dada de baja con éxito", false);
-			else
+				ModeloLog.registraMovimiento(idCria, "Dada de baja");
+			}else
 				vista.sacrificios.showMessage("Hubo un error...", true);
 			llenaTabla();
 		}

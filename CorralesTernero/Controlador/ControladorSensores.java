@@ -78,10 +78,11 @@ public class ControladorSensores implements ActionListener {
 
 		for (int i = 0; i < objetoSensor.size(); i++) {
 			cuerpo.append("ID CRIA: " + objetoSensor.get(i).get(0) + "\nTemperatura: " + objetoSensor.get(i).get(1)
-					+ " ºC\nPresión arterterial: " + objetoSensor.get(i).get(2) + "\nUbicación"
-					+ objetoSensor.get(i).get(3) + "\n-------------------------------------------------------\n");
+					+ " ºC\nPresión arterterial: " + objetoSensor.get(i).get(2) + "\nUbicación: "
+					+ objetoSensor.get(i).get(3) + "\n---------------------------------------------------------\n");
 		}
 		new Thread(() -> {
+			vista.sensores.showMessage("Enviando...", false);
 			vista.sensores.bar.setVisible(true);
 			try {
 				ModeloCorreoElectronico.enviarCorreos(asunto, cuerpo.toString());

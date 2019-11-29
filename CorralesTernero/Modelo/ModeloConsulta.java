@@ -39,11 +39,7 @@ public class ModeloConsulta {
 				aux.add(tuplasBD.getFloat(2) + " kg");
 				aux.add(tuplasBD.getString(3));
 				aux.add(tuplasBD.getInt(4) + " %");
-
-				String fecha = tuplasBD.getString(5); // Le doy formato a la fecha dd-mm-yyyy
-				String partesFecha[] = fecha.split("-");
-
-				aux.add(partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0]);
+				aux.add(tuplasBD.getString(5));
 				crias.add(aux);
 			}
 			LOGGER.info("TUPLAS OBTENIDAS CON ÉXITO");
@@ -58,20 +54,13 @@ public class ModeloConsulta {
 		Vector<Vector<String>> conjuntoCrias = new Vector<Vector<String>>();
 
 		String sentencia = "EXEC PA_CRIAS_CONSULTA " + criterio + ", ?, " + (vivas ? 1 : 0);
-
 		PreparedStatement consultaPreparada = null;
 
 		try {
 			LOGGER.info("OBTENIENDO TUPLAS FILTRADAS POR " + criterio);
 			consultaPreparada = conexion.prepareStatement(sentencia);
 
-			if (criterio.equals("FECHA_ENTRADA")) {// Si es fecha
-				String[] partesFecha = valor.split("-");
-				String fechaSQL = partesFecha[2] + partesFecha[1] + partesFecha[0]; // año-mes-dia
-				consultaPreparada.setString(1, fechaSQL);
-			} else {
-				consultaPreparada.setString(1, valor);
-			}
+			consultaPreparada.setString(1, valor);
 
 			ResultSet tuplasBD = consultaPreparada.executeQuery();
 
@@ -81,11 +70,7 @@ public class ModeloConsulta {
 				aux.add(tuplasBD.getFloat(2) + " kg");
 				aux.add(tuplasBD.getString(3));
 				aux.add(tuplasBD.getInt(4) + " %");
-
-				String fecha = tuplasBD.getString(5); // Le doy formato a la fecha dd-mm-yyyy
-				String partesFecha[] = fecha.split("-");
-
-				aux.add(partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0]);
+				aux.add(tuplasBD.getString(5));
 				conjuntoCrias.add(aux);
 			}
 			LOGGER.info("TUPLAS FILTRADAS CON ÉXITO");

@@ -3,13 +3,10 @@ package Vista;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import javax.swing.*;
-
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DatePickerSettings.DateArea;
-
 import Controlador.ControladorRegistro;
 import material.componentes.*;
 import material.componentes.MaterialButton.Type;
@@ -25,9 +22,9 @@ public class PestañaRegistro extends JPanel {
 	public MaterialTextField txtPesoCria, txtColorCria, txtGrasaCria;
 	public MaterialButton btnRegistrarCria, btnLimpiar, btnAleatorio;
 	private MaterialPanel panel;
-	public MaterialProgressSpinner bar;
+	public JProgressBar bar;
 	
-	public JLabel lblTitulo;
+	private JLabel lblTitulo;
 
 	private DatePickerSettings dateSettings;
 	public DatePicker calendario;
@@ -47,9 +44,10 @@ public class PestañaRegistro extends JPanel {
 		panel.setLayout(null);
 		panel.setBounds(40, 10, 700, 620);
 
-		lblTitulo= new JLabel("Registro");
+		lblTitulo= new JLabel("Registro", SwingConstants.CENTER);
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(26f));
-		lblTitulo.setBounds(290, 10, 100, 40);
+		lblTitulo.setBorder(new RoundedCornerBorder(MaterialColors.YELLOW_300));
+		lblTitulo.setBounds(290, 16, 120, 40);
 		
 		txtPesoCria = new MaterialTextField();
 		txtPesoCria.setBounds(100, 40, 500, 70);
@@ -134,12 +132,13 @@ public class PestañaRegistro extends JPanel {
 		btnAleatorio.setType(Type.FLAT);
 		btnAleatorio.setBounds(80, 470, 80, 70);
 
-		bar = new MaterialProgressSpinner();
-		bar.setBounds(300, 200, 100, 100);
+		bar = new JProgressBar();
+		bar.setBounds(20,10,660,5);
+		bar.setIndeterminate(true);
 		bar.setVisible(false);
-
-		panel.add(lblTitulo);
+		
 		panel.add(bar);
+		panel.add(lblTitulo);
 		panel.add(btnRegistrarCria);
 		panel.add(btnLimpiar);
 		panel.add(btnAleatorio);
@@ -152,6 +151,12 @@ public class PestañaRegistro extends JPanel {
 		add(panel);
 	}
 
+	/**
+	 * Muestra un mensaje en el centro del contenedor.
+	 * @param msg Mensaje que se desea mostrar en el Toast
+	 * @param error Si es <code>true</code> se muestra de color rojo,
+	 * 				si no, de color verde o azul.
+	 */
 	public void showMessage(String msg, boolean error) {
 		ToastMessage toast = new ToastMessage(this);
 		if (error)

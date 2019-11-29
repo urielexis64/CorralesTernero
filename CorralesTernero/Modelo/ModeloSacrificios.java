@@ -37,7 +37,7 @@ public class ModeloSacrificios {
 				aux.add(tuplasBD.getString(2) + "");
 				aux.add(tuplasBD.getString(3)+"");
 				aux.add(tuplasBD.getInt(4) + "");
-				aux.add(tuplasBD.getInt(5) + "");
+				aux.add(tuplasBD.getString(5) + "");
 				crias.add(aux);
 			}
 			LOGGER.info("TUPLAS OBTENIDAS CON ÉXITO");

@@ -6,16 +6,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import Controlador.ControladorCuidados;
-import EjecutarApp.JCheckBoxColumn;
+import extras.JCheckBoxColumn;
 import material.componentes.MaterialButton;
 import material.componentes.MaterialButton.Type;
 import material.extras.ToastMessage;
 import material.fonts.MaterialIcons;
 import material.fonts.Roboto;
 import mdlaf.shadows.DropShadowBorder;
+import mdlaf.shadows.RoundedCornerBorder;
 import mdlaf.utils.MaterialColors;
 
 public class PestañaCuidados extends JPanel {
@@ -32,13 +34,15 @@ public class PestañaCuidados extends JPanel {
 	private void hazInterfaz() {
 		setLayout(null);
 		
-		lblTitulo = new JLabel("Estado de salud de las crías");
+		lblTitulo = new JLabel("Estado de salud de las crías", SwingConstants.CENTER);
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(24f));
-		lblTitulo.setBounds(50, 20, 400, 50);
-		
+		lblTitulo.setBounds(50, 20, 320, 50);
+		lblTitulo.setBorder(new RoundedCornerBorder());
+
 		hazTabla();
 		
 		scrollPane = new JScrollPane(tabla);
+		scrollPane.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
 		scrollPane.setBounds(50, 100, 400, 400);
 		
 		btnGuardar = new MaterialButton();

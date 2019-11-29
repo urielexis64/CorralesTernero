@@ -7,16 +7,19 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import Controlador.ControladorClasificacion;
-import EjecutarApp.ModeloTabla;
+import extras.ModeloTabla;
 import material.componentes.MaterialButton;
 import material.extras.Rutinas;
 import material.fonts.MaterialIcons;
 import material.fonts.Roboto;
 import mdlaf.shadows.DropShadowBorder;
+import mdlaf.shadows.RoundedCornerBorder;
 import mdlaf.utils.MaterialColors;
 
 public class PestañaClasifcacion extends JPanel {
@@ -27,7 +30,7 @@ public class PestañaClasifcacion extends JPanel {
 
 	private JTable tablaCobertura1, tablaCobertura2, tablaCobertura3;
 	private ModeloTabla modeloTabla1, modeloTabla2, modeloTabla3;
-	private JScrollPane scrollTabla1, scrollTabla2, scrollTabla3;
+	public JScrollPane scrollTabla1, scrollTabla2, scrollTabla3;
 
 	public MaterialButton btnRefrescar;
 
@@ -38,8 +41,9 @@ public class PestañaClasifcacion extends JPanel {
 	private void hazInterfaz() {
 		setLayout(null);
 
-		lblCriterios = new JLabel("Criterios de clasificación");
+		lblCriterios = new JLabel("Criterios de clasificación", SwingConstants.CENTER);
 		lblCriterios.setBounds(250, 10, 300, 30);
+		lblCriterios.setBorder(new RoundedCornerBorder());
 		lblCriterios.setFont(Roboto.BLACK.deriveFont(24f));
 
 		lblColorMusculo = new JLabel(Rutinas.AjustarImagen("Resources\\colorMusculo.jpg", 261, 184));
@@ -82,13 +86,33 @@ public class PestañaClasifcacion extends JPanel {
 		hazTablas();
 
 		scrollTabla1 = new JScrollPane(tablaCobertura1);
+		scrollTabla1.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
 		scrollTabla1.setBounds(25, 330, 240, 280);
 
 		scrollTabla2 = new JScrollPane(tablaCobertura2);
+		scrollTabla2.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
 		scrollTabla2.setBounds(275, 330, 240, 280);
 
 		scrollTabla3 = new JScrollPane(tablaCobertura3);
+		scrollTabla3.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
 		scrollTabla3.setBounds(525, 330, 240, 280);
+
+		JSeparator sep1 = new JSeparator();
+		JSeparator sep2 = new JSeparator();
+		JSeparator sep3 = new JSeparator();
+		JSeparator sep4 = new JSeparator(1);
+		sep1.setForeground(new Color(193, 244, 56));
+		sep1.setBounds(50, 130, 310, 1);
+		sep2.setForeground(new Color(193, 244, 56));
+		sep2.setBounds(50, 180, 310, 1);
+		sep3.setForeground(new Color(193, 244, 56));
+		sep3.setBounds(50, 230, 310, 1);
+		sep4.setForeground(new Color(193, 244, 56));
+		sep4.setBounds(180, 62, 1, 168);
+		add(sep1);
+		add(sep2);
+		add(sep3);
+		add(sep4);
 
 		add(lblCriterios);
 		add(lblColorMusculo);

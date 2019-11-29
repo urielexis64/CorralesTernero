@@ -4,11 +4,14 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import Modelo.ConexionBDSingleton;
 import Vista.VentanaPrincipal;
 
-public class ControladorTitleBar implements ActionListener {
+public class ControladorTitleBar implements ActionListener, ChangeListener {
 
 	private VentanaPrincipal vista;
 
@@ -38,5 +41,29 @@ public class ControladorTitleBar implements ActionListener {
 				+ "<div style='color: #fffff0; h2 {margin-left: 5px;}'><h2>Uriel Alexis Aispuro Sánchez</h2></div><br> "
 				+ "<h3><center>Versión 0.3.1</center></h3><br><h3><center>21/09/2019</center></h3>" + "</html>",
 				"Acerca de...", -1);
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		JTabbedPane tab = (JTabbedPane) e.getSource();
+		switch (tab.getSelectedIndex()) {
+		case 1:
+			vista.clasificacion.btnRefrescar.doClick();
+			break;
+		case 2:
+			vista.consulta.btnRefrescar.doClick();
+			break;
+		case 3:
+			vista.cuidados.btnRefrescar.doClick();
+			break;
+		case 4:
+			vista.sacrificios.btnRefrescar.doClick();
+			break;
+		case 5:
+			vista.sensores.btnRefrescar.doClick();
+			break;
+		case 6:
+			vista.log.btnRefrescar.doClick();
+		}
 	}
 }

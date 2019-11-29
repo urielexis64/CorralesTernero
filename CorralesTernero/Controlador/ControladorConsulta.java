@@ -17,7 +17,6 @@ import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
 
 import Modelo.ModeloConsulta;
 import Vista.VentanaPrincipal;
-import mdlaf.utils.MaterialColors;
 
 public class ControladorConsulta implements ActionListener, CaretListener, ItemListener, DateChangeListener {
 	private VentanaPrincipal vista;
@@ -46,6 +45,10 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 				modelo.vivas = false;
 				btn.setForeground(Color.RED);
 				btn.setText("CRÍAS SACRIFICADAS");
+			}
+			if (!vista.consulta.txtBuscar.getText().equals("")) {
+				vista.consulta.txtBuscar.setText(vista.consulta.txtBuscar.getText()); // genera evento de caretUpdate y filtra tabla
+				return;
 			}
 		}
 		llenaTabla(); // Boton refrescar

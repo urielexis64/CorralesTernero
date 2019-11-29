@@ -1,8 +1,7 @@
-package EjecutarApp;
+package extras;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +14,7 @@ public class ModeloTabla extends DefaultTableModel implements TableCellRenderer 
 	public static final DefaultTableCellRenderer DEFAULT_RENDERER = new DefaultTableCellRenderer();
 	private static Color color;
 	public boolean isCellEditable(int row, int co) {
-		return co == this.getColumnCount() - 1;
+		return co == this.getColumnCount() - 1 && getColumnName(getColumnCount() - 1).equals("Sacrificar");
 	}
 
 	@Override
@@ -25,7 +24,7 @@ public class ModeloTabla extends DefaultTableModel implements TableCellRenderer 
 		if(color ==null)
 			color=table.getBackground();
 		
-		if (Integer.parseInt(table.getValueAt(row, 1).toString().split(" ")[0]) >= 45) {
+		if (Integer.parseInt(table.getValueAt(row, 1).toString().split(" ")[0]) >= 50) {
 			c.setBackground(MaterialColors.YELLOW_700);
 			c.setForeground(Color.BLACK);
 		}else {

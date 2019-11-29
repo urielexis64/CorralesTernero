@@ -10,10 +10,11 @@ import javax.swing.table.TableColumnModel;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.DatePickerSettings.DateArea;
 
 import Controlador.*;
 import EjecutarApp.Ejecutar;
-import EjecutarApp.ModeloTabla;
+import extras.ModeloTabla;
 import material.componentes.MaterialButton;
 import material.componentes.MaterialComboBox;
 import material.componentes.MaterialButton.Type;
@@ -54,9 +55,10 @@ public class PestañaConsulta extends JPanel {
 		iniciarTabla();
 		modal = new ModalActualiza();
 
-		lblTitulo = new JLabel("Consulta");
+		lblTitulo = new JLabel("Consulta", SwingConstants.CENTER);
+		lblTitulo.setBorder(new RoundedCornerBorder(MaterialColors.YELLOW_300));
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(26f));
-		lblTitulo.setBounds(90, 10, 190, 40);
+		lblTitulo.setBounds(90, 10, 130, 40);
 
 		scrollTable = new JScrollPane(tabla);
 		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
@@ -79,7 +81,7 @@ public class PestañaConsulta extends JPanel {
 		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
 		btnRefrescar.setType(Type.RAISED);
 		btnRefrescar.setBorder(new DropShadowBorder());
-		btnRefrescar.setBounds(5, 90, 80, 80);
+		btnRefrescar.setBounds(5, 95, 80, 80);
 
 		btnVaciar = new MaterialButton();
 		btnVaciar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
@@ -117,11 +119,17 @@ public class PestañaConsulta extends JPanel {
 		lblSegundosTransaccion.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblSegundosTransaccion.setBounds(40, 320, 25, 25);
 		lblSegundosTransaccion.setVisible(false);
-
+		
 		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings.setVisibleDateTextField(false);
 		dateSettings.setGapBeforeButtonPixels(0); // Redondez de las esquinas
 		dateSettings.setFormatForDatesCommonEra("dd-MM-uuuu");
+		dateSettings.setColor(DateArea.TextFieldBackgroundValidDate, MaterialColors.DARKLY_STRONG_BLUE);
+		dateSettings.setColor(DateArea.TextTodayLabel, MaterialColors.DARKLY_STRONG_BLUE);
+		dateSettings.setColor(DateArea.TextMonthAndYearMenuLabels, MaterialColors.DARKLY_STRONG_BLUE);
+		dateSettings.setColor(DateArea.TextClearLabel, MaterialColors.DARKLY_STRONG_BLUE);
+		dateSettings.setColor(DateArea.DatePickerTextValidDate, MaterialColors.WHITE);
+		
 		calendario = new DatePicker(dateSettings);
 		calendario.getComponentToggleCalendarButton().setIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
 		calendario.getComponentToggleCalendarButton().setText("");
@@ -129,7 +137,7 @@ public class PestañaConsulta extends JPanel {
 		calendario.getComponentToggleCalendarButton()
 				.setDisabledIcon(Rutinas.AjustarImagen("Resources\\calendar.png", 20, 20));
 		calendario.setBounds(480, 45, 45, 45);
-
+		
 		add(lblTitulo);
 		add(btnRefrescar);
 		add(btnVaciar);

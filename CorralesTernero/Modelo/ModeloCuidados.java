@@ -45,20 +45,26 @@ public class ModeloCuidados {
 	}
 
 	public boolean actualizaSalud(Vector<Vector<String>> crias) {
-		String sentenciaEnferma = "UPDATE CRIAS SET CORRAL_ID = 2, ALIM_ID = 2, VECES_CUARENTENA = VECES_CUARENTENA+1 WHERE ID_CRIA = ";
-		String sentenciaSana = "UPDATE CRIAS SET CORRAL_ID = 1, ALIM_ID = 1 WHERE ID_CRIA = ";
+		String sentenciaEnferma = "EXEC PA_ACTUALIZA_ESTADO 2, ";
+		String sentenciaSana = "EXEC PA_ACTUALIZA_ESTADO 1, ";
 
 		Statement consulta = null;
+
+		Vector<Vector<Object>> criasViejas = getCriasTabla();
 
 		try {
 			LOGGER.info("ACTUALIZANDO SALUD DE CRIAS...");
 
 			consulta = conexion.createStatement();
 			for (int i = 0; i < crias.size(); i++) {
-				if (crias.get(i).get(1).equals("true"))
-					consulta.executeUpdate(sentenciaEnferma + crias.get(i).get(0));
-				else
+				int idCria = Integer.parseInt(crias.get(i).get(0));
+				if (crias.get(i).get(1).equals("true") && criasViejas.get(i).get(1).equals("1")) { //Si se puso en "Enferma" y antes estaba "sana", entra
+					consulta.executeUpdate(sentenciaEnferma + idCria);
+					ModeloLog.registraMovimiento(idCria, "Se enfermó");
+				} else if (crias.get(i).get(1).equals("false") && criasViejas.get(i).get(1).equals("2")) {//Si se puso en "Sana" y antes estaba "enferma", entra
 					consulta.executeUpdate(sentenciaSana + crias.get(i).get(0));
+					ModeloLog.registraMovimiento(idCria, "Se recuperó");
+				}
 			}
 
 			LOGGER.info("TUPLAS ACTUALIZADAS CON ÉXITO");

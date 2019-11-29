@@ -7,6 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import Controlador.ControladorClasificacion;
 import Controlador.ControladorConsulta;
 import Controlador.ControladorCuidados;
+import Controlador.ControladorLog;
 import Controlador.ControladorModal;
 import Controlador.ControladorTabla;
 import Controlador.ControladorTitleBar;
@@ -19,10 +20,12 @@ import Modelo.ModeloClasificacion;
 import Modelo.ModeloConsulta;
 import Modelo.ModeloCuidados;
 import Modelo.ModeloEliminaCria;
+import Modelo.ModeloLog;
 import Modelo.ModeloRegistro;
 import Modelo.ModeloSacrificios;
 import Modelo.ModeloSensores;
 import Vista.VentanaPrincipal;
+import extras.SplashScreen;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialOceanicTheme;
 
@@ -31,21 +34,24 @@ public class Ejecutar {
 	private static VentanaPrincipal vista;
 
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {
-		login();
-
 		UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
 
-		vista = new VentanaPrincipal();
+		SplashScreen splash = new SplashScreen();
+		splash.show();
 
+		login();
+		vista = new VentanaPrincipal();
+		
 		ModeloRegistro modeloRegistro = new ModeloRegistro();
 		ModeloClasificacion modeloClasificaicon = new ModeloClasificacion();
 		ModeloConsulta modeloConsulta = new ModeloConsulta();
 		ModeloEliminaCria modeloEliminaCria = new ModeloEliminaCria();
 		ModeloActualiza modeloActualiza = new ModeloActualiza();
-		ModeloSacrificios  modeloSacrificios = new ModeloSacrificios();
+		ModeloSacrificios modeloSacrificios = new ModeloSacrificios();
 		ModeloCuidados modeloCuidados = new ModeloCuidados();
 		ModeloSensores modeloSensores = new ModeloSensores();
-		
+		ModeloLog modeloLog = new ModeloLog();
+
 		ControladorRegistro controladorRegistro = new ControladorRegistro(vista, modeloRegistro);
 		ControladorClasificacion controladorClasificacion = new ControladorClasificacion(vista, modeloClasificaicon);
 		ControladorConsulta controladorConsulta = new ControladorConsulta(vista, modeloConsulta);
@@ -55,7 +61,8 @@ public class Ejecutar {
 		ControladorTitleBar controladorTitleBar = new ControladorTitleBar(vista);
 		ControladorCuidados controladorCuidados = new ControladorCuidados(vista, modeloCuidados);
 		ControladorSensores controladorSensores = new ControladorSensores(vista, modeloSensores);
-		
+		ControladorLog controladorLog = new ControladorLog(vista, modeloLog);
+
 		vista.setControlador(controladorTitleBar);
 		vista.registro.setControlador(controladorRegistro);
 		vista.clasificacion.setControlador(controladorClasificacion);
@@ -65,8 +72,10 @@ public class Ejecutar {
 		vista.sacrificios.setControlador(controladorSacrificios);
 		vista.cuidados.setControladorCuidados(controladorCuidados);
 		vista.sensores.setControladorSensores(controladorSensores);
-		vista.setVisible(true);
+		vista.log.setControlador(controladorLog);
 
+		vista.setVisible(true);
+		splash.hide();
 	}
 
 	private static void login() {
@@ -90,5 +99,4 @@ public class Ejecutar {
 	public static VentanaPrincipal getInstance() { // Para centrar el Toast respecto a la posicion
 		return vista;
 	}
-
 }

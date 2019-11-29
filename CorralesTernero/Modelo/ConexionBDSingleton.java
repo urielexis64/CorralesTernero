@@ -31,12 +31,12 @@ public class ConexionBDSingleton {
 	}
 
 	public static void cierraConexion() {
-		try {
-			conn.close();
-//			LOGGER.info("Conexión cerrada exitosamente");
-		} catch (SQLException e) {
-			LOGGER.severe(e.getMessage());
-		}
+//		try {
+////			conn.close();
+////			LOGGER.info("Conexión cerrada exitosamente");
+//		} catch (SQLException e) {
+//			LOGGER.severe(e.getMessage());
+//		}
 	}
 
 }
