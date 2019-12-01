@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
@@ -39,19 +40,19 @@ public class PestañaSacrificios extends JPanel {
 
 		lblTitulo = new JLabel("Crías listas para sacrificar", SwingConstants.CENTER);
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(28f));
-		lblTitulo.setBorder(new RoundedCornerBorder());
+		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 		lblTitulo.setBounds(50, 20, 380, 50);
 
 		hazTabla();
 
 		scrollTabla = new JScrollPane(tabla);
 		scrollTabla.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
-		scrollTabla.setBounds(50, 100, 650, 300);
+		scrollTabla.setBounds(35, 100, 650, 300);
 
 		btnRefrescar = new MaterialButton();
 		btnRefrescar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
-		btnRefrescar.setBounds(700, 100, 80, 80);
+		btnRefrescar.setBounds(670, 100, 80, 80);
 
 		add(lblTitulo);
 		add(scrollTabla);

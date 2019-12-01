@@ -14,6 +14,7 @@ import Controlador.ControladorTitleBar;
 import Controlador.ControladorRegistro;
 import Controlador.ControladorSacrificios;
 import Controlador.ControladorSensores;
+import Controlador.ControladorSigProceso;
 import Modelo.ConexionBDSingleton;
 import Modelo.ModeloActualiza;
 import Modelo.ModeloClasificacion;
@@ -24,6 +25,7 @@ import Modelo.ModeloLog;
 import Modelo.ModeloRegistro;
 import Modelo.ModeloSacrificios;
 import Modelo.ModeloSensores;
+import Modelo.ModeloSigProceso;
 import Vista.VentanaPrincipal;
 import extras.SplashScreen;
 import mdlaf.MaterialLookAndFeel;
@@ -51,6 +53,7 @@ public class Ejecutar {
 		ModeloCuidados modeloCuidados = new ModeloCuidados();
 		ModeloSensores modeloSensores = new ModeloSensores();
 		ModeloLog modeloLog = new ModeloLog();
+		ModeloSigProceso modeloSigProceso = new ModeloSigProceso();
 
 		ControladorRegistro controladorRegistro = new ControladorRegistro(vista, modeloRegistro);
 		ControladorClasificacion controladorClasificacion = new ControladorClasificacion(vista, modeloClasificaicon);
@@ -62,6 +65,7 @@ public class Ejecutar {
 		ControladorCuidados controladorCuidados = new ControladorCuidados(vista, modeloCuidados);
 		ControladorSensores controladorSensores = new ControladorSensores(vista, modeloSensores);
 		ControladorLog controladorLog = new ControladorLog(vista, modeloLog);
+		ControladorSigProceso controladorSigProceso = new ControladorSigProceso(vista, modeloSigProceso);
 
 		vista.setControlador(controladorTitleBar);
 		vista.registro.setControlador(controladorRegistro);

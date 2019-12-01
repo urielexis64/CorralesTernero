@@ -28,11 +28,11 @@ import mdlaf.shadows.DropShadowBorder;
 import mdlaf.shadows.RoundedCornerBorder;
 
 public class PestañaConsulta extends JPanel {
-	private JTable tabla;
-	private static ModeloTabla modeloTabla;
+	public JTable tabla;
+	private ModeloTabla modeloTabla;
 	private JScrollPane scrollTable;
 
-	public MaterialButton btnRefrescar, btnVaciar, btnUndo;
+	public MaterialButton btnRefrescar, btnOrdenar, btnVaciar, btnUndo;
 	public JLabel lblNumeroCrias, lblSegundosTransaccion, lblTitulo;
 
 	public JPopupMenu menuFlotante;
@@ -56,7 +56,7 @@ public class PestañaConsulta extends JPanel {
 		modal = new ModalActualiza();
 
 		lblTitulo = new JLabel("Consulta", SwingConstants.CENTER);
-		lblTitulo.setBorder(new RoundedCornerBorder(MaterialColors.YELLOW_300));
+		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(26f));
 		lblTitulo.setBounds(90, 10, 130, 40);
 
@@ -82,21 +82,29 @@ public class PestañaConsulta extends JPanel {
 		btnRefrescar.setType(Type.RAISED);
 		btnRefrescar.setBorder(new DropShadowBorder());
 		btnRefrescar.setBounds(5, 95, 80, 80);
-
-		btnVaciar = new MaterialButton();
-		btnVaciar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
-		btnVaciar.setText(String.valueOf(MaterialIcons.DELETE_FOREVER));
-		btnVaciar.setType(Type.RAISED);
-		btnVaciar.setBorder(new DropShadowBorder());
-		btnVaciar.setBounds(5, 160, 80, 80);
-
-		btnUndo = new MaterialButton();
-		btnUndo.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
-		btnUndo.setText(String.valueOf(MaterialIcons.UNDO));
-		btnUndo.setType(Type.FLAT);
-		btnUndo.setBorder(new DropShadowBorder());
-		btnUndo.setBounds(5, 240, 80, 80);
-		btnUndo.setVisible(false);
+		
+		btnOrdenar= new MaterialButton();
+		btnOrdenar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
+		btnOrdenar.setText(String.valueOf(MaterialIcons.SORT_BY_ALPHA));
+		btnOrdenar.setForeground(Color.GREEN);
+		btnOrdenar.setType(Type.RAISED);
+		btnOrdenar.setBorder(new DropShadowBorder());
+		btnOrdenar.setBounds(5, 160, 80, 80);
+		
+//		btnVaciar = new MaterialButton();
+//		btnVaciar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
+//		btnVaciar.setText(String.valueOf(MaterialIcons.DELETE_FOREVER));
+//		btnVaciar.setType(Type.RAISED);
+//		btnVaciar.setBorder(new DropShadowBorder());
+//		btnVaciar.setBounds(5, 225, 80, 80);
+//		
+//		btnUndo = new MaterialButton();
+//		btnUndo.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
+//		btnUndo.setText(String.valueOf(MaterialIcons.UNDO));
+//		btnUndo.setType(Type.FLAT);
+//		btnUndo.setBorder(new DropShadowBorder());
+//		btnUndo.setBounds(5, 290, 80, 80);
+//		btnUndo.setVisible(false);
 
 		menuFlotante = new JPopupMenu();
 		itemEliminar = new JMenuItem("Eliminar cría");
@@ -117,7 +125,7 @@ public class PestañaConsulta extends JPanel {
 		lblNumeroCrias.setBounds(570, 45, 190, 40);
 		lblSegundosTransaccion = new JLabel("5");
 		lblSegundosTransaccion.setFont(new Font("Roboto", Font.BOLD, 16));
-		lblSegundosTransaccion.setBounds(40, 320, 25, 25);
+		lblSegundosTransaccion.setBounds(40, 380, 25, 25);
 		lblSegundosTransaccion.setVisible(false);
 		
 		DatePickerSettings dateSettings = new DatePickerSettings();
@@ -140,13 +148,14 @@ public class PestañaConsulta extends JPanel {
 		
 		add(lblTitulo);
 		add(btnRefrescar);
-		add(btnVaciar);
+		add(btnOrdenar);
+//		add(btnVaciar);
+//		add(btnUndo);
 		add(txtBuscar);
 		add(scrollTable);
 		add(comboBox);
 		add(btnEstado);
 		add(calendario);
-		add(btnUndo);
 		add(lblNumeroCrias);
 		add(lblSegundosTransaccion);
 	}
@@ -169,14 +178,15 @@ public class PestañaConsulta extends JPanel {
 		comboBox.addItemListener(controlador);
 		calendario.addDateChangeListener(controlador);
 		btnEstado.addActionListener(controlador);
+		btnOrdenar.addActionListener(controlador);
 	}
 
 	public void setControladorSeleccionTabla(ControladorTabla controlador) {
 		tabla.addMouseListener(controlador);
 		itemEliminar.addActionListener(controlador);
 		itemEditar.addActionListener(controlador);
-		btnVaciar.addActionListener(controlador);
-		btnUndo.addActionListener(controlador);
+//		btnVaciar.addActionListener(controlador);
+//		btnUndo.addActionListener(controlador);
 	}
 
 	public void setTabla(Vector<Vector<String>> objetoCria) {
@@ -191,7 +201,7 @@ public class PestañaConsulta extends JPanel {
 			nuevaCria.add(objetoCria.get(i).get(4)); // Fecha entrada
 			modeloTabla.addRow(nuevaCria);
 		}
-		btnVaciar.setEnabled(tabla.getRowCount() > 0);
+//		btnVaciar.setEnabled(tabla.getRowCount() > 0);
 	}
 
 	public void setTablaBusqueda(Vector<Vector<String>> objetoCria) {

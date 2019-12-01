@@ -46,14 +46,14 @@ public class PestañaRegistro extends JPanel {
 
 		lblTitulo= new JLabel("Registro", SwingConstants.CENTER);
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(26f));
-		lblTitulo.setBorder(new RoundedCornerBorder(MaterialColors.YELLOW_300));
+		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 		lblTitulo.setBounds(290, 16, 120, 40);
 		
 		txtPesoCria = new MaterialTextField();
 		txtPesoCria.setBounds(100, 40, 500, 70);
 		txtPesoCria.setLabel("Peso de la cría");
 		txtPesoCria.setUpperFilter(true);
-		txtPesoCria.setAccent(MaterialColors.YELLOW_300);
+		txtPesoCria.setAccent(new Color(193, 244, 56));
 		txtPesoCria.setForeground(MaterialColors.WHITE);
 		txtPesoCria.setBackground(MaterialColor.TRANSPARENT);
 		txtPesoCria.setCaretColor(Color.WHITE);
@@ -63,7 +63,7 @@ public class PestañaRegistro extends JPanel {
 		txtColorCria.setBounds(100, 140, 500, 70);
 		txtColorCria.setLabel("Color de músculo");
 		txtColorCria.setUpperFilter(true);
-		txtColorCria.setAccent(MaterialColors.YELLOW_300);
+		txtColorCria.setAccent(new Color(193, 244, 56));
 		txtColorCria.setForeground(MaterialColors.WHITE);
 		txtColorCria.setBackground(MaterialColor.TRANSPARENT);
 		txtColorCria.setCaretColor(Color.WHITE);
@@ -72,7 +72,7 @@ public class PestañaRegistro extends JPanel {
 		txtGrasaCria.setBounds(100, 240, 500, 70);
 		txtGrasaCria.setLabel("Porcentaje de grasa");
 		txtGrasaCria.setUpperFilter(true);
-		txtGrasaCria.setAccent(MaterialColors.YELLOW_300);
+		txtGrasaCria.setAccent(new Color(193, 244, 56));
 		txtGrasaCria.setForeground(MaterialColors.WHITE);
 		txtGrasaCria.setBackground(MaterialColor.TRANSPARENT);
 		txtGrasaCria.setCaretColor(Color.WHITE);

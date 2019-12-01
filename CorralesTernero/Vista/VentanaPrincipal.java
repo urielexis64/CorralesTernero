@@ -24,7 +24,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private JTabbedPane pestañas;
 	private JToggleButton btnModoOscuro;
-	private JButton btnCerrar, btnMinimizar, btnInfo;
+	private JButton btnCerrar, btnMinimizar, btnInfo, btnConfig;
 	private MaterialPanel panelSuperior;
 	private LabelColores lblTitulo;
 
@@ -35,6 +35,7 @@ public class VentanaPrincipal extends JFrame {
 	public PestañaCuidados cuidados;
 	public PestañaSensores sensores;
 	public PestañaLog log;
+	public PestañaSigProceso sigProceso;
 
 	public VentanaPrincipal() {
 		hazInterfaz();
@@ -53,14 +54,21 @@ public class VentanaPrincipal extends JFrame {
 		lblTitulo.setAnimado(true);
 
 		btnInfo = new JButton(Rutinas.AjustarImagen("Resources\\info.png", 20, 20));
-		btnInfo.setBounds(660, 15, 35, 35);
+		btnInfo.setBounds(620, 15, 35, 35);
 		btnInfo.setActionCommand("info");
-		btnCerrar = new JButton(Rutinas.AjustarImagen("Resources\\close.png", 20, 20));
-		btnCerrar.setBounds(740, 15, 35, 35);
-		btnCerrar.setActionCommand("cerrar");
+		btnInfo.setToolTipText("Acerca de...");
+		btnConfig = new JButton(Rutinas.AjustarImagen("Resources\\settings.png", 25, 25));
+		btnConfig.setBounds(660, 15, 35, 35);
+		btnConfig.setActionCommand("config");
+		btnConfig.setToolTipText("Ajustes");
 		btnMinimizar = new JButton(Rutinas.AjustarImagen("Resources\\minimize.png", 20, 20));
 		btnMinimizar.setBounds(700, 15, 35, 35);
 		btnMinimizar.setActionCommand("minimizar");
+		btnMinimizar.setToolTipText("Minimizar");
+		btnCerrar = new JButton(Rutinas.AjustarImagen("Resources\\close.png", 20, 20));
+		btnCerrar.setBounds(740, 15, 35, 35);
+		btnCerrar.setActionCommand("cerrar");
+		btnCerrar.setToolTipText("Cerrar");
 
 		pestañas = new JTabbedPane();
 		pestañas.setBounds(10, 50, 780, 730);
@@ -72,6 +80,7 @@ public class VentanaPrincipal extends JFrame {
 		cuidados = new PestañaCuidados();
 		sensores = new PestañaSensores();
 		log = new PestañaLog();
+		sigProceso= new PestañaSigProceso();
 
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\registro_icon[nuevo].png", 20, 20), registro);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18), clasificacion);
@@ -80,6 +89,7 @@ public class VentanaPrincipal extends JFrame {
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sacrificio_icon.png", 26, 26), sacrificios);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sensor_icon.png", 26, 26), sensores);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\log_icon.png", 26, 26), log);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\", 26, 26), sigProceso);
 		pestañas.setToolTipTextAt(0, "Registro");
 		pestañas.setToolTipTextAt(1, "Clasificación");
 		pestañas.setToolTipTextAt(2, "Consulta");
@@ -87,6 +97,7 @@ public class VentanaPrincipal extends JFrame {
 		pestañas.setToolTipTextAt(4, "Sacrificios");
 		pestañas.setToolTipTextAt(5, "Sensores");
 		pestañas.setToolTipTextAt(6, "Log de acciones");
+		pestañas.setToolTipTextAt(7, "Siguiente proceso");
 
 //		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
 
@@ -97,6 +108,7 @@ public class VentanaPrincipal extends JFrame {
 
 		panelSuperior.add(lblTitulo);
 		panelSuperior.add(btnInfo);
+		panelSuperior.add(btnConfig);
 		panelSuperior.add(btnCerrar);
 		panelSuperior.add(btnMinimizar);
 

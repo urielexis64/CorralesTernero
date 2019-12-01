@@ -39,7 +39,7 @@ public class ModeloLog {
 
 	public Vector<Vector<String>> getMovimientos() {
 		try {
-			ResultSet rs = consulta.executeQuery("SELECT * FROM LOG");
+			ResultSet rs = consulta.executeQuery("SELECT * FROM LOG ORDER BY FECHA DESC");
 			Vector<Vector<String>> movimientos = new Vector<Vector<String>>();
 
 			while (rs.next()) {

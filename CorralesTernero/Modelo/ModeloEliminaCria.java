@@ -27,7 +27,7 @@ public class ModeloEliminaCria {
 			LOGGER.info("CRÍA ELIMINADA -> ID = " + id);
 			return true;
 		} catch (SQLException e) {
-			LOGGER.severe("CRIA NO ELIMINADA -> ID = " + id);
+			LOGGER.severe("CRIA NO ELIMINADA -> ID = " + id+"\nError: "+e.getMessage());
 			return false;
 		}
 	}
@@ -37,7 +37,7 @@ public class ModeloEliminaCria {
 
 		try {
 			LOGGER.info("TRUNCANDO TABLA CRIAS...");
-			conexion.setAutoCommit(false); //Es como un BEGIN TRAN
+//			conexion.setAutoCommit(false); //Es como un BEGIN TRAN
 
 			consulta.executeUpdate(sentencia);
 			return true;

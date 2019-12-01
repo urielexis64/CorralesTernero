@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Color;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -39,7 +40,7 @@ public class PestañaSensores extends JPanel {
 		lblTitulo = new JLabel("Sensores de crías finas", SwingConstants.CENTER);
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(24f));
 		lblTitulo.setBounds(50, 20, 300, 50);
-		lblTitulo.setBorder(new RoundedCornerBorder());
+		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 				
 		hazTabla();
 		

@@ -19,14 +19,7 @@ public class ControladorSensores implements ActionListener {
 		this.vista = vista;
 		this.modelo = modelo;
 		llenaTabla();
-		procesoAleatorioSensores();
-	}
-
-	private void procesoAleatorioSensores() {
-		for (int i = 0; i < vista.sensores.tabla.getRowCount(); i++) {
-			int idCria = Integer.parseInt(vista.sensores.tabla.getValueAt(i, 0) + "");
-			modelo.randomSensores(idCria);
-		}
+		modelo.randomSensores();
 	}
 
 	private void llenaTabla() {
@@ -68,7 +61,7 @@ public class ControladorSensores implements ActionListener {
 			}
 		}
 
-		if (objetoSensor.size() == 0) {
+		if (objetoSensor.isEmpty()) {
 			vista.sensores.showMessage("Actualmente no hay crías propensas a enfermarse.", true);
 			return;
 		}

@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Color;
 import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ import material.componentes.MaterialButton.Type;
 import material.fonts.MaterialIcons;
 import material.fonts.Roboto;
 import mdlaf.shadows.DropShadowBorder;
+import mdlaf.shadows.RoundedCornerBorder;
 import mdlaf.utils.MaterialColors;
 
 public class PestañaLog extends JPanel {
@@ -34,6 +36,7 @@ public class PestañaLog extends JPanel {
 		iniciarTabla();
 		
 		lblTitulo = new JLabel("Log");
+		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(30f));
 		lblTitulo.setBounds(30, 10, 100, 50);
 

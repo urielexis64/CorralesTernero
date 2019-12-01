@@ -21,15 +21,16 @@ import Vista.VentanaPrincipal;
 public class ControladorConsulta implements ActionListener, CaretListener, ItemListener, DateChangeListener {
 	private VentanaPrincipal vista;
 	private ModeloConsulta modelo;
+	private static boolean asc = true;
 
 	public ControladorConsulta(VentanaPrincipal vista, ModeloConsulta modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
-		llenaTabla();
+		llenaTabla("id_cria", asc);
 	}
 
-	public void llenaTabla() {
-		vista.consulta.setTabla(modelo.getTotalCrias());
+	public void llenaTabla(String ordenamiento, boolean ascendente) {
+		vista.consulta.setTabla(modelo.getTotalCrias(ordenamiento, ascendente));
 		vista.consulta.lblNumeroCrias.setText("Total de crías: " + modelo.getNumCrias());
 	}
 
@@ -47,11 +48,19 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 				btn.setText("CRÍAS SACRIFICADAS");
 			}
 			if (!vista.consulta.txtBuscar.getText().equals("")) {
-				vista.consulta.txtBuscar.setText(vista.consulta.txtBuscar.getText()); // genera evento de caretUpdate y filtra tabla
+				vista.consulta.txtBuscar.setText(vista.consulta.txtBuscar.getText()); // genera evento de caretUpdate y
+																						// filtra tabla
 				return;
 			}
 		}
-		llenaTabla(); // Boton refrescar
+		if (e.getSource() == vista.consulta.btnRefrescar) {
+			llenaTabla(vista.consulta.comboBox.getSelectedItem().toString(), asc); // Boton refrescar
+			return;
+		}
+
+		llenaTabla(vista.consulta.comboBox.getSelectedItem().toString(), asc ? false : true);
+		vista.consulta.btnOrdenar.setForeground(asc ? Color.RED : Color.GREEN);
+		asc = !asc;
 	}
 
 	@Override

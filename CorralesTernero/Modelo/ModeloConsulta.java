@@ -19,13 +19,13 @@ public class ModeloConsulta {
 		vivas = true;
 	}
 
-	public Vector<Vector<String>> getTotalCrias() {
+	public Vector<Vector<String>> getTotalCrias(String ordenamiento, boolean ascendente) {
 		Vector<Vector<String>> crias = new Vector<Vector<String>>();
 
-		String sentencia = "EXEC PA_CRIAS_CONSULTA NULL, NULL, " + (vivas ? 1 : 0);
+		String sentencia = "EXEC PA_CRIAS_CONSULTA NULL, NULL, " + (vivas ? 1 : 0) + ", " + ordenamiento + ", "
+				+ (ascendente ? 0 : 1);
 
-		Statement consulta = null;
-
+		 Statement consulta = null;
 		try {
 			LOGGER.info("OBTENIENDO TUPLAS DE LA TABLA CRIAS...");
 
@@ -53,9 +53,9 @@ public class ModeloConsulta {
 	public Vector<Vector<String>> getConsultaCrias(String valor, String criterio) {
 		Vector<Vector<String>> conjuntoCrias = new Vector<Vector<String>>();
 
-		String sentencia = "EXEC PA_CRIAS_CONSULTA " + criterio + ", ?, " + (vivas ? 1 : 0);
+		String sentencia = "EXEC PA_CRIAS_CONSULTA " + criterio + ", ?, " + (vivas ? 1 : 0)+", ID_CRIA, 0";
 		PreparedStatement consultaPreparada = null;
-
+		
 		try {
 			LOGGER.info("OBTENIENDO TUPLAS FILTRADAS POR " + criterio);
 			consultaPreparada = conexion.prepareStatement(sentencia);

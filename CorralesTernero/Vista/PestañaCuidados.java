@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Color;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -36,8 +37,8 @@ public class PestañaCuidados extends JPanel {
 		
 		lblTitulo = new JLabel("Estado de salud de las crías", SwingConstants.CENTER);
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(24f));
-		lblTitulo.setBounds(50, 20, 320, 50);
-		lblTitulo.setBorder(new RoundedCornerBorder());
+		lblTitulo.setBounds(65, 20, 320, 50);
+		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 
 		hazTabla();
 		
@@ -48,14 +49,14 @@ public class PestañaCuidados extends JPanel {
 		btnGuardar = new MaterialButton();
 		btnGuardar.setFont(MaterialIcons.ICON_FONT.deriveFont(35f));
 		btnGuardar.setText(String.valueOf(MaterialIcons.SAVE));
-		btnGuardar.setBounds(455, 90, 80, 80);
+		btnGuardar.setBounds(455, 100, 80, 80);
 		
 		btnRefrescar = new MaterialButton();
 		btnRefrescar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
 		btnRefrescar.setType(Type.RAISED);
 		btnRefrescar.setBorder(new DropShadowBorder());
-		btnRefrescar.setBounds(455, 150, 80, 80);
+		btnRefrescar.setBounds(455, 160, 80, 80);
 		
 		add(lblTitulo);
 		add(scrollPane);

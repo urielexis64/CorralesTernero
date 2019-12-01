@@ -17,8 +17,8 @@ public class ModeloSensores {
 		conexion = ConexionBDSingleton.getConexion();
 	}
 	
-	public boolean randomSensores(int id){
-		String sentencia = "EXEC [PA_DATOS_RANDOM_SENSORES] "+id;
+	public boolean randomSensores(){
+		String sentencia = "EXEC [PA_DATOS_RANDOM_SENSORES]";
 		Statement consulta = null;
 
 		try {

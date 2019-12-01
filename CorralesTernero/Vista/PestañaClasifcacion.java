@@ -25,7 +25,7 @@ import mdlaf.utils.MaterialColors;
 public class PestañaClasifcacion extends JPanel {
 
 	private JLabel lblColorMusculo;
-	private JLabel lblCriterios, lblCrias1, lblCrias2, lblCrias3;
+	private JLabel lblTitulo, lblCrias1, lblCrias2, lblCrias3;
 	private JLabel lblRenglon1, lblRenglon2, lblRenglon3, lblRenglon4;
 
 	private JTable tablaCobertura1, tablaCobertura2, tablaCobertura3;
@@ -41,10 +41,10 @@ public class PestañaClasifcacion extends JPanel {
 	private void hazInterfaz() {
 		setLayout(null);
 
-		lblCriterios = new JLabel("Criterios de clasificación", SwingConstants.CENTER);
-		lblCriterios.setBounds(250, 10, 300, 30);
-		lblCriterios.setBorder(new RoundedCornerBorder());
-		lblCriterios.setFont(Roboto.BLACK.deriveFont(24f));
+		lblTitulo = new JLabel("Criterios de clasificación", SwingConstants.CENTER);
+		lblTitulo.setBounds(250, 10, 300, 30);
+		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
+		lblTitulo.setFont(Roboto.BLACK.deriveFont(24f));
 
 		lblColorMusculo = new JLabel(Rutinas.AjustarImagen("Resources\\colorMusculo.jpg", 261, 184));
 		lblColorMusculo.setBounds(450, 60, 261, 184);
@@ -101,6 +101,7 @@ public class PestañaClasifcacion extends JPanel {
 		JSeparator sep2 = new JSeparator();
 		JSeparator sep3 = new JSeparator();
 		JSeparator sep4 = new JSeparator(1);
+		
 		sep1.setForeground(new Color(193, 244, 56));
 		sep1.setBounds(50, 130, 310, 1);
 		sep2.setForeground(new Color(193, 244, 56));
@@ -109,12 +110,13 @@ public class PestañaClasifcacion extends JPanel {
 		sep3.setBounds(50, 230, 310, 1);
 		sep4.setForeground(new Color(193, 244, 56));
 		sep4.setBounds(180, 62, 1, 168);
+		
 		add(sep1);
 		add(sep2);
 		add(sep3);
 		add(sep4);
 
-		add(lblCriterios);
+		add(lblTitulo);
 		add(lblColorMusculo);
 
 		add(lblRenglon1);
