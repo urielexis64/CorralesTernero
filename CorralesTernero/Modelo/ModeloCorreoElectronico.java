@@ -4,12 +4,20 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Properties;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class ModeloCorreoElectronico {
 
@@ -37,6 +45,23 @@ public class ModeloCorreoElectronico {
 		can.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(unoDos(true)));
 		can.setSubject(asunto);
 		can.setText(cuerpo);
+//		MimeBodyPart messageBodyPart = new MimeBodyPart();
+//
+//		Multipart multipart = new MimeMultipart();
+//		BodyPart mensajeCuerpo = new MimeBodyPart();
+//		mensajeCuerpo.setText(cuerpo);
+//
+//		messageBodyPart = new MimeBodyPart();
+//		String file = "E:\\Escritorio\\prueba.pdf";
+//		String fileName = "Prueba.pdf";
+//		DataSource source = new FileDataSource(file);
+//		messageBodyPart.setDataHandler(new DataHandler(source));
+//		messageBodyPart.setFileName(fileName);
+//		multipart.addBodyPart(messageBodyPart);
+//		multipart.addBodyPart(mensajeCuerpo);
+//
+//		can.setContent(multipart);
+
 		Transport.send(can);
 	}
 
@@ -68,7 +93,7 @@ class DesEncrip {
 	public DesEncrip(String PreCambio, int Clave1, int Clave2, boolean paso4, int seleccion) {
 		String cambio = PreCambio;
 		error = false;
-		
+
 		if (paso4) {
 			String resultado3 = "";
 			for (int i = 0; i < PreCambio.length(); i++) {

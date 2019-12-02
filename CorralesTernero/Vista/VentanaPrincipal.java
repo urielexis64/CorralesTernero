@@ -12,6 +12,7 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
 import Controlador.ControladorModoOscuro;
 import Controlador.ControladorTitleBar;
+import extras.LabelColores;
 import material.componentes.MaterialColor;
 import material.componentes.MaterialPanel;
 import material.extras.Rutinas;
@@ -36,6 +37,7 @@ public class VentanaPrincipal extends JFrame {
 	public PestañaSensores sensores;
 	public PestañaLog log;
 	public PestañaSigProceso sigProceso;
+	public PestañaInformes informes;
 
 	public VentanaPrincipal() {
 		hazInterfaz();
@@ -81,6 +83,7 @@ public class VentanaPrincipal extends JFrame {
 		sensores = new PestañaSensores();
 		log = new PestañaLog();
 		sigProceso= new PestañaSigProceso();
+		informes= new PestañaInformes();
 
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\registro_icon[nuevo].png", 20, 20), registro);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18), clasificacion);
@@ -89,7 +92,8 @@ public class VentanaPrincipal extends JFrame {
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sacrificio_icon.png", 26, 26), sacrificios);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sensor_icon.png", 26, 26), sensores);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\log_icon.png", 26, 26), log);
-		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\", 26, 26), sigProceso);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\informes_icon.png", 30, 30), informes);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sigProceso_icon.png", 30, 30), sigProceso);
 		pestañas.setToolTipTextAt(0, "Registro");
 		pestañas.setToolTipTextAt(1, "Clasificación");
 		pestañas.setToolTipTextAt(2, "Consulta");
@@ -97,7 +101,8 @@ public class VentanaPrincipal extends JFrame {
 		pestañas.setToolTipTextAt(4, "Sacrificios");
 		pestañas.setToolTipTextAt(5, "Sensores");
 		pestañas.setToolTipTextAt(6, "Log de acciones");
-		pestañas.setToolTipTextAt(7, "Siguiente proceso");
+		pestañas.setToolTipTextAt(7, "Informes");
+		pestañas.setToolTipTextAt(8, "Siguiente proceso");
 
 //		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
 
@@ -162,7 +167,7 @@ public class VentanaPrincipal extends JFrame {
 			public void run() {
 				while (w < getWidth()) {
 					setShape(new RoundRectangle2D.Double(getWidth() / 2 - w / 2 - 20, getHeight() / 2 - h / 2 - 20,
-							w += 40, h += 40, 50, 50));
+							w += 40, h += 40, 30, 30));
 					try {
 						sleep(10);
 					} catch (InterruptedException e) {
@@ -198,40 +203,3 @@ public class VentanaPrincipal extends JFrame {
 
 }
 
-class LabelColores extends JLabel implements ActionListener {
-
-	private Timer t;
-	private int i;
-	private boolean asc;
-	private Color[] colores = { MaterialColor.BLUEGREY_100, MaterialColor.BLUEGREY_200, MaterialColor.BLUEGREY_300,
-			MaterialColor.BLUEGREY_400, MaterialColor.BLUEGREY_500, MaterialColor.BLUEGREY_600,
-			MaterialColor.BLUEGREY_700, MaterialColor.BLUEGREY_800, MaterialColor.BLUEGREY_900 };
-
-	public LabelColores(String s) {
-		super(s);
-		t = new Timer(200, this);
-		i = 0;
-		asc = true;
-	}
-
-	public void setAnimado(boolean b) {
-		if (b) {
-			t.start();
-		} else {
-			t.stop();
-		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (i == 8)
-			asc = false;
-		else if (i == 0)
-			asc = true;
-
-		if (asc)
-			setBorder(new RoundedCornerBorder(colores[++i]));
-		else
-			setBorder(new RoundedCornerBorder(colores[--i]));
-	}
-}

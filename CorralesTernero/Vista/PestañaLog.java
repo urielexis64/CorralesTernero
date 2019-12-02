@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -22,10 +23,10 @@ import mdlaf.utils.MaterialColors;
 
 public class PestañaLog extends JPanel {
 	private JTable tabla;
-	private static ModeloTabla modeloTabla;
+	private ModeloTabla modeloTabla;
 	private JScrollPane scrollTable;
 	public MaterialButton btnRefrescar;
-	private JLabel lblTitulo;
+	private JLabel lblTitulo, lblInfo;
 
 	public PestañaLog() {
 		hazInterfaz();
@@ -35,23 +36,29 @@ public class PestañaLog extends JPanel {
 		setLayout(null);
 		iniciarTabla();
 		
-		lblTitulo = new JLabel("Log");
+		lblTitulo = new JLabel("Log", SwingConstants.CENTER);
 		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(30f));
-		lblTitulo.setBounds(30, 10, 100, 50);
+		lblTitulo.setBounds(45, 10, 70, 50);
 
+		lblInfo = new JLabel("<html>Se muestran los movimientos que cada cría ha realizado y su fecha correspondiente.", SwingConstants.CENTER);
+		lblInfo.setFont(Roboto.BLACK.deriveFont(14f));
+		lblInfo.setBorder(new DropShadowBorder());
+		lblInfo.setBounds(540, 130, 230, 65);
+		
 		scrollTable = new JScrollPane(tabla);
 		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
-		scrollTable.setBounds(30, 60, 500, 500);
+		scrollTable.setBounds(30, 60, 500, 450);
 		
 		btnRefrescar = new MaterialButton();
 		btnRefrescar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
 		btnRefrescar.setType(Type.RAISED);
 		btnRefrescar.setBorder(new DropShadowBorder());
-		btnRefrescar.setBounds(540, 60, 80, 80);
+		btnRefrescar.setBounds(520, 65, 80, 80);
 
 		add(btnRefrescar);
+		add(lblInfo);
 		add(lblTitulo);
 		add(scrollTable);
 	}

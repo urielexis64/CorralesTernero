@@ -49,14 +49,14 @@ public class PestañaCuidados extends JPanel {
 		btnGuardar = new MaterialButton();
 		btnGuardar.setFont(MaterialIcons.ICON_FONT.deriveFont(35f));
 		btnGuardar.setText(String.valueOf(MaterialIcons.SAVE));
-		btnGuardar.setBounds(455, 100, 80, 80);
+		btnGuardar.setBounds(440, 100, 80, 80);
 		
 		btnRefrescar = new MaterialButton();
 		btnRefrescar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
 		btnRefrescar.setType(Type.RAISED);
 		btnRefrescar.setBorder(new DropShadowBorder());
-		btnRefrescar.setBounds(455, 160, 80, 80);
+		btnRefrescar.setBounds(440, 160, 80, 80);
 		
 		add(lblTitulo);
 		add(scrollPane);

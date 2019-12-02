@@ -46,6 +46,9 @@ public class ControladorTitleBar implements ActionListener, ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		JTabbedPane tab = (JTabbedPane) e.getSource();
+
+		vista.setSize(vista.getWidth(), 800);
+
 		switch (tab.getSelectedIndex()) {
 		case 1:
 			vista.clasificacion.btnRefrescar.doClick();
@@ -64,6 +67,12 @@ public class ControladorTitleBar implements ActionListener, ChangeListener {
 			break;
 		case 6:
 			vista.log.btnRefrescar.doClick();
+			break;
+		case 7:
+			vista.setSize(vista.getWidth(), 270);
+			break;
+		case 8:
+			vista.sigProceso.btnSig.doClick();
 		}
 	}
 }

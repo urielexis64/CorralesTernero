@@ -1,5 +1,6 @@
 package EjecutarApp;
 
+import java.io.FileInputStream;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -12,6 +13,7 @@ import Controlador.ControladorModal;
 import Controlador.ControladorTabla;
 import Controlador.ControladorTitleBar;
 import Controlador.ControladorRegistro;
+import Controlador.ControladorInformes;
 import Controlador.ControladorSacrificios;
 import Controlador.ControladorSensores;
 import Controlador.ControladorSigProceso;
@@ -28,6 +30,8 @@ import Modelo.ModeloSensores;
 import Modelo.ModeloSigProceso;
 import Vista.VentanaPrincipal;
 import extras.SplashScreen;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialOceanicTheme;
 
@@ -42,8 +46,11 @@ public class Ejecutar {
 		splash.show();
 
 		login();
-		vista = new VentanaPrincipal();
 		
+		moo();
+		
+		vista = new VentanaPrincipal();
+
 		ModeloRegistro modeloRegistro = new ModeloRegistro();
 		ModeloClasificacion modeloClasificaicon = new ModeloClasificacion();
 		ModeloConsulta modeloConsulta = new ModeloConsulta();
@@ -66,6 +73,7 @@ public class Ejecutar {
 		ControladorSensores controladorSensores = new ControladorSensores(vista, modeloSensores);
 		ControladorLog controladorLog = new ControladorLog(vista, modeloLog);
 		ControladorSigProceso controladorSigProceso = new ControladorSigProceso(vista, modeloSigProceso);
+		ControladorInformes controladorInformes = new ControladorInformes(vista, modeloSigProceso);
 
 		vista.setControlador(controladorTitleBar);
 		vista.registro.setControlador(controladorRegistro);
@@ -77,6 +85,8 @@ public class Ejecutar {
 		vista.cuidados.setControladorCuidados(controladorCuidados);
 		vista.sensores.setControladorSensores(controladorSensores);
 		vista.log.setControlador(controladorLog);
+		vista.informes.setControlador(controladorInformes);
+		vista.sigProceso.setControlador(controladorSigProceso);
 
 		vista.setVisible(true);
 		splash.hide();
@@ -98,6 +108,17 @@ public class Ejecutar {
 			JOptionPane.showMessageDialog(null, "ERROR AL CONECTARSE A LA BASE DE DATOS", "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	private static void moo() {
+		new Thread(()->{
+			try {
+				Player moo = new Player(new FileInputStream("Resources\\moo.mp3"));
+				moo.play();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}).start();
 	}
 
 	public static VentanaPrincipal getInstance() { // Para centrar el Toast respecto a la posicion

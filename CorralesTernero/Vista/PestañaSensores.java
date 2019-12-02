@@ -46,18 +46,18 @@ public class PestañaSensores extends JPanel {
 		
 		scrollPane = new JScrollPane(tabla);
 		scrollPane.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
-		scrollPane.setBounds(50, 100, 600, 500);
+		scrollPane.setBounds(35, 100, 600, 500);
 		
 		btnEnviarCorreo = new MaterialButton();
 		btnEnviarCorreo.setFont(MaterialIcons.ICON_FONT.deriveFont(35f));
 		btnEnviarCorreo.setText(String.valueOf(MaterialIcons.EMAIL));
-		btnEnviarCorreo.setBounds(650, 90, 80, 80);
+		btnEnviarCorreo.setBounds(630, 105, 80, 80);
 		
 		btnRefrescar = new MaterialButton();
 		btnRefrescar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
 		btnRefrescar.setBorder(new DropShadowBorder());
-		btnRefrescar.setBounds(650, 150, 80, 80);
+		btnRefrescar.setBounds(630, 160, 80, 80);
 		btnRefrescar.doClick();
 				
 		bar = new JProgressBar();

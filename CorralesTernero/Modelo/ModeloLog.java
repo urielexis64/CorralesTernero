@@ -39,6 +39,7 @@ public class ModeloLog {
 
 	public Vector<Vector<String>> getMovimientos() {
 		try {
+			LOGGER.info("OBTENIENDO LISTA DE MOVIMIENTOS...");
 			ResultSet rs = consulta.executeQuery("SELECT * FROM LOG ORDER BY FECHA DESC");
 			Vector<Vector<String>> movimientos = new Vector<Vector<String>>();
 
@@ -49,7 +50,7 @@ public class ModeloLog {
 				tupla.add(rs.getString(3));
 				movimientos.add(tupla);
 			}
-
+			LOGGER.info("LISTA DE MOVIMIENTOS OBTENIDA CON ÉXITO");
 			return movimientos;
 		} catch (SQLException e) {
 			return null;

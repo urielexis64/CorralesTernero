@@ -6,9 +6,22 @@
 	<classpathentry exported="true" kind="lib" path="CorralesTernero/Librerias/LGoodDatePicker-10.4.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="CorralesTernero/Librerias/mail-1.4.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="CorralesTernero/Librerias/material-ui-swing-1.0.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="CorralesTernero/Librerias/MaterialComponents.jar"/>
 	<classpathentry exported="true" kind="lib" path="CorralesTernero/Librerias/sqljdbc42.jar"/>
 	<classpathentry exported="true" kind="lib" path="CorralesTernero/Librerias/timingframework-core-5.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="CorralesTernero/Librerias/timingframework-swing-5.0.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MaterialDesign"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/font-asian-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/forms-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/hyph-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/io-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/kernel-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/layout-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/pdfa-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/pdftest-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/sign-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/slf4j-simple-1.7.25.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/PDF/barcodes-7.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/jmediaplayer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

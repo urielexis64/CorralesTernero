@@ -4,7 +4,6 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -16,7 +15,7 @@ import material.extras.AccionComponente;
 public class ControladorRegistro implements ActionListener {
 	private VentanaPrincipal vista;
 	private ModeloRegistro modelo;
-
+	
 	public ControladorRegistro(VentanaPrincipal vista, ModeloRegistro modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
@@ -68,12 +67,13 @@ public class ControladorRegistro implements ActionListener {
 							null);
 					vista.registro.showMessage("Texto copiado", false);
 				});
-				
+
 				vista.registro.showMessage("¡Cría insertada con éxito!", false);
-				
+
 				JOptionPane.showOptionDialog(vista, "ID generado: " + idGenerado, "Mensaje", 0, 0, null,
 						new Object[] { btnCopiar, "Cerrar" }, "Cerrar");
 				ModeloLog.registraMovimiento(idGenerado, "Dada de alta");
+				
 				vista.registro.bar.setVisible(false);
 			} else {
 				vista.registro.bar.setVisible(false);
@@ -81,7 +81,7 @@ public class ControladorRegistro implements ActionListener {
 			}
 			vista.registro.limpiar();
 		}).start();
- 
+
 		AccionComponente.codifica(vista.registro.btnRegistrarCria, 30, 15);
 	}
 }
