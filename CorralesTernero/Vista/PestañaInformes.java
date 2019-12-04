@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Controlador.ControladorInformes;
+import EjecutarApp.Ejecutar;
 import material.extras.ToastMessage;
 import material.fonts.Roboto;
 import mdlaf.shadows.RoundedCornerBorder;
@@ -52,7 +53,7 @@ public class PestañaInformes extends JPanel {
 	}
 
 	public void showMessage(String msg, boolean error) {
-		ToastMessage toast = new ToastMessage(this);
+		ToastMessage toast = new ToastMessage(Ejecutar.getInstance());
 		if (error)
 			toast.setInfo(msg, MaterialColors.RED_500);
 		else

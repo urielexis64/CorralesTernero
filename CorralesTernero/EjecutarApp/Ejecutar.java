@@ -1,3 +1,4 @@
+
 package EjecutarApp;
 
 import java.io.FileInputStream;
@@ -9,6 +10,7 @@ import Controlador.ControladorClasificacion;
 import Controlador.ControladorConsulta;
 import Controlador.ControladorCuidados;
 import Controlador.ControladorLog;
+import Controlador.ControladorLoginUsuario;
 import Controlador.ControladorModal;
 import Controlador.ControladorTabla;
 import Controlador.ControladorTitleBar;
@@ -24,13 +26,14 @@ import Modelo.ModeloConsulta;
 import Modelo.ModeloCuidados;
 import Modelo.ModeloEliminaCria;
 import Modelo.ModeloLog;
+import Modelo.ModeloLoginUsuario;
 import Modelo.ModeloRegistro;
 import Modelo.ModeloSacrificios;
 import Modelo.ModeloSensores;
 import Modelo.ModeloSigProceso;
+import Vista.LoginUsuario;
 import Vista.VentanaPrincipal;
 import extras.SplashScreen;
-import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialOceanicTheme;
@@ -41,16 +44,21 @@ public class Ejecutar {
 
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
-
+		login();
+		
+		LoginUsuario loginUsuario = new LoginUsuario();
+		ModeloLoginUsuario modeloLoginUsuario = new ModeloLoginUsuario();
+		ControladorLoginUsuario controladorLoginUsuario = new ControladorLoginUsuario(loginUsuario, modeloLoginUsuario);
+		loginUsuario.setControlador(controladorLoginUsuario);
+	}
+	
+	public static void iniciaAplicacion(String nombreUsuario) {
 		SplashScreen splash = new SplashScreen();
 		splash.show();
 
-		login();
-		
 		moo();
-		
-		vista = new VentanaPrincipal();
-
+		vista = new VentanaPrincipal(nombreUsuario);
+System.out.println("Nombre "+nombreUsuario);
 		ModeloRegistro modeloRegistro = new ModeloRegistro();
 		ModeloClasificacion modeloClasificaicon = new ModeloClasificacion();
 		ModeloConsulta modeloConsulta = new ModeloConsulta();
@@ -109,9 +117,9 @@ public class Ejecutar {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private static void moo() {
-		new Thread(()->{
+		new Thread(() -> {
 			try {
 				Player moo = new Player(new FileInputStream("Resources\\moo.mp3"));
 				moo.play();

@@ -3,8 +3,6 @@ package Vista;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
@@ -13,9 +11,9 @@ import javax.swing.*;
 import Controlador.ControladorModoOscuro;
 import Controlador.ControladorTitleBar;
 import extras.LabelColores;
-import material.componentes.MaterialColor;
 import material.componentes.MaterialPanel;
 import material.extras.Rutinas;
+import material.fonts.Roboto;
 import mdlaf.*;
 import mdlaf.shadows.RoundedCornerBorder;
 import mdlaf.themes.MaterialLiteTheme;
@@ -28,6 +26,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnCerrar, btnMinimizar, btnInfo, btnConfig;
 	private MaterialPanel panelSuperior;
 	private LabelColores lblTitulo;
+	private JLabel lblNombreUsuario;
 
 	public PestañaRegistro registro;
 	public PestañaClasifcacion clasificacion;
@@ -39,11 +38,11 @@ public class VentanaPrincipal extends JFrame {
 	public PestañaSigProceso sigProceso;
 	public PestañaInformes informes;
 
-	public VentanaPrincipal() {
-		hazInterfaz();
+	public VentanaPrincipal(String usuario) {
+		hazInterfaz(usuario);
 	}
 
-	private void hazInterfaz() {
+	private void hazInterfaz(String usuario) {
 		panelSuperior = new MaterialPanel();
 		panelSuperior.setBounds(0, 0, 800, 75);
 		panelSuperior.setLayout(null);
@@ -54,6 +53,11 @@ public class VentanaPrincipal extends JFrame {
 		lblTitulo.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblTitulo.setBounds(25, 12, 190, 40);
 		lblTitulo.setAnimado(true);
+
+		lblNombreUsuario = new JLabel(usuario, SwingConstants.CENTER);
+		lblNombreUsuario.setFont(Roboto.LIGHT.deriveFont(20f));
+		lblNombreUsuario.setBounds(300, 12, 200, 40);
+		lblNombreUsuario.setBorder(new RoundedCornerBorder(20, new Color(193, 244, 56), 2.5f));
 
 		btnInfo = new JButton(Rutinas.AjustarImagen("Resources\\info.png", 20, 20));
 		btnInfo.setBounds(620, 15, 35, 35);
@@ -82,8 +86,8 @@ public class VentanaPrincipal extends JFrame {
 		cuidados = new PestañaCuidados();
 		sensores = new PestañaSensores();
 		log = new PestañaLog();
-		sigProceso= new PestañaSigProceso();
-		informes= new PestañaInformes();
+		sigProceso = new PestañaSigProceso();
+		informes = new PestañaInformes();
 
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\registro_icon[nuevo].png", 20, 20), registro);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18), clasificacion);
@@ -111,6 +115,7 @@ public class VentanaPrincipal extends JFrame {
 		btnModoOscuro.setBackground(new Color(40, 65, 91, 0));
 		btnModoOscuro.setBounds(300, 740, 200, 50);
 
+		panelSuperior.add(lblNombreUsuario);
 		panelSuperior.add(lblTitulo);
 		panelSuperior.add(btnInfo);
 		panelSuperior.add(btnConfig);
@@ -143,7 +148,7 @@ public class VentanaPrincipal extends JFrame {
 		btnCerrar.addActionListener(controladorTitle);
 		btnMinimizar.addActionListener(controladorTitle);
 		pestañas.addChangeListener(controladorTitle);
-		
+
 		FrameDragListener frameDragListener = new FrameDragListener(this);
 		addMouseListener(frameDragListener);
 		addMouseMotionListener(frameDragListener);
@@ -164,6 +169,7 @@ public class VentanaPrincipal extends JFrame {
 		super.setVisible(true);
 		new Thread() {
 			int w = 0, h = 0;
+
 			public void run() {
 				while (w < getWidth()) {
 					setShape(new RoundRectangle2D.Double(getWidth() / 2 - w / 2 - 20, getHeight() / 2 - h / 2 - 20,
@@ -202,4 +208,3 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 }
-

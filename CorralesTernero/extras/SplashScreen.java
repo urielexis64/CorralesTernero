@@ -10,8 +10,8 @@ public class SplashScreen {
 	public SplashScreen() {
 
 		window = new JWindow();
+		window.setAlwaysOnTop(true);
 		ImageIcon image = new ImageIcon("resources\\splashscreen.gif");
-
 		window.add(new JLabel("", image, SwingConstants.CENTER));
 
 		JProgressBar bar = new JProgressBar();
