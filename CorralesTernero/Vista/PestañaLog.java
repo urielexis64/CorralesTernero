@@ -26,7 +26,7 @@ public class PestañaLog extends JPanel {
 	private ModeloTabla modeloTabla;
 	private JScrollPane scrollTable;
 	public MaterialButton btnRefrescar;
-	private JLabel lblTitulo, lblInfo;
+	private JLabel lblTitulo;
 
 	public PestañaLog() {
 		hazInterfaz();
@@ -40,25 +40,19 @@ public class PestañaLog extends JPanel {
 		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(30f));
 		lblTitulo.setBounds(45, 10, 70, 50);
-
-		lblInfo = new JLabel("<html>Se muestran los movimientos que cada cría ha realizado y su fecha correspondiente.", SwingConstants.CENTER);
-		lblInfo.setFont(Roboto.BLACK.deriveFont(14f));
-		lblInfo.setBorder(new DropShadowBorder());
-		lblInfo.setBounds(540, 130, 230, 65);
 		
 		scrollTable = new JScrollPane(tabla);
 		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
-		scrollTable.setBounds(30, 60, 500, 450);
+		scrollTable.setBounds(30, 60, 700, 450);
 		
 		btnRefrescar = new MaterialButton();
 		btnRefrescar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
 		btnRefrescar.setText(String.valueOf(MaterialIcons.REFRESH));
 		btnRefrescar.setType(Type.RAISED);
 		btnRefrescar.setBorder(new DropShadowBorder());
-		btnRefrescar.setBounds(520, 65, 80, 80);
+		btnRefrescar.setBounds(710, 65, 80, 80);
 
 		add(btnRefrescar);
-		add(lblInfo);
 		add(lblTitulo);
 		add(scrollTable);
 	}
@@ -83,13 +77,15 @@ public class PestañaLog extends JPanel {
 		modeloTabla.addColumn("<HTML><h2 style= text-decoration:underline>ID Cría");
 		modeloTabla.addColumn("Movimiento");
 		modeloTabla.addColumn("Fecha");
+		modeloTabla.addColumn("Realizado por:");
 	}
 
 	private void defineAnchoColumnas() {
 		TableColumnModel columnas = tabla.getColumnModel();
 		columnas.getColumn(0).setMaxWidth(80);
-		columnas.getColumn(1).setMaxWidth(220);
-		columnas.getColumn(2).setMaxWidth(200);
+		columnas.getColumn(1).setMaxWidth(150);
+		columnas.getColumn(2).setMaxWidth(250);
+		columnas.getColumn(3).setMaxWidth(170);
 	}
 	
 	public void setTabla(Vector<Vector<String>> objetoMovimiento){
@@ -99,7 +95,8 @@ public class PestañaLog extends JPanel {
 			nuevoMovimiento = new Vector<String>();
 			nuevoMovimiento.add(objetoMovimiento.get(i).get(0)); // ID
 			nuevoMovimiento.add(objetoMovimiento.get(i).get(1)); // Descripción
-			nuevoMovimiento.add(objetoMovimiento.get(i).get(2).substring(0, 19)); // Fecha
+			nuevoMovimiento.add(objetoMovimiento.get(i).get(2)); // Fecha
+			nuevoMovimiento.add(objetoMovimiento.get(i).get(3)); // Usuario
 			modeloTabla.addRow(nuevoMovimiento);
 		}
 	}

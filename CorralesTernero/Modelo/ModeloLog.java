@@ -21,8 +21,9 @@ public class ModeloLog {
 		}
 	}
 
-	public static boolean registraMovimiento(int idCria, String movimiento) {
-		String sentenciaMovimiento = "EXEC PA_REGISTRA_MOVIMIENTO " + idCria + ", '" + movimiento + "'";
+	public static boolean registraMovimiento(int idCria, String movimiento, String usuario) {
+		String sentenciaMovimiento = "EXEC PA_REGISTRA_MOVIMIENTO " + idCria + ", '" + movimiento + "', '" + usuario
+				+ "'";
 
 		try {
 			LOGGER.info("REGISTRANDO MOVIMIENTO ID -> " + idCria);
@@ -40,7 +41,8 @@ public class ModeloLog {
 	public Vector<Vector<String>> getMovimientos() {
 		try {
 			LOGGER.info("OBTENIENDO LISTA DE MOVIMIENTOS...");
-			ResultSet rs = consulta.executeQuery("SELECT * FROM LOG ORDER BY FECHA DESC");
+			ResultSet rs = consulta.executeQuery(
+					"SELECT [id_cria], [movimiento], FORMAT(fecha, 'dddd, dd MMM yyyy hh:mm:ss tt', 'es-mx'), [usuario] FROM LOG ORDER BY FECHA DESC");
 			Vector<Vector<String>> movimientos = new Vector<Vector<String>>();
 
 			while (rs.next()) {
@@ -48,11 +50,13 @@ public class ModeloLog {
 				tupla.add(rs.getInt(1) + "");
 				tupla.add(rs.getString(2));
 				tupla.add(rs.getString(3));
+				tupla.add(rs.getString(4));
 				movimientos.add(tupla);
 			}
 			LOGGER.info("LISTA DE MOVIMIENTOS OBTENIDA CON ÉXITO");
 			return movimientos;
 		} catch (SQLException e) {
+			LOGGER.severe("ERROR AL CONSULTAR MOVIMIENTOS: " + e.getMessage());
 			return null;
 		}
 	}

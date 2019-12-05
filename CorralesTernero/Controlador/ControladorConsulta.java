@@ -21,16 +21,14 @@ import Vista.VentanaPrincipal;
 public class ControladorConsulta implements ActionListener, CaretListener, ItemListener, DateChangeListener {
 	private VentanaPrincipal vista;
 	private ModeloConsulta modelo;
-	private static boolean asc = true;
 
 	public ControladorConsulta(VentanaPrincipal vista, ModeloConsulta modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
-		llenaTabla("id_cria", asc);
 	}
 
-	public void llenaTabla(String ordenamiento, boolean ascendente) {
-		vista.consulta.setTabla(modelo.getTotalCrias(ordenamiento, ascendente));
+	public void llenaTabla() {
+		vista.consulta.setTabla(modelo.getTotalCrias());
 		vista.consulta.lblNumeroCrias.setText("Total de crías: " + modelo.getNumCrias());
 	}
 
@@ -53,14 +51,9 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 				return;
 			}
 		}
-		if (e.getSource() == vista.consulta.btnRefrescar) {
-			llenaTabla(vista.consulta.comboBox.getSelectedItem().toString(), asc); // Boton refrescar
-			return;
-		}
 
-		llenaTabla(vista.consulta.comboBox.getSelectedItem().toString(), asc ? false : true);
-		vista.consulta.btnOrdenar.setForeground(asc ? Color.RED : Color.GREEN);
-		asc = !asc;
+		llenaTabla(); // Boton refrescar
+
 	}
 
 	@Override

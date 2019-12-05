@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import EjecutarApp.Ejecutar;
 import Modelo.ModeloLog;
 import Modelo.ModeloRegistro;
 import Vista.VentanaPrincipal;
@@ -72,7 +73,7 @@ public class ControladorRegistro implements ActionListener {
 
 				JOptionPane.showOptionDialog(vista, "ID generado: " + idGenerado, "Mensaje", 0, 0, null,
 						new Object[] { btnCopiar, "Cerrar" }, "Cerrar");
-				ModeloLog.registraMovimiento(idGenerado, "Dada de alta");
+				ModeloLog.registraMovimiento(idGenerado, "Dada de alta", Ejecutar.NOMBRE_USUARIO );
 				
 				vista.registro.bar.setVisible(false);
 			} else {

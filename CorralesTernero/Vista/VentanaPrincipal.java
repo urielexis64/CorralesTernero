@@ -37,12 +37,13 @@ public class VentanaPrincipal extends JFrame {
 	public PestañaLog log;
 	public PestañaSigProceso sigProceso;
 	public PestañaInformes informes;
+	public PestañaRegistroUsuarios registroUsuarios;
 
-	public VentanaPrincipal(String usuario) {
-		hazInterfaz(usuario);
+	public VentanaPrincipal(String usuario, String permisos) {
+		hazInterfaz(usuario, permisos);
 	}
 
-	private void hazInterfaz(String usuario) {
+	private void hazInterfaz(String usuario, String permisos) {
 		panelSuperior = new MaterialPanel();
 		panelSuperior.setBounds(0, 0, 800, 75);
 		panelSuperior.setLayout(null);
@@ -88,6 +89,7 @@ public class VentanaPrincipal extends JFrame {
 		log = new PestañaLog();
 		sigProceso = new PestañaSigProceso();
 		informes = new PestañaInformes();
+		registroUsuarios = new PestañaRegistroUsuarios();
 
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\registro_icon[nuevo].png", 20, 20), registro);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\clasificacion_icon.png", 18, 18), clasificacion);
@@ -98,6 +100,7 @@ public class VentanaPrincipal extends JFrame {
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\log_icon.png", 26, 26), log);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\informes_icon.png", 30, 30), informes);
 		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\sigProceso_icon.png", 30, 30), sigProceso);
+		pestañas.addTab("", Rutinas.AjustarImagen("Resources\\admin_icon.png", 30, 30), registroUsuarios);
 		pestañas.setToolTipTextAt(0, "Registro");
 		pestañas.setToolTipTextAt(1, "Clasificación");
 		pestañas.setToolTipTextAt(2, "Consulta");
@@ -107,8 +110,31 @@ public class VentanaPrincipal extends JFrame {
 		pestañas.setToolTipTextAt(6, "Log de acciones");
 		pestañas.setToolTipTextAt(7, "Informes");
 		pestañas.setToolTipTextAt(8, "Siguiente proceso");
+		pestañas.setToolTipTextAt(9, "Registrar usuarios");
 
-//		pestañas.setSelectedIndex(2); //Empieza en el tab establecido
+		int[] indicesPermisos = new int[permisos.length()];
+
+		for (int i = 0; i < permisos.length(); i++) {
+			indicesPermisos[i] = Integer.parseInt(permisos.charAt(i) + "");
+		}
+
+		pestañas.setEnabledAt(0, indicesPermisos[0] == 1 ? true : false);
+		pestañas.setEnabledAt(1, indicesPermisos[1] == 1 ? true : false);
+		pestañas.setEnabledAt(2, indicesPermisos[2] == 1 ? true : false);
+		pestañas.setEnabledAt(3, indicesPermisos[3] == 1 ? true : false);
+		pestañas.setEnabledAt(4, indicesPermisos[4] == 1 ? true : false);
+		pestañas.setEnabledAt(5, indicesPermisos[5] == 1 ? true : false);
+		pestañas.setEnabledAt(6, indicesPermisos[6] == 1 ? true : false);
+		pestañas.setEnabledAt(7, indicesPermisos[7] == 1 ? true : false);
+		pestañas.setEnabledAt(8, indicesPermisos[8] == 1 ? true : false);
+		pestañas.setEnabledAt(9, usuario.equals("admin") ? true : false);
+
+		for (int i = 0; i < 9; i++) {
+			if (pestañas.isEnabledAt(i)) {
+				pestañas.setSelectedIndex(i); // Empieza en el tab establecido
+				break;
+			}
+		}
 
 		btnModoOscuro = new JToggleButton("Modo claro (BETA)");
 		btnModoOscuro.setSelected(true);

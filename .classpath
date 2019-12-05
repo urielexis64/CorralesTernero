@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="Resources"/>
 	<classpathentry kind="src" path="CorralesTernero"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MaterialDesign"/>
 	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/jmediaplayer.jar"/>
 	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/LGoodDatePicker-10.4.1.jar"/>
 	<classpathentry kind="lib" path="E:/eclipse-workspace/Base de datos/Librerias/mail-1.4.7.jar"/>

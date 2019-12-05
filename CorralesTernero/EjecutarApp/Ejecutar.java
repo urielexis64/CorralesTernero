@@ -15,6 +15,7 @@ import Controlador.ControladorModal;
 import Controlador.ControladorTabla;
 import Controlador.ControladorTitleBar;
 import Controlador.ControladorRegistro;
+import Controlador.ControladorRegistroUsuarios;
 import Controlador.ControladorInformes;
 import Controlador.ControladorSacrificios;
 import Controlador.ControladorSensores;
@@ -28,6 +29,7 @@ import Modelo.ModeloEliminaCria;
 import Modelo.ModeloLog;
 import Modelo.ModeloLoginUsuario;
 import Modelo.ModeloRegistro;
+import Modelo.ModeloRegistroUsuarios;
 import Modelo.ModeloSacrificios;
 import Modelo.ModeloSensores;
 import Modelo.ModeloSigProceso;
@@ -41,24 +43,27 @@ import mdlaf.themes.MaterialOceanicTheme;
 public class Ejecutar {
 
 	private static VentanaPrincipal vista;
+	public static String NOMBRE_USUARIO;
 
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
 		login();
-		
+//		iniciaAplicacion("Prueba", "111111111");
 		LoginUsuario loginUsuario = new LoginUsuario();
 		ModeloLoginUsuario modeloLoginUsuario = new ModeloLoginUsuario();
 		ControladorLoginUsuario controladorLoginUsuario = new ControladorLoginUsuario(loginUsuario, modeloLoginUsuario);
 		loginUsuario.setControlador(controladorLoginUsuario);
 	}
-	
-	public static void iniciaAplicacion(String nombreUsuario) {
+
+	public static void iniciaAplicacion(String nombreUsuario, String permisos) {
+		NOMBRE_USUARIO = nombreUsuario;
+
 		SplashScreen splash = new SplashScreen();
 		splash.show();
 
 		moo();
-		vista = new VentanaPrincipal(nombreUsuario);
-System.out.println("Nombre "+nombreUsuario);
+		vista = new VentanaPrincipal(nombreUsuario, permisos);
+
 		ModeloRegistro modeloRegistro = new ModeloRegistro();
 		ModeloClasificacion modeloClasificaicon = new ModeloClasificacion();
 		ModeloConsulta modeloConsulta = new ModeloConsulta();
@@ -69,6 +74,7 @@ System.out.println("Nombre "+nombreUsuario);
 		ModeloSensores modeloSensores = new ModeloSensores();
 		ModeloLog modeloLog = new ModeloLog();
 		ModeloSigProceso modeloSigProceso = new ModeloSigProceso();
+		ModeloRegistroUsuarios modeloRegistroUsuarios = new ModeloRegistroUsuarios();
 
 		ControladorRegistro controladorRegistro = new ControladorRegistro(vista, modeloRegistro);
 		ControladorClasificacion controladorClasificacion = new ControladorClasificacion(vista, modeloClasificaicon);
@@ -82,6 +88,8 @@ System.out.println("Nombre "+nombreUsuario);
 		ControladorLog controladorLog = new ControladorLog(vista, modeloLog);
 		ControladorSigProceso controladorSigProceso = new ControladorSigProceso(vista, modeloSigProceso);
 		ControladorInformes controladorInformes = new ControladorInformes(vista, modeloSigProceso);
+		ControladorRegistroUsuarios controladorRegistroUsuarios = new ControladorRegistroUsuarios(vista,
+				modeloRegistroUsuarios);
 
 		vista.setControlador(controladorTitleBar);
 		vista.registro.setControlador(controladorRegistro);
@@ -95,6 +103,7 @@ System.out.println("Nombre "+nombreUsuario);
 		vista.log.setControlador(controladorLog);
 		vista.informes.setControlador(controladorInformes);
 		vista.sigProceso.setControlador(controladorSigProceso);
+		vista.registroUsuarios.setControlador(controladorRegistroUsuarios);
 
 		vista.setVisible(true);
 		splash.hide();

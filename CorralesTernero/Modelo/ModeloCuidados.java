@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import EjecutarApp.Ejecutar;
+
 public class ModeloCuidados {
 	private final Logger LOGGER = Logger.getLogger(ModeloCuidados.class.getName());
 
@@ -60,10 +62,10 @@ public class ModeloCuidados {
 				int idCria = Integer.parseInt(crias.get(i).get(0));
 				if (crias.get(i).get(1).equals("true") && criasViejas.get(i).get(1).equals("1")) { //Si se puso en "Enferma" y antes estaba "sana", entra
 					consulta.executeUpdate(sentenciaEnferma + idCria);
-					ModeloLog.registraMovimiento(idCria, "Se enfermó");
+					ModeloLog.registraMovimiento(idCria, "Se enfermó", Ejecutar.NOMBRE_USUARIO);
 				} else if (crias.get(i).get(1).equals("false") && criasViejas.get(i).get(1).equals("2")) {//Si se puso en "Sana" y antes estaba "enferma", entra
 					consulta.executeUpdate(sentenciaSana + crias.get(i).get(0));
-					ModeloLog.registraMovimiento(idCria, "Se recuperó");
+					ModeloLog.registraMovimiento(idCria, "Se recuperó", Ejecutar.NOMBRE_USUARIO);
 				}
 			}
 

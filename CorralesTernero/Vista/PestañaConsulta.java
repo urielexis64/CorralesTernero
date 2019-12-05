@@ -32,7 +32,7 @@ public class PestañaConsulta extends JPanel {
 	private ModeloTabla modeloTabla;
 	private JScrollPane scrollTable;
 
-	public MaterialButton btnRefrescar, btnOrdenar, btnVaciar, btnUndo;
+	public MaterialButton btnRefrescar, btnVaciar, btnUndo;
 	public JLabel lblNumeroCrias, lblSegundosTransaccion, lblTitulo;
 
 	public JPopupMenu menuFlotante;
@@ -82,14 +82,6 @@ public class PestañaConsulta extends JPanel {
 		btnRefrescar.setType(Type.RAISED);
 		btnRefrescar.setBorder(new DropShadowBorder());
 		btnRefrescar.setBounds(5, 95, 80, 80);
-		
-		btnOrdenar= new MaterialButton();
-		btnOrdenar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
-		btnOrdenar.setText(String.valueOf(MaterialIcons.SORT_BY_ALPHA));
-		btnOrdenar.setForeground(Color.GREEN);
-		btnOrdenar.setType(Type.RAISED);
-		btnOrdenar.setBorder(new DropShadowBorder());
-		btnOrdenar.setBounds(5, 160, 80, 80);
 		
 //		btnVaciar = new MaterialButton();
 //		btnVaciar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
@@ -148,7 +140,6 @@ public class PestañaConsulta extends JPanel {
 		
 		add(lblTitulo);
 		add(btnRefrescar);
-		add(btnOrdenar);
 //		add(btnVaciar);
 //		add(btnUndo);
 		add(txtBuscar);
@@ -178,7 +169,6 @@ public class PestañaConsulta extends JPanel {
 		comboBox.addItemListener(controlador);
 		calendario.addDateChangeListener(controlador);
 		btnEstado.addActionListener(controlador);
-		btnOrdenar.addActionListener(controlador);
 	}
 
 	public void setControladorSeleccionTabla(ControladorTabla controlador) {

@@ -9,15 +9,19 @@ import javax.swing.JOptionPane;
 import Modelo.ModeloCorreoElectronico;
 import Modelo.ModeloSensores;
 import Vista.VentanaPrincipal;
+import material.componentes.MaterialColor;
+import mdlaf.utils.MaterialColors;
 
 public class ControladorSensores implements ActionListener {
 
 	private VentanaPrincipal vista;
 	private ModeloSensores modelo;
-
+	private boolean simulando;
+	
 	public ControladorSensores(VentanaPrincipal vista, ModeloSensores modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
+		simulando=false;
 		llenaTabla();
 		modelo.randomSensores();
 	}
@@ -32,8 +36,28 @@ public class ControladorSensores implements ActionListener {
 			llenaTabla();
 			return;
 		}
-		if (JOptionPane.showConfirmDialog(vista, "¿Desea enviar un correo electrónico?") == 0)
-			procesoEnviarCorreo();
+		if (e.getSource() == vista.sensores.btnEnviarCorreo) {
+			if (JOptionPane.showConfirmDialog(vista, "¿Desea enviar un correo electrónico?") == 0)
+				procesoEnviarCorreo();
+			return;
+		}
+
+		if (e.getSource() == vista.sensores.timer) {
+			modelo.randomSensores();
+			vista.sensores.btnRefrescar.doClick();
+			return;
+		}
+		
+		if (!simulando) {
+			vista.sensores.timer.start();
+			vista.sensores.btnSimular.setBackground(MaterialColors.RED_300);
+			simulando=true;
+		} else {
+			vista.sensores.btnSimular.setBackground(MaterialColors.GREEN_300);
+			vista.sensores.timer.stop();
+			simulando=false;
+		}
+
 	}
 
 	private void procesoEnviarCorreo() {
