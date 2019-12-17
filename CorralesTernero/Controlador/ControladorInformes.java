@@ -16,7 +16,9 @@ import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.draw.ILineDrawer;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
@@ -24,6 +26,7 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.element.LineSeparator;
 
 import Modelo.ModeloSigProceso;
 import Vista.VentanaPrincipal;
@@ -85,14 +88,18 @@ public class ControladorInformes implements ActionListener {
 		PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
 		PdfFont bold = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
 
-		Image imagen = new Image(ImageDataFactory.create("Resources\\logo_tec.png"));
-		imagen.setWidth(80).setHeight(80).setHorizontalAlignment(HorizontalAlignment.LEFT);
+		Image imagen = new Image(ImageDataFactory.create("Resources\\cow.png"));
+		imagen.setWidth(120).setHeight(120).setHorizontalAlignment(HorizontalAlignment.CENTER);
 
 		SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("ES"));
 
 		doc.add(new Paragraph("Culiacán, Sinaloa a " + formateador.format(new Date())).setFont(font)
 				.setTextAlignment(TextAlignment.RIGHT));
 		doc.add(imagen);
+
+		doc.add(new Paragraph("Se muestran algunos de los atributos de las crías que han permanecido durante más de 5 meses en los corrales.").setFont(font).setFontSize(14f)
+				.setTextAlignment(TextAlignment.LEFT));
+		
 		doc.add(new Paragraph("Informe de crías: Corrales Ternero").setFont(bold).setFontSize(20f)
 				.setTextAlignment(TextAlignment.CENTER));
 

@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 import Controlador.ControladorLoginUsuario;
 import Vista.VentanaPrincipal.FrameDragListener;
@@ -33,7 +34,7 @@ public class LoginUsuario extends JFrame {
 	public JLabel lblFoto;
 	public MaterialTextField txtCorreo;
 	public MaterialPasswordField txtContra;
-	public JButton btnEntrar, btnCerrar, btnOjo;
+	public JButton btnEntrar, btnCerrar, btnMinimizar, btnOjo;
 	public MaterialProgressSpinner bar;
 	public ImageIcon imgOjo, imgOjoCerrado;
 
@@ -47,6 +48,7 @@ public class LoginUsuario extends JFrame {
 		setLocationRelativeTo(null);
 		setLayout(null);
 		setUndecorated(true);
+		setIconImage(Rutinas.AjustarImagen("Resources\\cow.png", 50, 50).getImage());
 		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 60, 60));
 
 		imgOjo = Rutinas.AjustarImagen("Resources\\ojo.png", 25, 25);
@@ -58,6 +60,7 @@ public class LoginUsuario extends JFrame {
 		btnOjo.setFocusable(false);
 
 		fondo = new PanelGradiente();
+		fondo.setBackground(new Color(255,255,255,100));
 		fondo.setBounds(0, 0, 400, 600);
 
 		lblFoto = new JLabel(Rutinas.AjustarImagen("Resources\\user_icon.png", 150, 150));
@@ -68,6 +71,10 @@ public class LoginUsuario extends JFrame {
 		btnCerrar.setBounds(355, 8, 25, 25);
 		btnCerrar.setFocusable(false);
 
+		btnMinimizar = new JButton(Rutinas.AjustarImagen("Resources\\minimize.png", 25, 25));
+		btnMinimizar.setBounds(325, 8, 25, 25);
+		btnMinimizar.setFocusable(false);
+
 		txtCorreo = new MaterialTextField();
 		txtCorreo.setLabel("Correo electrónico");
 		txtCorreo.setBounds(50, 190, 300, 70);
@@ -77,10 +84,8 @@ public class LoginUsuario extends JFrame {
 		txtCorreo.setFocusTraversalKeysEnabled(false);
 
 		ArrayList<String> keywords = new ArrayList<String>(5);
-		keywords.add("corralesternero@gmail.com");
-		keywords.add("cle");
-		keywords.add("123");
-		keywords.add("solover");
+		keywords.add("corralesternero@ternero.com");
+		keywords.add("urielalexis64@ternero.com");
 		Autocomplete autoComplete = new Autocomplete(txtCorreo, keywords);
 		txtCorreo.getDocument().addDocumentListener(autoComplete);
 		txtCorreo.getInputMap().put(KeyStroke.getKeyStroke("TAB"), "commit");
@@ -92,19 +97,6 @@ public class LoginUsuario extends JFrame {
 		txtContra.setFont(Roboto.REGULAR.deriveFont(14f));
 		txtContra.setBackground(MaterialColor.TRANSPARENT);
 		txtContra.setAccent(Color.decode("#00DBAD"));
-		
-		txtContra.setFocusTraversalKeysEnabled(false);
-
-		ArrayList<String> keywords2 = new ArrayList<String>(5);
-		keywords2.add("corralesternero");
-		keywords2.add("cle");
-		keywords2.add("123");
-		keywords2.add("solover");
-		Autocomplete autoComplete2 = new Autocomplete(txtContra, keywords2);
-		txtContra.getDocument().addDocumentListener(autoComplete2);
-		txtContra.getInputMap().put(KeyStroke.getKeyStroke("TAB"), "commit");
-		txtContra.getActionMap().put("commit", autoComplete2.new CommitAction());
-		
 
 		btnEntrar = new JButton("Iniciar sesión", Rutinas.AjustarImagen("Resources\\enter_icon.png", 30, 30));
 		btnEntrar.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -115,10 +107,11 @@ public class LoginUsuario extends JFrame {
 		bar = new MaterialProgressSpinner(Color.decode("#77DBAD"));
 		bar.setBounds(162, 290, 75, 75);
 		bar.setVisible(false);
-
+		
 		add(bar);
 		add(lblFoto);
 		add(btnCerrar);
+		add(btnMinimizar);
 		add(txtCorreo);
 		add(btnOjo);
 		add(txtContra);
@@ -141,6 +134,7 @@ public class LoginUsuario extends JFrame {
 	public void setControlador(ControladorLoginUsuario controlador) {
 		btnEntrar.addActionListener(controlador);
 		btnCerrar.addActionListener(controlador);
+		btnMinimizar.addActionListener(controlador);
 		btnOjo.addActionListener(controlador);
 		txtCorreo.addActionListener(controlador);
 		txtContra.addActionListener(controlador);
@@ -148,36 +142,72 @@ public class LoginUsuario extends JFrame {
 		addMouseListener(frameDragListener);
 		addMouseMotionListener(frameDragListener);
 	}
-	
+
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		new Thread(()->{
-			new Thread() {
-				int w = 0, h = 0;
+		new Thread(() -> {
+			int w = 0, h = 0;
 
-				public void run() {
-					while (w < getWidth()) {
-						setShape(new RoundRectangle2D.Double(getWidth() / 2 - w / 2-20, getHeight() / 2 - h / 2-25,
-								w += 40, h += 50, 30, 30));
-						try {
-							sleep(15);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+			while (w < getWidth()) {
+				setShape(new RoundRectangle2D.Double(getWidth() / 2 - w / 2 - 20, getHeight() / 2 - h / 2 - 25, w += 40,
+						h += 50, 30, 30));
+				try {
+					Thread.sleep(15);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-			}.start();
+
+			}
+
 		}).start();
 	}
 
 	class PanelGradiente extends JPanel {
 		private static final long serialVersionUID = 1L;
+//		private Timer t;
+//		private int x1, y1, x2, y2;
+//		
+//		public PanelGradiente() {
+//			x1=200;
+//			y1=0;
+//			x2=200;
+//			y2=500;}
+//			
+//			t = new Timer(1000, evt -> {
+//				if(x1>0 &&y1!=500) 
+//					x1-=5;
+//					
+//				if(x1==0)
+//					y1+=5;
+//				
+//				if(y1==500)
+//					x1+=5;
+//				
+//				if(x1==500)
+//					y1-=5;
+//				
+//				if(x2<500 &&y2!=0) 
+//					x2+=5;
+//					
+//				if(x2==500)
+//					y2-=5;
+//				
+//				if(y2==0)
+//					x2-=5;
+//				
+//				if(x2==0)
+//					y2+=5;
+//				
+//				repaint();			
+//			});
+//			t.start();
+//		}
 
 		@Override
 		public void paint(Graphics g) {
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setPaint(new GradientPaint(0, 200, Color.decode("#28415B"), 200, 500, Color.decode("#22417A")));
-			g2.fillRect(0, 0, getWidth(), getHeight());
+			g2.setPaint(new GradientPaint(200, 0, Color.decode("#2F415B"), 200, 500, Color.decode("#21357A")));
+			g2.fillRect(0, 0, getWidth(), getHeight());			
 		}
 	}
 

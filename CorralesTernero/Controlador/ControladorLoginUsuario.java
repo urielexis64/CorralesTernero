@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTextField;
+import javax.swing.JFrame;
 
 import EjecutarApp.Ejecutar;
 import Modelo.ModeloLoginUsuario;
@@ -28,6 +28,11 @@ public class ControladorLoginUsuario implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == vista.btnCerrar)
 			System.exit(0);
+
+		if (e.getSource() == vista.btnMinimizar) {
+			vista.setState(JFrame.ICONIFIED);
+			return;
+		}
 
 		if (e.getSource() == vista.btnOjo) {
 			if (echoChar == '\u0000')
@@ -55,8 +60,17 @@ public class ControladorLoginUsuario implements ActionListener {
 			String correo = vista.txtCorreo.getText();
 			String contra = vista.txtContra.getText();
 
-			String datosUsuario[] = modelo.iniciarSesion(correo, contra);
+			Object datosUsuario[] = modelo.iniciarSesion(correo, contra);
+
 			if (datosUsuario != null) {
+				if(Integer.parseInt(datosUsuario[0].toString())==-1) {
+					AccionComponente.sacudir(vista.txtCorreo, 500, 50);
+					AccionComponente.sacudir(vista.txtContra, 500, 50);
+					vista.showMessage("Ya hay una sesión activa con esa cuenta.", true);
+					vista.bar.setVisible(false);
+					return;
+				}
+				
 				AccionComponente.mover(vista.txtCorreo, new Point(-400, vista.txtCorreo.getY()), 60, 6);
 				AccionComponente.mover(vista.txtContra, new Point(700, vista.txtContra.getY()), 60, 6);
 				AccionComponente.mover(vista.btnOjo, new Point(700, vista.txtContra.getY()), 60, 6);
@@ -65,10 +79,10 @@ public class ControladorLoginUsuario implements ActionListener {
 				try {
 					Thread.sleep(1300);
 				} catch (InterruptedException e1) {
-					e1.printStackTrace();
 				}
-				vista.showMessage("Bienvenido, " + datosUsuario[0], false);
-				Ejecutar.iniciaAplicacion(datosUsuario[0], datosUsuario[1]);
+				vista.showMessage("Bienvenido, " + datosUsuario[1], false);
+				Ejecutar.iniciaAplicacion(Integer.parseInt(datosUsuario[0].toString()), datosUsuario[1].toString(),
+						datosUsuario[2].toString());
 
 			} else {
 				AccionComponente.sacudir(vista.txtCorreo, 500, 50);

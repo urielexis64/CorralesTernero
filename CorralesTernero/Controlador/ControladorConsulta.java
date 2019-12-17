@@ -3,6 +3,7 @@ package Controlador;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Vector;
@@ -21,15 +22,34 @@ import Vista.VentanaPrincipal;
 public class ControladorConsulta implements ActionListener, CaretListener, ItemListener, DateChangeListener {
 	private VentanaPrincipal vista;
 	private ModeloConsulta modelo;
+	private boolean filtro;
 
 	public ControladorConsulta(VentanaPrincipal vista, ModeloConsulta modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
+		filtro = false;
 	}
 
-	public void llenaTabla() {
+	public void llenaTabla(boolean cambioEstado) {
+		if (cambioEstado) {
+			vista.consulta.lblPaginaActual.setText("Pág. " + (vista.consulta.pagActual = 1));
+			modelo.inicio = 0;
+		}
+		if (filtro) {
+			String valor = vista.consulta.txtBuscar.getText(); // Valor en la caja de texto Buscar
+			String atributo = vista.consulta.comboBox.getSelectedItem().toString(); // Valor del ComboBox
+
+			Vector<Vector<String>> resultado = modelo.getConsultaCrias(valor, atributo);
+
+			if (resultado != null)
+				vista.consulta.setTablaBusqueda(resultado);
+			return;
+		}
 		vista.consulta.setTabla(modelo.getTotalCrias());
-		vista.consulta.lblNumeroCrias.setText("Total de crías: " + modelo.getNumCrias());
+		int totalTuplas = modelo.getNumCrias();
+		vista.consulta.btnSig.setEnabled(totalTuplas > 15 && modelo.inicio + 15 <= totalTuplas);
+		vista.consulta.btnAnt.setEnabled(totalTuplas > 15 && modelo.inicio >= 15);
+		vista.consulta.lblNumeroCrias.setText("Total de crías: " + totalTuplas);
 	}
 
 	@Override
@@ -50,14 +70,39 @@ public class ControladorConsulta implements ActionListener, CaretListener, ItemL
 																						// filtra tabla
 				return;
 			}
+			filtro=false;
+			llenaTabla(true);
+			return;
 		}
 
-		llenaTabla(); // Boton refrescar
+		if (e.getSource() == vista.consulta.btnRefrescar) {
+			filtro=false;
+			llenaTabla(false); // Boton refrescar
+			return;
+		}
 
+		if (e.getSource() == vista.consulta.btnSig) {
+			modelo.inicio += 15;
+			vista.consulta.lblPaginaActual.setText("Pág. " + ++vista.consulta.pagActual);
+			vista.consulta.lblPaginaActual.revalidate();
+			llenaTabla(false);
+			return;
+		}
+
+		vista.consulta.lblPaginaActual.setText("Pág. " + --vista.consulta.pagActual);
+		modelo.inicio -= 15;
+		llenaTabla(false);
 	}
 
 	@Override
 	public void caretUpdate(CaretEvent e) {
+		filtro = true;
+		modelo.inicio = 0;
+		vista.consulta.lblPaginaActual.setText("Pág. " + (vista.consulta.pagActual = 1));
+		int totalTuplas = modelo.getNumCrias();
+		vista.consulta.btnSig.setEnabled(totalTuplas > 15 && modelo.inicio + 15 <= totalTuplas);
+		vista.consulta.btnAnt.setEnabled(totalTuplas > 15 && modelo.inicio >= 15);
+
 		JTextField txt = (JTextField) e.getSource();
 
 		String valor = "", atributo = "";

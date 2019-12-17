@@ -44,24 +44,27 @@ public class Ejecutar {
 
 	private static VentanaPrincipal vista;
 	public static String NOMBRE_USUARIO;
-
+	public static int ID_USUARIO;
+	private static ModeloLoginUsuario modeloLoginUsuario;
+	
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
 		login();
-//		iniciaAplicacion("Prueba", "111111111");
+//		iniciaAplicacion(1, "Prueba", "111111111");
 		LoginUsuario loginUsuario = new LoginUsuario();
-		ModeloLoginUsuario modeloLoginUsuario = new ModeloLoginUsuario();
+		modeloLoginUsuario = new ModeloLoginUsuario();
 		ControladorLoginUsuario controladorLoginUsuario = new ControladorLoginUsuario(loginUsuario, modeloLoginUsuario);
 		loginUsuario.setControlador(controladorLoginUsuario);
 	}
 
-	public static void iniciaAplicacion(String nombreUsuario, String permisos) {
+	public static void iniciaAplicacion(int id, String nombreUsuario, String permisos) {
 		NOMBRE_USUARIO = nombreUsuario;
-
+		ID_USUARIO = id;
+		
 		SplashScreen splash = new SplashScreen();
 		splash.show();
 
-		moo();
+//		moo();
 		vista = new VentanaPrincipal(nombreUsuario, permisos);
 
 		ModeloRegistro modeloRegistro = new ModeloRegistro();
@@ -75,14 +78,14 @@ public class Ejecutar {
 		ModeloLog modeloLog = new ModeloLog();
 		ModeloSigProceso modeloSigProceso = new ModeloSigProceso();
 		ModeloRegistroUsuarios modeloRegistroUsuarios = new ModeloRegistroUsuarios();
-
+				
 		ControladorRegistro controladorRegistro = new ControladorRegistro(vista, modeloRegistro);
 		ControladorClasificacion controladorClasificacion = new ControladorClasificacion(vista, modeloClasificaicon);
 		ControladorConsulta controladorConsulta = new ControladorConsulta(vista, modeloConsulta);
 		ControladorTabla controladorSeleccionTabla = new ControladorTabla(vista, modeloEliminaCria);
 		ControladorModal controladorModal = new ControladorModal(vista, modeloActualiza);
 		ControladorSacrificios controladorSacrificios = new ControladorSacrificios(vista, modeloSacrificios);
-		ControladorTitleBar controladorTitleBar = new ControladorTitleBar(vista);
+		ControladorTitleBar controladorTitleBar = new ControladorTitleBar(vista, modeloLoginUsuario);
 		ControladorCuidados controladorCuidados = new ControladorCuidados(vista, modeloCuidados);
 		ControladorSensores controladorSensores = new ControladorSensores(vista, modeloSensores);
 		ControladorLog controladorLog = new ControladorLog(vista, modeloLog);
@@ -99,7 +102,9 @@ public class Ejecutar {
 		vista.consulta.modal.setControlador(controladorModal);
 		vista.sacrificios.setControlador(controladorSacrificios);
 		vista.cuidados.setControladorCuidados(controladorCuidados);
-		vista.sensores.setControladorSensores(controladorSensores);
+		vista.sensores.estado.setControladorSensores(controladorSensores);
+		vista.sensores.asignacion.setControlador(controladorSensores);
+		vista.sensores.registro.setControlador(controladorSensores);
 		vista.log.setControlador(controladorLog);
 		vista.informes.setControlador(controladorInformes);
 		vista.sigProceso.setControlador(controladorSigProceso);

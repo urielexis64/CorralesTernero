@@ -112,7 +112,7 @@ public class Autocomplete implements DocumentListener {
       textField.setText(sb.toString());
       textField.setCaretPosition(position + completion.length());
       textField.moveCaretPosition(position);
-      mode = Mode.INSERT;
+      mode = Mode.COMPLETION;
     }
   }
 

@@ -36,8 +36,8 @@ public class PestañaSigProceso extends JPanel {
 		lblTitulo.setFont(Roboto.BLACK.deriveFont(28f));
 		lblTitulo.setBorder(new RoundedCornerBorder(new Color(193, 244, 56)));
 		lblTitulo.setBounds(50, 20, 370, 50);
-		lblTitulo.setFuente();
-		lblTitulo.setAnimado(true);
+//		lblTitulo.setFuente();
+//		lblTitulo.setAnimado(true);
 
 		lblInfo = new JLabel("Las siguientes crías ya están listas para pasar al proceso #2", SwingConstants.CENTER);
 		lblInfo.setFont(Roboto.BLACK.deriveFont(14f));
@@ -53,8 +53,8 @@ public class PestañaSigProceso extends JPanel {
 		btnSig.setForeground(Color.green);
 		btnSig.setFont(MaterialIcons.ICON_FONT.deriveFont(50f));
 		btnSig.setBounds(650, 10, 80, 80);
-		btnSig.setMovimiento(2);
-		btnSig.setVelocidad(50);
+//		btnSig.setMovimiento(2);
+//		BTNSIG.SETVELOCIDAD(50);
 
 		add(lblTitulo);
 		add(lblInfo);

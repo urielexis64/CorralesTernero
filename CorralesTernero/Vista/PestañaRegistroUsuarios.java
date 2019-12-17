@@ -84,14 +84,14 @@ public class PestañaRegistroUsuarios extends JPanel {
 		checkClasificacion = new JCheckBox("Ver clasificación");
 		checkCuidados = new JCheckBox("Salud crías");
 		checkSacrificios = new JCheckBox("Sacrificar crías");
-		checkSensores = new JCheckBox("Sensores");
+		checkSensores = new JCheckBox("Sensores              ");
 		checkInforme = new JCheckBox("Generar informe");
-		checkLog = new JCheckBox("Ver LOG");
+		checkLog = new JCheckBox("Ver LOG             ");
 		checkSigProceso = new JCheckBox("Pasar a siguiente proceso");
 
 		panelPermisos = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		panelPermisos.setBounds(500, 100, 230, 350);
-		panelPermisos.setBorder(BorderFactory.createTitledBorder(new RoundedCornerBorder(), "Permisos",
+		panelPermisos.setBorder(BorderFactory.createTitledBorder(new RoundedCornerBorder(new Color(193, 244, 56)), "Permisos",
 				TitledBorder.CENTER, TitledBorder.TOP, Roboto.BOLD.deriveFont(20f), Color.WHITE));
 
 		panelPermisos.add(checkRegistro);

@@ -24,7 +24,7 @@ public class ModeloTabla extends DefaultTableModel implements TableCellRenderer 
 		if(color ==null)
 			color=table.getBackground();
 		
-		if (Integer.parseInt(table.getValueAt(row, 1).toString().split(" ")[0]) >= 50) {
+		if (Integer.parseInt(table.getValueAt(row, 2).toString().split(" ")[0]) >= 50) {
 			c.setBackground(MaterialColors.YELLOW_700);
 			c.setForeground(Color.BLACK);
 		}else {

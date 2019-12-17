@@ -63,19 +63,15 @@ public class VentanaPrincipal extends JFrame {
 		btnInfo = new JButton(Rutinas.AjustarImagen("Resources\\info.png", 20, 20));
 		btnInfo.setBounds(620, 15, 35, 35);
 		btnInfo.setActionCommand("info");
-		btnInfo.setToolTipText("Acerca de...");
 		btnConfig = new JButton(Rutinas.AjustarImagen("Resources\\settings.png", 25, 25));
 		btnConfig.setBounds(660, 15, 35, 35);
 		btnConfig.setActionCommand("config");
-		btnConfig.setToolTipText("Ajustes");
 		btnMinimizar = new JButton(Rutinas.AjustarImagen("Resources\\minimize.png", 20, 20));
 		btnMinimizar.setBounds(700, 15, 35, 35);
 		btnMinimizar.setActionCommand("minimizar");
-		btnMinimizar.setToolTipText("Minimizar");
 		btnCerrar = new JButton(Rutinas.AjustarImagen("Resources\\close.png", 20, 20));
 		btnCerrar.setBounds(740, 15, 35, 35);
 		btnCerrar.setActionCommand("cerrar");
-		btnCerrar.setToolTipText("Cerrar");
 
 		pestañas = new JTabbedPane();
 		pestañas.setBounds(10, 50, 780, 730);
@@ -160,7 +156,7 @@ public class VentanaPrincipal extends JFrame {
 //		setAlwaysOnTop(true);
 		setBackground(new Color(40, 65, 91, 240));
 
-		setIconImage(Rutinas.AjustarImagen("Resources\\cow.png", 100, 100).getImage());
+		setIconImage(Rutinas.AjustarImagen("bin\\cow.png", 100, 100).getImage());
 		setLayout(null);
 
 		add(btnModoOscuro);

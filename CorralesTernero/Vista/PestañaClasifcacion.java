@@ -101,7 +101,7 @@ public class PestañaClasifcacion extends JPanel {
 		JSeparator sep2 = new JSeparator();
 		JSeparator sep3 = new JSeparator();
 		JSeparator sep4 = new JSeparator(1);
-		
+
 		sep1.setForeground(new Color(193, 244, 56));
 		sep1.setBounds(50, 130, 310, 1);
 		sep2.setForeground(new Color(193, 244, 56));
@@ -110,7 +110,7 @@ public class PestañaClasifcacion extends JPanel {
 		sep3.setBounds(50, 230, 310, 1);
 		sep4.setForeground(new Color(193, 244, 56));
 		sep4.setBounds(180, 62, 1, 168);
-		
+
 		add(sep1);
 		add(sep2);
 		add(sep3);
@@ -153,10 +153,12 @@ public class PestañaClasifcacion extends JPanel {
 	}
 
 	private void defineColumnas(ModeloTabla modelo) {
+
 		modelo.addColumn("<html><h4>ID Cría");
 		modelo.addColumn("<html><h4>Corral");
 		modelo.addColumn("<html><h4>Alimentación");
-		modelo.addColumn("<html><h4>Sensor");
+		if (modelo == modeloTabla2)
+			modelo.addColumn("<html><h4>Sensor");
 	}
 
 	public void setTabla(Vector<Vector<String>> objetoCria) {
@@ -166,7 +168,6 @@ public class PestañaClasifcacion extends JPanel {
 			nuevaCria.add(objetoCria.get(i).get(0)); // ID
 			nuevaCria.add(objetoCria.get(i).get(1)); // CORRAL_ID
 			nuevaCria.add(objetoCria.get(i).get(2)); // ALIM_ID
-			nuevaCria.add(objetoCria.get(i).get(3)); // SENSOR_ID
 
 			String clasificacion = objetoCria.get(i).get(4);
 
@@ -175,6 +176,7 @@ public class PestañaClasifcacion extends JPanel {
 				modeloTabla1.addRow(nuevaCria);
 				break;
 			case "COBERTURA 2":
+				nuevaCria.add(objetoCria.get(i).get(3)); // SENSOR_ID
 				modeloTabla2.addRow(nuevaCria);
 				break;
 			case "COBERTURA 3":

@@ -113,52 +113,52 @@ public class ControladorTabla extends MouseAdapter implements ActionListener {
 			return;
 		}
 
-		if (e.getSource() == vista.consulta.btnVaciar) { // Botón eliminar toda la tabla
-			String mensaje = "¿Está seguro de vaciar COMPLETAMENTE la tabla?";
-
-			if (JOptionPane.showConfirmDialog(vista, mensaje, "Aviso", JOptionPane.YES_NO_OPTION) == 0) {
-
-				if (!modelo.vaciarTabla()) {
-					vista.consulta.showMessage("Hubo un error...", true);
-				} else {
-					String tuplasEliminadas = vista.consulta.lblNumeroCrias.getText().split(":")[1];
-					vista.consulta.showMessage("Se eliminaron " + tuplasEliminadas + " tuplas.", false);
-					vista.consulta.btnUndo.setVisible(true);
-					timer.start();
-					vista.consulta.lblSegundosTransaccion.setVisible(true);
-					AccionComponente.disco(vista.consulta.btnUndo, 6000, 100);
-				}
-				vista.consulta.btnRefrescar.doClick();
-			}
-			return;
-		}
-
-		if (e.getSource() == timer) {
-			if (contador > 0) {
-				vista.consulta.lblSegundosTransaccion.setText(--contador + "");
-				return;
-			}
-			terminarTransaccion(true); // Hace commit
-			return;
-		}
-
-		terminarTransaccion(false); // Hace rollback
+//		if (e.getSource() == vista.consulta.btnVaciar) { // Botón eliminar toda la tabla
+//			String mensaje = "¿Está seguro de vaciar COMPLETAMENTE la tabla?";
+//
+//			if (JOptionPane.showConfirmDialog(vista, mensaje, "Aviso", JOptionPane.YES_NO_OPTION) == 0) {
+//
+//				if (!modelo.vaciarTabla()) {
+//					vista.consulta.showMessage("Hubo un error...", true);
+//				} else {
+//					String tuplasEliminadas = vista.consulta.lblNumeroCrias.getText().split(":")[1];
+//					vista.consulta.showMessage("Se eliminaron " + tuplasEliminadas + " tuplas.", false);
+//					vista.consulta.btnUndo.setVisible(true);
+//					timer.start();
+//					vista.consulta.lblSegundosTransaccion.setVisible(true);
+//					AccionComponente.disco(vista.consulta.btnUndo, 6000, 100);
+//				}
+//				vista.consulta.btnRefrescar.doClick();
+//			}
+//			return;
+//		}
+//
+//		if (e.getSource() == timer) {
+//			if (contador > 0) {
+//				vista.consulta.lblSegundosTransaccion.setText(--contador + "");
+//				return;
+//			}
+//			terminarTransaccion(true); // Hace commit
+//			return;
+//		}
+//
+//		terminarTransaccion(false); // Hace rollback
 	}
 
-	private void terminarTransaccion(boolean commit) {
-		timer.stop();
-		modelo.commitTransaccion(commit); // Si no presiona el boton UNDO
-		vista.consulta.btnUndo.setVisible(false);
-		vista.consulta.lblSegundosTransaccion.setText("5");
-		vista.consulta.lblSegundosTransaccion.setVisible(false);
-
-		if (!commit) { // Si fue rollback, actualiza la tabla
-			vista.consulta.btnRefrescar.doClick();
-			vista.consulta.showMessage("Se recuperaron las tuplas.", false);
-		}
-		contador = 5; // Se resetea el contador
-	}
-
-	private int contador = 5;
+//	private void terminarTransaccion(boolean commit) {
+//		timer.stop();
+//		modelo.commitTransaccion(commit); // Si no presiona el boton UNDO
+//		vista.consulta.btnUndo.setVisible(false);
+//		vista.consulta.lblSegundosTransaccion.setText("5");
+//		vista.consulta.lblSegundosTransaccion.setVisible(false);
+//
+//		if (!commit) { // Si fue rollback, actualiza la tabla
+//			vista.consulta.btnRefrescar.doClick();
+//			vista.consulta.showMessage("Se recuperaron las tuplas.", false);
+//		}
+//		contador = 5; // Se resetea el contador
+//	}
+//
+//	private int contador = 5;
 
 }

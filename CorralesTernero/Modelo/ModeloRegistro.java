@@ -44,24 +44,4 @@ public class ModeloRegistro {
 			return -1;
 		}
 	}
-
-//	public int registrarCria(float peso, String colorMusculo, int porcentajeGrasa, String fecha_entrada) { //Inyeccion SQL
-//		String insercion = " EXECUTE PA_INSERTACRIA " + peso + ", '" + colorMusculo + "', "
-//				+ porcentajeGrasa + ", '" + fecha_entrada + "'";
-//
-//		try {
-//			Statement consulta = conexion.createStatement();
-//
-//			consulta.executeUpdate(insercion);
-//
-//			ResultSet rs = consultaIdentity.executeQuery("SELECT IDENT_CURRENT ('CRIAS')");
-//			rs.next();
-//			int idGenerado = rs.getInt(1);
-//			LOGGER.info("INSERCIÓN REALIZADA CORRECTAMENTE (ID = " +idGenerado + ")");
-//			return idGenerado;
-//		} catch (Exception e) {
-//			LOGGER.severe(e.getMessage());
-//			return -1;
-//		}
-//	}
 }

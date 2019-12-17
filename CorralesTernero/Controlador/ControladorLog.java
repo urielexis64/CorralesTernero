@@ -3,6 +3,8 @@ package Controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+
 import Modelo.ModeloLog;
 import Vista.VentanaPrincipal;
 
@@ -14,12 +16,16 @@ public class ControladorLog implements ActionListener {
 	public ControladorLog(VentanaPrincipal vista, ModeloLog modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
-		vista.log.setTabla(modelo.getMovimientos());
+		vista.log.setTabla(modelo.getMovimientos(-1));
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		vista.log.setTabla(modelo.getMovimientos());
+		if (e.getSource() instanceof JButton) {
+			vista.log.setTabla(modelo.getMovimientos(-1));
+			return;
+		}
+		vista.log.setTabla(modelo.getMovimientos(Integer.parseInt(vista.log.txtBuscar.getText())));
 	}
 
 }

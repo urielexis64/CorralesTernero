@@ -36,8 +36,8 @@ public class ControladorRegistroUsuarios implements ActionListener {
 			permisos.append((vista.registroUsuarios.checkCuidados.isSelected() ? 1 : 0) + "");
 			permisos.append((vista.registroUsuarios.checkSacrificios.isSelected() ? 1 : 0) + "");
 			permisos.append((vista.registroUsuarios.checkSensores.isSelected() ? 1 : 0) + "");
-			permisos.append((vista.registroUsuarios.checkInforme.isSelected() ? 1 : 0) + "");
 			permisos.append((vista.registroUsuarios.checkLog.isSelected() ? 1 : 0) + "");
+			permisos.append((vista.registroUsuarios.checkInforme.isSelected() ? 1 : 0) + "");
 			permisos.append((vista.registroUsuarios.checkSigProceso.isSelected() ? 1 : 0) + "");
 
 			if(permisos.toString().equals("000000000")) {

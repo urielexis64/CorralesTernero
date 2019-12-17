@@ -16,19 +16,35 @@ public class ModeloLoginUsuario {
 		conexion = ConexionBDSingleton.getConexion();
 	}
 
-	public String[] iniciarSesion(String correo, String contra) {
+	public Object[] iniciarSesion(String correo, String contra) {
 		try {
 			ps = conexion.prepareStatement("EXEC PA_LOGIN_USUARIO ?, ?");
 			ps.setString(1, correo);
 			ps.setString(2, contra);
-
+	
 			ResultSet rs = ps.executeQuery();
-			if (rs.next())
-				return new String[] { rs.getString(1), rs.getString(2) };
-			else
+			if (rs.next()) {
+				int primeraColumna = rs.getInt(1);
+				if (primeraColumna == -1)
+					return new Object[] { primeraColumna };
+
+				LOGGER.info("LOGIN REALIZADO CON ÉXITO");
+				return new Object[] { rs.getInt(1), rs.getString(2).toString(), rs.getString(3).toString() };
+			} else
 				throw new SQLException();
 		} catch (SQLException e) {
+			LOGGER.severe(e.getMessage());
 			return null;
+		}
+	}
+
+	public boolean cerrarSesion(int idUsuario) {
+		try {
+			ps = conexion.prepareStatement("EXEC PA_LOGOUT_USUARIO ?");
+			ps.setInt(1, idUsuario);
+			return ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			return false;
 		}
 	}
 }

@@ -36,7 +36,7 @@ public class ModeloClasificacion {
 				aux.add(tuplasBD.getInt(1) + "");
 				aux.add(tuplasBD.getInt(2) + "");
 				aux.add(tuplasBD.getInt(3)+"");
-				aux.add(tuplasBD.getInt(4) + "");
+				aux.add(tuplasBD.getString(4));
 				aux.add(tuplasBD.getString(5));
 				crias.add(aux);
 			}

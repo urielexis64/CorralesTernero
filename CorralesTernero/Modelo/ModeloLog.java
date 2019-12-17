@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class ModeloLog {
 	private final static Logger LOGGER = Logger.getLogger(ModeloLog.class.getName());
 
-	private Connection conexion;
+	private static Connection conexion;
 	private static Statement consulta;
 
 	public ModeloLog() {
@@ -26,6 +26,7 @@ public class ModeloLog {
 				+ "'";
 
 		try {
+			consulta = conexion.createStatement();
 			LOGGER.info("REGISTRANDO MOVIMIENTO ID -> " + idCria);
 
 			consulta.execute(sentenciaMovimiento);
@@ -33,16 +34,22 @@ public class ModeloLog {
 			LOGGER.info("MOVIMIENTO REGISTRADO -> ID = " + idCria);
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			LOGGER.severe("MOVIMIENTO NO REGISTRADO -> ID = " + e.getMessage());
 			return false;
 		}
 	}
 
-	public Vector<Vector<String>> getMovimientos() {
+	public Vector<Vector<String>> getMovimientos(int id) {
 		try {
 			LOGGER.info("OBTENIENDO LISTA DE MOVIMIENTOS...");
-			ResultSet rs = consulta.executeQuery(
-					"SELECT [id_cria], [movimiento], FORMAT(fecha, 'dddd, dd MMM yyyy hh:mm:ss tt', 'es-mx'), [usuario] FROM LOG ORDER BY FECHA DESC");
+			ResultSet rs;
+			if(id==-1)
+			rs = consulta.executeQuery(
+					"SELECT [Id_Cria], [Movimiento], Format([Fecha], 'dd-MM-yyyy HH:mm:ss'), [Usuario] FROM LOG ORDER BY [Fecha] DESC");
+			else
+				rs = consulta.executeQuery(
+						"SELECT [Id_Cria], [Movimiento], Format([Fecha], 'dd-MM-yyyy HH:mm:ss'), [Usuario] FROM LOG WHERE ID_CRIA ="+id+" ORDER BY [Fecha] DESC");
 			Vector<Vector<String>> movimientos = new Vector<Vector<String>>();
 
 			while (rs.next()) {

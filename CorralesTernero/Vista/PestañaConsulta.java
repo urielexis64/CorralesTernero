@@ -32,8 +32,8 @@ public class PestañaConsulta extends JPanel {
 	private ModeloTabla modeloTabla;
 	private JScrollPane scrollTable;
 
-	public MaterialButton btnRefrescar, btnVaciar, btnUndo;
-	public JLabel lblNumeroCrias, lblSegundosTransaccion, lblTitulo;
+	public MaterialButton btnRefrescar, btnSig, btnAnt;
+	public JLabel lblNumeroCrias, lblPaginaActual, lblTitulo;
 
 	public JPopupMenu menuFlotante;
 	public JMenuItem itemEliminar, itemEditar;
@@ -45,8 +45,10 @@ public class PestañaConsulta extends JPanel {
 	public ModalActualiza modal;
 	
 	public JToggleButton btnEstado;
+	public int pagActual;
 
 	public PestañaConsulta() {
+		pagActual=1;
 		hazInterfaz();
 	}
 
@@ -63,7 +65,7 @@ public class PestañaConsulta extends JPanel {
 		scrollTable = new JScrollPane(tabla);
 		scrollTable.setBorder(new DropShadowBorder(MaterialColors.WHITE, 2, 15, .5f, 10, true, true, true, true));
 		scrollTable.setBounds(75, 90, 700, 520);
-
+		
 		comboBox = new MaterialComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(
 				new String[] { "ID_CRIA", "PESO", "COLOR_MUSCULO", "PORCENTAJE_GRASA", "FECHA_ENTRADA" }));
@@ -83,20 +85,21 @@ public class PestañaConsulta extends JPanel {
 		btnRefrescar.setBorder(new DropShadowBorder());
 		btnRefrescar.setBounds(5, 95, 80, 80);
 		
-//		btnVaciar = new MaterialButton();
-//		btnVaciar.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
-//		btnVaciar.setText(String.valueOf(MaterialIcons.DELETE_FOREVER));
-//		btnVaciar.setType(Type.RAISED);
-//		btnVaciar.setBorder(new DropShadowBorder());
-//		btnVaciar.setBounds(5, 225, 80, 80);
-//		
-//		btnUndo = new MaterialButton();
-//		btnUndo.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
-//		btnUndo.setText(String.valueOf(MaterialIcons.UNDO));
-//		btnUndo.setType(Type.FLAT);
-//		btnUndo.setBorder(new DropShadowBorder());
-//		btnUndo.setBounds(5, 290, 80, 80);
-//		btnUndo.setVisible(false);
+		btnSig = new MaterialButton();
+		btnSig.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
+		btnSig.setText(String.valueOf(MaterialIcons.SKIP_NEXT));
+		btnSig.setType(Type.FLAT);
+		btnSig.setBorder(new DropShadowBorder());
+		btnSig.setBounds(5, 200, 80, 80);
+		btnSig.setEnabled(false);
+		
+		btnAnt = new MaterialButton();
+		btnAnt.setFont(MaterialIcons.ICON_FONT.deriveFont(30f));
+		btnAnt.setText(String.valueOf(MaterialIcons.SKIP_PREVIOUS));
+		btnAnt.setType(Type.FLAT);
+		btnAnt.setBorder(new DropShadowBorder());
+		btnAnt.setBounds(5, 150, 80, 80);
+		btnAnt.setEnabled(false);
 
 		menuFlotante = new JPopupMenu();
 		itemEliminar = new JMenuItem("Eliminar cría");
@@ -115,10 +118,10 @@ public class PestañaConsulta extends JPanel {
 		lblNumeroCrias.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblNumeroCrias.setBorder(new RoundedCornerBorder(MaterialColors.DARKLY_BLUE));
 		lblNumeroCrias.setBounds(570, 45, 190, 40);
-		lblSegundosTransaccion = new JLabel("5");
-		lblSegundosTransaccion.setFont(new Font("Roboto", Font.BOLD, 16));
-		lblSegundosTransaccion.setBounds(40, 380, 25, 25);
-		lblSegundosTransaccion.setVisible(false);
+		
+		lblPaginaActual = new JLabel("Pág. "+pagActual, SwingConstants.CENTER);
+		lblPaginaActual.setFont(new Font("Roboto", Font.BOLD, 16));
+		lblPaginaActual.setBounds(15, 250, 60, 60);
 		
 		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings.setVisibleDateTextField(false);
@@ -140,15 +143,15 @@ public class PestañaConsulta extends JPanel {
 		
 		add(lblTitulo);
 		add(btnRefrescar);
-//		add(btnVaciar);
-//		add(btnUndo);
+		add(btnSig);
+		add(btnAnt);
 		add(txtBuscar);
 		add(scrollTable);
 		add(comboBox);
 		add(btnEstado);
 		add(calendario);
 		add(lblNumeroCrias);
-		add(lblSegundosTransaccion);
+		add(lblPaginaActual);
 	}
 
 	private void iniciarTabla() {
@@ -169,14 +172,14 @@ public class PestañaConsulta extends JPanel {
 		comboBox.addItemListener(controlador);
 		calendario.addDateChangeListener(controlador);
 		btnEstado.addActionListener(controlador);
+		btnSig.addActionListener(controlador);
+		btnAnt.addActionListener(controlador);
 	}
 
 	public void setControladorSeleccionTabla(ControladorTabla controlador) {
 		tabla.addMouseListener(controlador);
 		itemEliminar.addActionListener(controlador);
 		itemEditar.addActionListener(controlador);
-//		btnVaciar.addActionListener(controlador);
-//		btnUndo.addActionListener(controlador);
 	}
 
 	public void setTabla(Vector<Vector<String>> objetoCria) {
@@ -191,7 +194,6 @@ public class PestañaConsulta extends JPanel {
 			nuevaCria.add(objetoCria.get(i).get(4)); // Fecha entrada
 			modeloTabla.addRow(nuevaCria);
 		}
-//		btnVaciar.setEnabled(tabla.getRowCount() > 0);
 	}
 
 	public void setTablaBusqueda(Vector<Vector<String>> objetoCria) {

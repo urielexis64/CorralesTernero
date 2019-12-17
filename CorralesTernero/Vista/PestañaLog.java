@@ -15,6 +15,7 @@ import Controlador.ControladorLog;
 import extras.ModeloTabla;
 import material.componentes.MaterialButton;
 import material.componentes.MaterialButton.Type;
+import material.extras.IconTextField;
 import material.fonts.MaterialIcons;
 import material.fonts.Roboto;
 import mdlaf.shadows.DropShadowBorder;
@@ -27,7 +28,8 @@ public class PestañaLog extends JPanel {
 	private JScrollPane scrollTable;
 	public MaterialButton btnRefrescar;
 	private JLabel lblTitulo;
-
+	public IconTextField txtBuscar;
+	
 	public PestañaLog() {
 		hazInterfaz();
 	}
@@ -52,13 +54,18 @@ public class PestañaLog extends JPanel {
 		btnRefrescar.setBorder(new DropShadowBorder());
 		btnRefrescar.setBounds(710, 65, 80, 80);
 
+		txtBuscar = new IconTextField("Resources\\search_icon.png", "Buscar por ID", 20);
+		txtBuscar.setBounds(510, 25, 185, 30);
+		
 		add(btnRefrescar);
 		add(lblTitulo);
 		add(scrollTable);
+		add(txtBuscar);
 	}
 	
 	public void setControlador(ControladorLog controlador){
 		btnRefrescar.addActionListener(controlador);
+		txtBuscar.addActionListener(controlador);
 	}
 
 	private void iniciarTabla() {
@@ -82,14 +89,22 @@ public class PestañaLog extends JPanel {
 
 	private void defineAnchoColumnas() {
 		TableColumnModel columnas = tabla.getColumnModel();
-		columnas.getColumn(0).setMaxWidth(80);
-		columnas.getColumn(1).setMaxWidth(150);
-		columnas.getColumn(2).setMaxWidth(250);
-		columnas.getColumn(3).setMaxWidth(170);
+		columnas.getColumn(0).setMaxWidth(100);
+		columnas.getColumn(1).setMaxWidth(250);
+		columnas.getColumn(2).setMaxWidth(210);
+		columnas.getColumn(3).setMaxWidth(130);
 	}
 	
 	public void setTabla(Vector<Vector<String>> objetoMovimiento){
 		limpiarTabla();
+		if(objetoMovimiento.isEmpty()) {
+			((DefaultTableModel) tabla.getModel()).setColumnCount(0); // Borramos las columnas que haya (en caso de)
+			modeloTabla.addColumn("MENSAJE");
+			modeloTabla.addRow(new Object[] {"NO SE ENCONTRARON RESULTADOS."});
+			return;
+		}
+		defineColumnas();
+		defineAnchoColumnas();
 		Vector<String> nuevoMovimiento;
 		for (int i = 0; i < objetoMovimiento.size(); i++) {
 			nuevoMovimiento = new Vector<String>();

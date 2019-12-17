@@ -8,15 +8,19 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import EjecutarApp.Ejecutar;
 import Modelo.ConexionBDSingleton;
+import Modelo.ModeloLoginUsuario;
 import Vista.VentanaPrincipal;
 
 public class ControladorTitleBar implements ActionListener, ChangeListener {
 
 	private VentanaPrincipal vista;
-
-	public ControladorTitleBar(VentanaPrincipal vista) {
+	private ModeloLoginUsuario modelo;
+	
+	public ControladorTitleBar(VentanaPrincipal vista, ModeloLoginUsuario modelo) {
 		this.vista = vista;
+		this.modelo=modelo;
 	}
 
 	@Override
@@ -31,6 +35,7 @@ public class ControladorTitleBar implements ActionListener, ChangeListener {
 		case "cerrar":
 			if (JOptionPane.showConfirmDialog(vista, "¿Esta seguro de cerrar la aplicación?") != 0)
 				return;
+			modelo.cerrarSesion(Ejecutar.ID_USUARIO);
 			ConexionBDSingleton.cierraConexion();
 			System.exit(0);
 		}
@@ -63,7 +68,7 @@ public class ControladorTitleBar implements ActionListener, ChangeListener {
 			vista.sacrificios.btnRefrescar.doClick();
 			break;
 		case 5:
-			vista.sensores.btnRefrescar.doClick();
+			vista.sensores.estado.btnRefrescar.doClick();
 			break;
 		case 6:
 			vista.log.btnRefrescar.doClick();
